@@ -54,6 +54,7 @@ public class EmployeesRoot {
 		String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 		String DB_URL = "jdbc:mysql://localhost/employeesdb";
 		
+		
 		String USER = "root";
 		String PASS = "";
 		
