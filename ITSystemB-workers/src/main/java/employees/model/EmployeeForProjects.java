@@ -1,5 +1,6 @@
 package employees.model;
 
+
 import common.iWorkerForProjects;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
@@ -14,7 +15,6 @@ public class EmployeeForProjects implements iWorkerForProjects {
     private StringProperty pesel;
     
     EmployeeForProjects(LongProperty id,StringProperty firstName,StringProperty lastName,StringProperty position,IntegerProperty salary,StringProperty pesel){
-    	this.id = id;
     	this.firstName = firstName;
     	this.lastName = lastName;
     	this.position = position;
@@ -22,32 +22,50 @@ public class EmployeeForProjects implements iWorkerForProjects {
     	this.pesel = pesel;
     }
 
-	@Override
 	public StringProperty getFirstName() {
 		return firstName;
 	}
 	
 
-	@Override
 	public StringProperty getLastName() {
 		return lastName;
 	}
 
-	@Override
 	public StringProperty getPosition() {
 		return position;
 	}
 
-	@Override
 	public StringProperty getPesel() {
 		return pesel;
 	}
 
-	@Override
 	public IntegerProperty getSalary() {
 		return salary;
 	}
-    
+
+	// dodatkowe pole chyba potrzebuje
+	public LongProperty getId() {
+		return id;
+	}
+	
+	// chwilowe sety do tworzenia nowych pracownikow
+
+	void setId(LongProperty id){
+		this.id = id;
+	}
+
+	void setFirstName(StringProperty firstName){
+		this.firstName = firstName;
+	}
+	
+
+	void setLastName(StringProperty lastName){
+		this.lastName = lastName;
+	}
+
+	void setSalary(IntegerProperty salary){
+		this.salary = salary;
+	}
     
     
 }

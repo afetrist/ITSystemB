@@ -2,7 +2,6 @@ package employees;
 
 import java.io.IOException;
 
-import employees.model.*;
 import employees.view.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -16,6 +15,9 @@ import javafx.stage.Stage;
 import java.sql.*;
 
 import application.MainApplication;
+import employees.model.Person;
+
+
 
 public class EmployeesRoot {
 	

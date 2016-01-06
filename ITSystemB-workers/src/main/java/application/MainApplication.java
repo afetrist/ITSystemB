@@ -1,6 +1,7 @@
 package application;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import employees.EmployeesRoot;
 import employees.view.PersonOverviewController;
@@ -79,7 +80,15 @@ public class MainApplication extends Application {
 	
 	public void addProject() {
 		ProjectMain projectMain = new ProjectMain();
-		projectMain.run();
+		try {
+			projectMain.run();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Tab tab = new Tab();
 		tab.setText("Projects");
 		tab.setContent(projectMain.getPane());

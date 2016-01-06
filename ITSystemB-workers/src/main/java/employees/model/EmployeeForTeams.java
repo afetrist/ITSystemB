@@ -21,23 +21,23 @@ public class EmployeeForTeams implements iWorkerForTeams {
     	this.pesel = pesel;
     }
 
-	@Override
+	//@Override
 	public StringProperty getFirstName() {
 		return firstName;
 	}
 	
 
-	@Override
+	//@Override
 	public StringProperty getLastName() {
 		return lastName;
 	}
 
-	@Override
+	//@Override
 	public StringProperty getPosition() {
 		return position;
 	}
 
-	@Override
+	//@Override
 	public StringProperty getPesel() {
 		return pesel;
 	}
