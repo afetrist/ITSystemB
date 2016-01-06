@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.iisg.to2.controller.AddController">
+	<center>
+		<GridPane hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
+			<columnConstraints>
+				<ColumnConstraints />
+				<ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints minHeight="10.0" />
+				<RowConstraints minHeight="10.0" />
+				<RowConstraints minHeight="10.0" />
+				<RowConstraints minHeight="10.0" />
+				<RowConstraints minHeight="10.0" />
+				<RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+            <RowConstraints minHeight="10.0" />
+			</rowConstraints>
+			<children>
+				<Label text="Deadline">
+					<GridPane.margin>
+						<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label text="StartDate" GridPane.rowIndex="2">
+					<GridPane.margin>
+						<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label text="Employees" GridPane.rowIndex="4">
+					<GridPane.margin>
+						<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label text="Teams" GridPane.rowIndex="6">
+					<GridPane.margin>
+						<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+					</GridPane.margin>
+				</Label>
+				<Label text="Budget" GridPane.rowIndex="8">
+					<GridPane.margin>
+						<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+					</GridPane.margin>
+				</Label>
+				<TextField fx:id="teamsTextField" prefHeight="25.0" prefWidth="370.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+					<GridPane.margin>
+						<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+					</GridPane.margin>
+				</TextField>
+				<TextField fx:id="employeesTextField" GridPane.columnIndex="1" GridPane.rowIndex="4">
+					<GridPane.margin>
+						<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+					</GridPane.margin>
+				</TextField>
+				<TextField fx:id="budgetTextField" GridPane.columnIndex="1" GridPane.rowIndex="8">
+					<GridPane.margin>
+						<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+					</GridPane.margin>
+				</TextField>
+            <DatePicker fx:id="deadlineDatePicker" GridPane.columnIndex="1" />
+            <DatePicker fx:id="startdateDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+			<Button fx:id="addEmployeesButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAddEmployeesAction" text="AddEmployees" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+            <Button fx:id="addTeamsButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAddTeamsAction" text="AddTeams" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <Button fx:id="calculateBudget" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleCalculateAction" text="calculateBudget" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+            <Label fx:id="errorDate" prefHeight="17.0" prefWidth="500.0" text="ERROR! Deadline must be after start date!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="errorEmployees" prefHeight="17.0" prefWidth="406.0" text="ERROR! Problem with employees!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="errorTeams" prefHeight="17.0" prefWidth="338.0" text="ERROR! Problem with teams!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="errorBudget" prefHeight="17.0" prefWidth="344.0" text="ERROR! Budget for these parameters is incorrect!" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="calculatedCost" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+            <Label prefHeight="17.0" prefWidth="66.0" text="Calculated" GridPane.rowIndex="18" />
+        
+			</children>
+		</GridPane>
+	</center>
+	<bottom>
+		<HBox alignment="BOTTOM_RIGHT" spacing="5.0" BorderPane.alignment="CENTER">
+			<children>
+				 <Button fx:id="okButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleOkAction" text="Okey">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Button>
+				 <Button fx:id="cancelButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleCancelAction" text="Cancel">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin></Button>
+			</children>
+			<BorderPane.margin>
+				<Insets bottom="0.0" left="5.0" right="5.0" top="5.0" />
+			</BorderPane.margin>
+		</HBox>
+	</bottom>
+	<opaqueInsets>
+		<Insets />
+	</opaqueInsets>
+</BorderPane>
