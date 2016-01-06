@@ -2,8 +2,6 @@ package employees;
 
 import java.io.IOException;
 
-
-import application.MainApplication;
 import employees.model.*;
 import employees.view.*;
 import javafx.application.Application;
@@ -16,6 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.sql.*;
+
+import application.MainApplication;
 
 public class EmployeesRoot {
 	

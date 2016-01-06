@@ -13,6 +13,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Tab;
 import javafx.scene.Scene;
 
+import pl.edu.agh.iisg.to2.ProjectMain;
 
 public class MainApplication extends Application {
 	
@@ -31,7 +32,7 @@ public class MainApplication extends Application {
 		//UWAGA: obecnie jest mock na Wasze pany, możecie je zastąpić z pozimomu fxmla lub javy
 		employeesRoot = new EmployeesRoot(primaryStage, rootLayout);
 		showPersonOverview();
-	
+		addProject();
 		
 	}
 	
@@ -74,6 +75,15 @@ public class MainApplication extends Application {
 		} catch (IOException e){
 			e.printStackTrace();
 		}
+	}
+	
+	public void addProject() {
+		ProjectMain projectMain = new ProjectMain();
+		projectMain.run();
+		Tab tab = new Tab();
+		tab.setText("Projects");
+		tab.setContent(projectMain.getPane());
+		paneLayout.getTabs().add(tab);		
 	}
 	
 	public Stage getPrimaryStage() {
