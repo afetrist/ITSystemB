@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import employees.model.EmployeeForProjects;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +25,6 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import pl.edu.agh.iisg.to2.model.IEmployee;
 import pl.edu.agh.iisg.to2.model.ITeam;
 import pl.edu.agh.iisg.to2.model.ProjectMock;
 
@@ -56,7 +56,7 @@ public class ListController {
 	private ProjectController projController; 
 	private ObservableList<ProjectMock> projects;
 	private ObservableList<ITeam> teams;
-	private ObservableList<IEmployee> employees;
+	private ObservableList<EmployeeForProjects> employees;
 	private ObservableList<ProjectMock> projectsTmp;
 	
 	@FXML private Label errorId;
@@ -87,7 +87,7 @@ public class ListController {
 		errorBudget.setVisible(false);
 	}
 	
-	private void initializeWithArguments() {
+	private void initializeWithArguments(int mode) {
 		ObservableList<ProjectMock> tmpWithArguments = FXCollections.observableArrayList();
 		tmpWithArguments.addAll(projects);
 		String tmp = "";
@@ -128,7 +128,7 @@ public class ListController {
 			tmp = paramEmployees.getText();
 			System.out.println("string Employees" + tmp);
 			for (int i = 0; i < tmpWithArguments.size(); i++){
-				ObservableList<IEmployee> etmp = FXCollections.observableArrayList();
+				ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
 				etmp.addAll(tmpWithArguments.get(i).getEmployees());
 				String tmpEmployees = FindEmployees.getStringEmployees(etmp).getValue();
 				if (!(tmpEmployees.toLowerCase().contains(tmp.toLowerCase()))){
@@ -167,7 +167,7 @@ public class ListController {
 		for (ProjectMock tmpp: tmpWithArguments){
 			System.out.println("koncowe:"+ tmpp.getDeadline().getValue().toString()+ tmpp.getDeadline().getValue().toString());
 		}
-		if (areParametersValid()){
+		if ((areParametersValid())&& (mode == 1)){
 			setData(tmpWithArguments, this.d, 1);
 		}	
 	}
@@ -191,7 +191,7 @@ public class ListController {
 
 	@FXML
 	private void handleFindAction(ActionEvent event) {
-		initializeWithArguments();
+		initializeWithArguments(1);
 	}
 
 	@FXML
@@ -246,6 +246,11 @@ public class ListController {
         
 	}
 	
+	public void setDataToTest(ObservableList<ProjectMock> p) {
+		this.projects = p;
+		projectTable.getItems().setAll(p);
+	}
+	
 	public void setData(ObservableList<ProjectMock> p, GeneratedData d, int i) {
 		this.d = d;
 		this.employees = d.getEmployees();
@@ -290,6 +295,10 @@ public class ListController {
 
 	public void setConverter(LocalDateStringConverter converter) {
 		this.converter = converter;
+	}
+	
+	public ObservableList<ProjectMock> getProjects(){
+		return this.projects;
 	}
 
 	

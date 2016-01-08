@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import employees.model.EmployeeForProjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.ProjectMain;
-import pl.edu.agh.iisg.to2.model.IEmployee;
 import pl.edu.agh.iisg.to2.model.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
 import pl.edu.agh.iisg.to2.model.ProjectMock;
@@ -23,10 +23,11 @@ public class ProjectController {
 
 	private ObservableList<ProjectMock> projects;
 	private ObservableList<ITeam> teams;
-	private ObservableList<IEmployee> employees;
+	private ObservableList<EmployeeForProjects> employees;
 	private Stage primaryStage;
 	private GeneratedData data;
 	private BorderPane rootLayout;
+	private ListController listController;
 
 	public ProjectController() {
 	}
@@ -52,8 +53,8 @@ public class ProjectController {
 	}
 	
 	public void generateMockData() {
-		int numberOfEmployees = 12;
-		int numberOFTeams = 5;
+		//int numberOfEmployees = 12;
+		//int numberOFTeams = 5;
 		this.data = new GeneratedData();
 		this.employees = FXCollections.observableArrayList(data.getEmployees());
 		this.teams = FXCollections.observableArrayList(data.getTeams());
@@ -72,6 +73,14 @@ public class ProjectController {
 		}
 		
 	}
+	public ListController getListController() {
+		return listController;
+	}
+
+	public void setListController(ListController listController) {
+		this.listController = listController;
+	}
+
 	public void initRootLayout() {
 		try {
 			//this.primaryStage.setTitle("Project");
@@ -83,10 +92,10 @@ public class ProjectController {
 			loader.setLocation(ProjectMain.class.getResource("view/ListView.fxml"));
 			this.rootLayout = (BorderPane) loader.load();
 			
-			ListController controller = loader.getController();
+			listController = loader.getController();
 			generateMockData();
-			controller.setData(projects, this.data , 0);
-			controller.setProjController(this);
+			listController.setData(projects, this.data , 0);
+			listController.setProjController(this);
 			
 			//Scene scene = new Scene(rootLayout);
 			//primaryStage.setScene(scene);

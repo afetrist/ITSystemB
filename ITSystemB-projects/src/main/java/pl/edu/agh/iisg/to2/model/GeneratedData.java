@@ -1,10 +1,11 @@
 package pl.edu.agh.iisg.to2.model;
 
+import employees.model.EmployeeForProjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class GeneratedData {
-	private ObservableList<IEmployee> employees;
+	private ObservableList<EmployeeForProjects> employees;
 	private ObservableList<ITeam> teams;
 	
 	public GeneratedData(){
@@ -13,10 +14,10 @@ public class GeneratedData {
 	}
 	
 	
-	public ObservableList<IEmployee> getEmployees() {
+	public ObservableList<EmployeeForProjects> getEmployees() {
 		return employees;
 	}
-	public void setEmployees(ObservableList<IEmployee> employees) {
+	public void setEmployees(ObservableList<EmployeeForProjects> employees) {
 		this.employees = employees;
 	}
 	public ObservableList<ITeam> getTeams() {

@@ -14,7 +14,9 @@ public class EmployeeForProjects implements iWorkerForProjects {
     private IntegerProperty salary;
     private StringProperty pesel;
     
-    EmployeeForProjects(LongProperty id,StringProperty firstName,StringProperty lastName,StringProperty position,IntegerProperty salary,StringProperty pesel){
+    
+    //chwilowo robie visible zeby moc generowac do testow pracownikow z waszego modulu
+    public EmployeeForProjects(LongProperty id,StringProperty firstName,StringProperty lastName,StringProperty position,IntegerProperty salary,StringProperty pesel){
     	this.firstName = firstName;
     	this.lastName = lastName;
     	this.position = position;

@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import employees.model.EmployeeForProjects;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
 public class MySQLAccess {
@@ -102,7 +106,7 @@ public ArrayList<ITeam> fetchTeamsObjectsForProject(String projectId) throws SQL
 	return teamsList;
 }
 
-public ArrayList<IEmployee> fetchEmployeeObjectsForProject(String projectId) throws SQLException, ClassNotFoundException
+public ArrayList<EmployeeForProjects> fetchEmployeeObjectsForProject(String projectId) throws SQLException, ClassNotFoundException
 {
 	Statement fetchStatement = null;
 	ResultSet employeeSet = null;
@@ -111,7 +115,7 @@ public ArrayList<IEmployee> fetchEmployeeObjectsForProject(String projectId) thr
 	employeeSet = fetchStatement.executeQuery("SELECT * FROM IProject_Employee WHERE projectId="
 			+ "\"" + projectId + "\"");
 
-	ArrayList<IEmployee> employeeList = new ArrayList<IEmployee>();
+	ArrayList<EmployeeForProjects> employeeList = new ArrayList<EmployeeForProjects>();
 	while (employeeSet.next()) {
 		String employeeId = employeeSet.getString("employeeId");
 		System.out.println("Fetch emplotee with id " + employeeId);
@@ -122,7 +126,7 @@ public ArrayList<IEmployee> fetchEmployeeObjectsForProject(String projectId) thr
 		//
 		// ===========================================================//
 		
-		EmployeeMock employee = new EmployeeMock(employeeId, "", "", "", BigDecimal.valueOf(100));
+		EmployeeForProjects employee = new EmployeeForProjects( new SimpleLongProperty(Long.valueOf(1232)), new SimpleStringProperty("stas"), new SimpleStringProperty("test1"), new SimpleStringProperty("szef") , new SimpleIntegerProperty(100) , new SimpleStringProperty("223113"));
 		employeeList.add(employee);
 	}	
 	
@@ -149,7 +153,7 @@ public List<ProjectMock> fetchAllProjects() throws SQLException, ClassNotFoundEx
 
 			   
 			   ArrayList<ITeam> teams = this.fetchTeamsObjectsForProject(projectId);
-			   ArrayList<IEmployee> employees = this.fetchEmployeeObjectsForProject(projectId);
+			   ArrayList<EmployeeForProjects> employees = this.fetchEmployeeObjectsForProject(projectId);
 			   BigDecimal budgetDecimal = new BigDecimal(BigInteger.valueOf(budget));
 
 			   ProjectMock p = new ProjectMock(deadline, startDate, teams, employees, budgetDecimal);
@@ -180,7 +184,7 @@ public void insertProject(IProject project) throws SQLException, ClassNotFoundEx
 	preparedStatement.executeUpdate();
 	
 	// Add relationships with Employee
-	for (IEmployee employee: project.getEmployees()){
+	for (EmployeeForProjects employee: project.getEmployees()){
 		System.out.println("Add relationship...");
 		this.insertEmployeeRelationship(project, employee);
 	} 
@@ -215,7 +219,7 @@ private void removeAllTeamRelationships(IProject project) throws SQLException, C
 	preparedStatement.executeUpdate();
 }
 
-private void insertEmployeeRelationship(IProject project, IEmployee employee) throws SQLException, ClassNotFoundException
+private void insertEmployeeRelationship(IProject project, EmployeeForProjects employee) throws SQLException, ClassNotFoundException
 {
 	String command = "INSERT INTO TOProjects.IProject_Employee (employeeId, projectId) VALUES "
 			+ "(\"" + employee.getId() + "\", "
@@ -256,7 +260,7 @@ public void updateProject(IProject project) throws SQLException, ClassNotFoundEx
 	this.removeAllTeamRelationships(project);
 	
 	// and recreate them once again
-	for (IEmployee employee: project.getEmployees()){
+	for (EmployeeForProjects employee: project.getEmployees()){
 		this.insertEmployeeRelationship(project, employee);
 	}
 	// and recreate them once again

@@ -9,15 +9,19 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import employees.model.EmployeeForProjects;
+import employees.model.Person;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pl.edu.agh.iisg.to2.model.IEmployee;
-import pl.edu.agh.iisg.to2.model.EmployeeMock;
 
 public class DataGenerator {
 	
 
-	public static List<IEmployee> generateEmployees(int size){
+	public static List<EmployeeForProjects> generateEmployees(int size){
 		final int SIZE = 24;
 		
 		String[] names = {
@@ -73,6 +77,32 @@ public class DataGenerator {
 			"Owen",
 			"Kim"	
 		};
+
+		String[] position = {
+				"boss",
+				"CEO",
+				"CEE",
+				"CIA xD",
+				"student",
+				"ordinary employee",
+				"secretary",
+				"chef",
+				"masterchef",
+				"boss",
+				"CEO",
+				"CEE",
+				"CIA xD",
+				"student",
+				"ordinary employee",
+				"secretary",
+				"chef",
+				"masterchef",
+				"Ellis",
+				"Salin",
+				"Owen",
+				"somebody",
+				"Kim"	
+			};
 		
 		String[] pesel = {
 			"185837",
@@ -101,7 +131,7 @@ public class DataGenerator {
 			"521568" 
 		};
 		
-		List<IEmployee> workers = new ArrayList<>();
+		List<EmployeeForProjects> workers = new ArrayList<>();
 		
 		
 		for (int i = 0; i < size && i < SIZE; i++) {
@@ -109,7 +139,7 @@ public class DataGenerator {
 			int i1 = generator.nextInt(24);
 			int i2 = generator.nextInt(24);
 			int i3 = generator.nextInt(240);
-			workers.add(new EmployeeMock(Integer.toString(i3), names[i1], surnames[i2], pesel[i1], new BigDecimal(BigInteger.valueOf(100))));
+			workers.add(new EmployeeForProjects( new SimpleLongProperty(Long.valueOf(i3)), new SimpleStringProperty(names[i1]), new SimpleStringProperty(surnames[i2]), new SimpleStringProperty(surnames[i2]) , new SimpleIntegerProperty(100) , new SimpleStringProperty(pesel[i1])));
 		}
 		
 		return workers;
@@ -248,7 +278,7 @@ public class DataGenerator {
 	}
 	
 	
-	public static List<ProjectMock> generateProjects(List<IEmployee> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams, int numberOfProjects){
+	public static List<ProjectMock> generateProjects(List<EmployeeForProjects> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams, int numberOfProjects){
 		List<ProjectMock> projects = new ArrayList<>();
 		Random generator = new Random(); 
 		int iT = generator.nextInt(numberOfTeams);
@@ -267,7 +297,7 @@ public class DataGenerator {
 		return projects;
 	}
 	
-	public static ProjectMock generateProject(List<IEmployee> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams){;
+	public static ProjectMock generateProject(List<EmployeeForProjects> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams){;
 		Random generator = new Random(); 
 		int iT = generator.nextInt(numberOfTeams);
 		int iE = generator.nextInt(numberOfEmployees);
@@ -282,6 +312,8 @@ public class DataGenerator {
 		return p;
 	}
 	
+	
+	
 	public static ProjectMock generateProjectWithMultipleTeamsEmployees(GeneratedData d, int numberOfEmployees, int numberOfTeams){
 		long minDay = LocalDate.of(1970, 1, 1).toEpochDay();
 		long maxDay = LocalDate.of(2015, 12, 31).toEpochDay();
@@ -289,7 +321,7 @@ public class DataGenerator {
 		long randomDay2 = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 		LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 		LocalDate randomDate2 = LocalDate.ofEpochDay(randomDay2);
-		ObservableList<IEmployee> employees = FXCollections.observableArrayList();
+		ObservableList<EmployeeForProjects> employees = FXCollections.observableArrayList();
 		employees.addAll(d.getEmployees());
 		ObservableList<ITeam> teams = FXCollections.observableArrayList();
 		teams.addAll(d.getTeams());

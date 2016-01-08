@@ -2,6 +2,7 @@ package pl.edu.agh.iisg.to2.controller;
 
 import java.math.BigDecimal;
 
+import employees.model.EmployeeForProjects;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,16 +15,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pl.edu.agh.iisg.to2.model.IEmployee;
 import pl.edu.agh.iisg.to2.model.ProjectMock;
 
 public class AddEmployeeController {
 
-		@FXML private TableView<IEmployee> employeeTable;
-		@FXML private TableColumn<IEmployee, String> idColumn;
-		@FXML private TableColumn<IEmployee, String> firstNameColumn;
-		@FXML private TableColumn<IEmployee, String> lastNameColumn;
-		@FXML private TableColumn<IEmployee, BigDecimal> salaryColumn;
+		@FXML private TableView<EmployeeForProjects> employeeTable;
+		@FXML private TableColumn<EmployeeForProjects, String> idColumn;
+		@FXML private TableColumn<EmployeeForProjects, String> firstNameColumn;
+		@FXML private TableColumn<EmployeeForProjects, String> lastNameColumn;
 		
 		@FXML private Button cancelButton;
 		@FXML private Button addButton;
@@ -36,7 +35,7 @@ public class AddEmployeeController {
 
 		private ProjectController projController; 
 		private ProjectMock project;
-		private ObservableList<IEmployee> employees;
+		private ObservableList<EmployeeForProjects> employees;
 
 		@FXML private Label errorEmployees;
 		
@@ -44,9 +43,8 @@ public class AddEmployeeController {
 		@FXML
 		private void initialize() {
 			employeeTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-			firstNameColumn.setCellValueFactory(value -> value.getValue().getFirstNameObservable());
-			lastNameColumn.setCellValueFactory(value -> value.getValue().getLastNameObservable());
-			salaryColumn.setCellValueFactory(value -> value.getValue().getSalaryObservable());
+			firstNameColumn.setCellValueFactory(value -> value.getValue().getFirstName());
+			lastNameColumn.setCellValueFactory(value -> value.getValue().getLastName());
 			addButton.disableProperty().bind(Bindings.isEmpty(employeeTable.getSelectionModel().getSelectedItems()));
 			errorEmployees.setVisible(false);
 		}
@@ -60,9 +58,9 @@ public class AddEmployeeController {
 
 		@FXML
 		private void handleAddAction(ActionEvent event) {
-	        	IEmployee etmp = employeeTable.getSelectionModel().getSelectedItem();
+			EmployeeForProjects etmp = employeeTable.getSelectionModel().getSelectedItem();
 	        	if (this.type == 0){
-	        		ObservableList<IEmployee> e = FXCollections.observableArrayList(etmp);
+	        		ObservableList<EmployeeForProjects> e = FXCollections.observableArrayList(etmp);
 	        		this.project.setEmployees(e);
 	        		this.type = 1;
 	        	}else{
@@ -92,7 +90,7 @@ public class AddEmployeeController {
 			return true;
 		}
 		
-		public void setData(ProjectMock p, ObservableList<IEmployee> e, int i) {
+		public void setData(ProjectMock p, ObservableList<EmployeeForProjects> e, int i) {
 			this.type = i;
 			this.employees = e;
 			this.project = p;

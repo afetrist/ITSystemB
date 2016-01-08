@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import employees.model.EmployeeForProjects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,7 +13,7 @@ import javafx.beans.property.StringProperty;
 
 public class TeamMock implements ITeam {
 	private String id;
-	private List<IEmployee> employees;
+	private List<EmployeeForProjects> employees;
 	private BigDecimal costOfTeam;
 	private String nameOfTeam;
 
@@ -25,7 +26,7 @@ public class TeamMock implements ITeam {
 		this.employees = new ArrayList<>();	
 	}
 
-	public TeamMock(String id, List<IEmployee> employees, BigDecimal costofteam, String nameOfTeam) {
+	public TeamMock(String id, List<EmployeeForProjects> employees, BigDecimal costofteam, String nameOfTeam) {
 		this.id = id;
 		this.employees = employees;
 		this.costOfTeam = costofteam;
@@ -38,7 +39,7 @@ public class TeamMock implements ITeam {
 	}
 
 	@Override
-	public List<IEmployee> getFullMemberList() {
+	public List<EmployeeForProjects> getFullMemberList() {
 		return employees;
 	}
 
@@ -47,11 +48,11 @@ public class TeamMock implements ITeam {
 		return id;
 	}
 
-	public List<IEmployee> getEmployees() {
+	public List<EmployeeForProjects> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(ArrayList<IEmployee> employees) {
+	public void setEmployees(ArrayList<EmployeeForProjects> employees) {
 		this.employees = employees;
 	}
 

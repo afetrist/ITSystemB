@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+import employees.model.EmployeeForProjects;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -37,7 +38,6 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import pl.edu.agh.iisg.to2.model.IEmployee;
 import pl.edu.agh.iisg.to2.model.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
 import pl.edu.agh.iisg.to2.model.ProjectMock;
@@ -71,7 +71,7 @@ public class EditController {
 	private DateTimeFormatter formatter;
 	
 	private ObservableList<ITeam> teams;
-	private ObservableList<IEmployee> employees;
+	private ObservableList<EmployeeForProjects> employees;
 	private ObservableList<ProjectMock> projects;
 	
 	private GeneratedData d;
@@ -141,7 +141,7 @@ public class EditController {
 
             AddEmployeeController controllerAddEmployee = fxmlLoaderAddEmployee.getController();
 			controllerAddEmployee.setDialogStage(stageAddEmployee);
-			controllerAddEmployee.setData(this.projectEdit, employees, 0);
+			controllerAddEmployee.setData(this.projectEdit, this.employees, 0);
 			
             stageAddEmployee.showAndWait();
             System.out.println("Refreshing...");
@@ -243,7 +243,7 @@ public class EditController {
 			
 		}
 		if (!(employeesTextField.getText().isEmpty())){
-			ObservableList<IEmployee> etmp = FXCollections.observableArrayList();
+			ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
 			etmp.addAll(FindEmployees.setEmployeesFromString(employeesTextField.getText(), employees));
 			projectEdit.setEmployees(etmp);
 		}
@@ -295,18 +295,20 @@ public class EditController {
 	@FXML
 	private void handleCalculateAction(ActionEvent event) {
 		BigDecimal budget = new BigDecimal(0);
+		int finalBudget = 0;
 		ObjectProperty<LocalDate> deadline =  new SimpleObjectProperty<LocalDate>(deadlineDatePicker.getValue());
 		ObjectProperty<LocalDate> startdate =  new SimpleObjectProperty<LocalDate>(startdateDatePicker.getValue());
 		long days = ChronoUnit.DAYS.between(deadline.getValue(), startdate.getValue());
 		int daysInt = toIntExact(days);
 		ObservableList<ITeam> ttmp = FXCollections.observableArrayList();
 		ttmp.addAll(FindTeams.setTeamsFromString(teamsTextField.getText(), teams));
-		ObservableList<IEmployee> etmp = FXCollections.observableArrayList();
+		ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
 		etmp.addAll(FindEmployees.setEmployeesFromString(employeesTextField.getText(), employees));
-		for (IEmployee e: etmp ) budget = budget.add(e.getSalary());
+		for (EmployeeForProjects e: etmp ) finalBudget = finalBudget +  e.getSalary().getValue();
 		for (ITeam t: ttmp) budget = budget.add(t.getCostOfTeam());
 		budget = budget.multiply(new BigDecimal(daysInt*8)); 
-		int tmp = budget.intValueExact();
+		finalBudget = finalBudget*daysInt*8;
+		int tmp = budget.intValueExact() + finalBudget;
 		calculatedCost.setText(Integer.toString(tmp));	
 	}
 

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+import employees.model.EmployeeForProjects;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -38,7 +39,6 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import pl.edu.agh.iisg.to2.model.IEmployee;
 import pl.edu.agh.iisg.to2.model.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
 import pl.edu.agh.iisg.to2.model.ProjectMock;
@@ -71,7 +71,7 @@ public class AddController {
 	private ProjectMock project;
 	private ObservableList<ProjectMock> projectsTmp;
 	private ObservableList<ITeam> teams;
-	private ObservableList<IEmployee> employees;
+	private ObservableList<EmployeeForProjects> employees;
 	
 	private GeneratedData d;
 	
@@ -124,12 +124,14 @@ public class AddController {
 		int daysInt = toIntExact(days);
 		ObservableList<ITeam> ttmp = FXCollections.observableArrayList();
 		ttmp.addAll(FindTeams.setTeamsFromString(teamsTextField.getText(), teams));
-		ObservableList<IEmployee> etmp = FXCollections.observableArrayList();
+		ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
 		etmp.addAll(FindEmployees.setEmployeesFromString(employeesTextField.getText(), employees));
-		for (IEmployee e: etmp ) budget = budget.add(e.getSalary());
+		int finalBudget = 0;
+		for (EmployeeForProjects e: etmp ) finalBudget = finalBudget +  e.getSalary().getValue();
 		for (ITeam t: ttmp) budget = budget.add(t.getCostOfTeam());
 		budget = budget.multiply(new BigDecimal(daysInt*8)); 
-		int tmp = budget.intValueExact();
+		finalBudget = finalBudget*daysInt*8;
+		int tmp = budget.intValueExact() + finalBudget;
 		calculatedCost.setText(Integer.toString(tmp));	
 	}
 
@@ -264,7 +266,7 @@ public class AddController {
 		}
 		if (!(employeesTextField.getText().isEmpty())){
 			System.out.println("chce ustawic pracownika:"+ employeesTextField.getText());
-			ObservableList<IEmployee> etmp = FXCollections.observableArrayList();
+			ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
 			etmp.addAll(FindEmployees.setEmployeesFromString(employeesTextField.getText(), employees));
 			project.setEmployees(etmp);
 		}

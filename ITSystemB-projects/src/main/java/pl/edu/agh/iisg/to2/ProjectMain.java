@@ -31,8 +31,7 @@ public class ProjectMain {
 	public void run() throws ClassNotFoundException, SQLException {
 		MySQLAccess dao = new MySQLAccess();
 		GeneratedData genData = new GeneratedData();
-		int num = (int) (Math.random()*(7));
-		for (int numTmp = 0; numTmp < num; numTmp = numTmp + 1){
+		for (int numTmp = 0; numTmp < 8; numTmp = numTmp + 1){
 			try {
 				dao.insertProject(DataGenerator.generateProjectWithMultipleTeamsEmployees(genData, 3, 3));
 			} catch (Exception e) {
