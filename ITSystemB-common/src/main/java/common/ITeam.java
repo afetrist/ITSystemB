@@ -1,9 +1,10 @@
-package pl.edu.agh.iisg.to2.model;
+package common;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-import employees.model.EmployeeForProjects;
+import common.EmployeeForProjects;
+import common.iEmployeeForProjects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 

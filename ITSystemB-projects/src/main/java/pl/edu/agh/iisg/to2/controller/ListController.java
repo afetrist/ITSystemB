@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import employees.model.EmployeeForProjects;
+import common.iEmployeeForProjects;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,8 +25,11 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import pl.edu.agh.iisg.to2.model.ITeam;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import common.ITeam;
+import pl.edu.agh.iisg.to2.common.ProjectMock;
+
+import pl.edu.agh.iisg.to2.FindEmployees;
+import pl.edu.agh.iisg.to2.FindTeams;
 
 public class ListController {
 
@@ -56,7 +59,7 @@ public class ListController {
 	private ProjectController projController; 
 	private ObservableList<ProjectMock> projects;
 	private ObservableList<ITeam> teams;
-	private ObservableList<EmployeeForProjects> employees;
+	private ObservableList<iEmployeeForProjects> employees;
 	private ObservableList<ProjectMock> projectsTmp;
 	
 	@FXML private Label errorId;
@@ -93,10 +96,10 @@ public class ListController {
 		String tmp = "";
 		if (!paramId.getText().isEmpty()) {
 			tmp = paramId.getText();
-			System.out.print("string id" + tmp);
+			//System.out.print("string id" + tmp);
 			for (int i = 0; i < tmpWithArguments.size(); i++){
 				if (!(tmp.equals(tmpWithArguments.get(i).getId()))){
-					System.out.print("string id2" + tmpWithArguments.get(i).getId()+"\n");
+					//System.out.print("string id2" + tmpWithArguments.get(i).getId()+"\n");
 					tmpWithArguments.remove(i) ;
 					i--;
 				}
@@ -104,10 +107,10 @@ public class ListController {
 		}
 		if (!paramDeadline.getText().isEmpty()){
 			tmp = paramDeadline.getText();
-			System.out.print("string deadline" + tmp);
+			//System.out.print("string deadline" + tmp);
 			for (int i = 0; i < tmpWithArguments.size(); i++){
 				if (!(tmp.equals(tmpWithArguments.get(i).getDeadline().getValue().toString()))){
-					System.out.print("string deadline2" + tmpWithArguments.get(i).getDeadline().getValue().toString()+"\n");
+					//System.out.print("string deadline2" + tmpWithArguments.get(i).getDeadline().getValue().toString()+"\n");
 					tmpWithArguments.remove(i) ;
 					i--;
 				}
@@ -115,10 +118,10 @@ public class ListController {
 		}
 		if (!paramStartDate.getText().isEmpty()){
 			tmp = paramStartDate.getText();
-			System.out.print("string startdate" + tmp);
+			//System.out.print("string startdate" + tmp);
 			for (int i = 0; i < tmpWithArguments.size(); i++){
 				if (!(tmp.equals(tmpWithArguments.get(i).getStartdate().getValue().toString()))){
-					System.out.print("string startdate2" + tmpWithArguments.get(i).getStartdate().getValue().toString()+"\n");
+					//System.out.print("string startdate2" + tmpWithArguments.get(i).getStartdate().getValue().toString()+"\n");
 					tmpWithArguments.remove(i);
 					i--;
 				}
@@ -126,13 +129,13 @@ public class ListController {
 		}
 		if (!paramEmployees.getText().isEmpty()){
 			tmp = paramEmployees.getText();
-			System.out.println("string Employees" + tmp);
+			//System.out.println("string Employees" + tmp);
 			for (int i = 0; i < tmpWithArguments.size(); i++){
-				ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
+				ObservableList<iEmployeeForProjects> etmp = FXCollections.observableArrayList();
 				etmp.addAll(tmpWithArguments.get(i).getEmployees());
 				String tmpEmployees = FindEmployees.getStringEmployees(etmp).getValue();
 				if (!(tmpEmployees.toLowerCase().contains(tmp.toLowerCase()))){
-					System.out.println("wartosc tmp: " + tmp+ " wartosc tmpEmployees: "+ tmpEmployees);
+					//System.out.println("wartosc tmp: " + tmp+ " wartosc tmpEmployees: "+ tmpEmployees);
 					tmpWithArguments.remove(i) ;
 					i--;
 				}
@@ -140,13 +143,13 @@ public class ListController {
 		}
 		if (!paramTeams.getText().isEmpty()){
 			tmp = paramTeams.getText();
-			System.out.print("string Teams" + tmp);
+			//System.out.print("string Teams" + tmp);
 			for (int i = 0; i < tmpWithArguments.size(); i++){
 				ObservableList<ITeam> ttmp = FXCollections.observableArrayList();
 				ttmp.addAll(tmpWithArguments.get(i).getTeams());
 				String tmpTeams = FindTeams.getStringTeams(ttmp).getValue();
 				if (!(tmpTeams.toLowerCase().contains(tmp.toLowerCase()))){
-					System.out.println("wartosc tmp: " + tmp+ " wartosc tmpEmployees: "+ tmpTeams);
+					//System.out.println("wartosc tmp: " + tmp+ " wartosc tmpEmployees: "+ tmpTeams);
 					tmpWithArguments.remove(i) ;
 					i--;
 				}
@@ -154,8 +157,8 @@ public class ListController {
 		}
 		if (!paramBudget.getText().isEmpty()){
 			tmp = paramBudget.getText();
-			System.out.print("string Budget:" + tmp +"\n");
-			System.out.println("size: "+tmpWithArguments.size());
+			//System.out.print("string Budget:" + tmp +"\n");
+			//System.out.println("size: "+tmpWithArguments.size());
 			for (int i = 0; i < tmpWithArguments.size(); i++){
 				if (!(tmp.equals(tmpWithArguments.get(i).getBudget().getValue().toString())) ){
 					//System.out.print("string budget2 to remove: " + tmpWithArguments.get(i).getBudget().getValue().toString()+"\n");
@@ -165,7 +168,7 @@ public class ListController {
 			}
 		}
 		for (ProjectMock tmpp: tmpWithArguments){
-			System.out.println("koncowe:"+ tmpp.getDeadline().getValue().toString()+ tmpp.getDeadline().getValue().toString());
+			//System.out.println("koncowe:"+ tmpp.getDeadline().getValue().toString()+ tmpp.getDeadline().getValue().toString());
 		}
 		if ((areParametersValid())&& (mode == 1)){
 			setData(tmpWithArguments, this.d, 1);
@@ -259,7 +262,7 @@ public class ListController {
 		}
 		this.projects = p;
 		for (ProjectMock ptmp: p){
-			System.out.println("deadline: "+ ptmp.getDeadline().getValue().toString()+ "startdate: "+ ptmp.getStartdate().getValue().toString() + "\n");
+			//System.out.println("deadline: "+ ptmp.getDeadline().getValue().toString()+ "startdate: "+ ptmp.getStartdate().getValue().toString() + "\n");
 		} 
 		this.teams = d.getTeams();
 		projectTable.getItems().setAll(p);

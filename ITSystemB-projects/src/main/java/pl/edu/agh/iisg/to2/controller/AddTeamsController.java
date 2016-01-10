@@ -13,8 +13,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pl.edu.agh.iisg.to2.model.ITeam;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import common.ITeam;
+import pl.edu.agh.iisg.to2.common.ProjectMock;
 
 public class AddTeamsController {
 

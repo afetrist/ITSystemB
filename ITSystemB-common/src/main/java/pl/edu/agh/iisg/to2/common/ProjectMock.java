@@ -1,4 +1,4 @@
-package pl.edu.agh.iisg.to2.model;
+package pl.edu.agh.iisg.to2.common;
 
 import static java.lang.Math.toIntExact;
 
@@ -15,8 +15,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import employees.model.EmployeeForProjects;
+import common.EmployeeForProjects;
+import common.ITeam;
+import common.iEmployeeForProjects;
 
 
 public class ProjectMock implements IProject {
@@ -25,14 +26,14 @@ public class ProjectMock implements IProject {
 	private ObjectProperty<LocalDate> deadline;
 	private ObjectProperty<LocalDate> startdate;
 	private ObservableList<ITeam> teams;
-	private ObservableList<EmployeeForProjects> employees;
+	private ObservableList<iEmployeeForProjects> employees;
 	private ObjectProperty<BigDecimal> budget;
 
 	public ProjectMock(){
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public ProjectMock(LocalDate deadline, LocalDate startdate, ITeam team, EmployeeForProjects employee, BigDecimal budget) {
+	public ProjectMock(LocalDate deadline, LocalDate startdate, ITeam team, iEmployeeForProjects employee, BigDecimal budget) {
 		this.deadline = new SimpleObjectProperty<>(deadline);
 		this.startdate = new SimpleObjectProperty<>(startdate);
 		this.id = UUID.randomUUID().toString();
@@ -43,7 +44,7 @@ public class ProjectMock implements IProject {
 		this.budget = new SimpleObjectProperty<BigDecimal>(budget);
 	}
 	 
-	public ProjectMock(LocalDate deadline, LocalDate startdate, List<ITeam> teams, List<EmployeeForProjects> employees, BigDecimal budget) {
+	public ProjectMock(LocalDate deadline, LocalDate startdate, List<ITeam> teams, List<iEmployeeForProjects> employees, BigDecimal budget) {
 		this.id = UUID.randomUUID().toString();
 		this.deadline = new SimpleObjectProperty<>(deadline);
 		this.startdate = new SimpleObjectProperty<>(startdate);
@@ -93,19 +94,19 @@ public class ProjectMock implements IProject {
 		this.teams.add(team);
 	}
 
-	public ObservableList<EmployeeForProjects> getEmployees() {
+	public ObservableList<iEmployeeForProjects> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(ObservableList<EmployeeForProjects> employees) {
+	public void setEmployees(ObservableList<iEmployeeForProjects> employees) {
 		this.employees = employees;
 	}
 	
-	public void addEmployees(ObservableList<EmployeeForProjects> employees) {
+	public void addEmployees(ObservableList<iEmployeeForProjects> employees) {
 		this.employees.addAll(employees);
 	}
 	
-	public void addEmployee(EmployeeForProjects employee) {
+	public void addEmployee(iEmployeeForProjects employee) {
 		this.employees.add(employee);
 	}
 	
@@ -132,7 +133,7 @@ public class ProjectMock implements IProject {
 		long days = ChronoUnit.DAYS.between(getDeadline().getValue(), getStartdate().getValue());
 		int daysInt = toIntExact(days);
 		int cost = 0;
-		for (EmployeeForProjects e: getEmployees() ) cost += e.getSalary().getValue().intValue();
+		for (iEmployeeForProjects e: getEmployees() ) cost += e.getSalary().getValue().intValue();
 		for (ITeam t: getTeams() ) cost += t.getCostOfTeam().intValueExact();
 		cost = cost*daysInt*8; 
 		
@@ -154,9 +155,9 @@ public class ProjectMock implements IProject {
 	public StringProperty getStringEmployeesForProject(){
 		StringProperty s = new SimpleStringProperty("");
 		if (getEmployees() != null){
-			for (EmployeeForProjects tmp: getEmployees() ){
+			for (iEmployeeForProjects tmp: getEmployees() ){
 				//System.out.println("ustawiam wartosc stringa Employee:"+ tmp.getId());
-				s.setValue(s.getValue() + tmp.getFirstName() + tmp.getLastName() + " ");
+				s.setValue(s.getValue() + tmp.getFirstName().getValue() + " " + tmp.getLastName().getValue() + " ");
 			}
 		}
 		else s.setValue("-1");

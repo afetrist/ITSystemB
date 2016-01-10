@@ -72,6 +72,11 @@
 		</dependency>
 		<dependency>
 			<groupId>pl.edu.agh</groupId>
+			<artifactId>ITSystemB-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>pl.edu.agh</groupId>
 			<artifactId>ITSystemB-projects</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

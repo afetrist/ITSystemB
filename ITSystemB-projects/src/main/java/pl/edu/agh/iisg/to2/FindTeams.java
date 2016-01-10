@@ -1,11 +1,11 @@
-package pl.edu.agh.iisg.to2.controller;
+package pl.edu.agh.iisg.to2;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import pl.edu.agh.iisg.to2.model.ITeam;
+import common.ITeam;
 
 public class FindTeams {
 

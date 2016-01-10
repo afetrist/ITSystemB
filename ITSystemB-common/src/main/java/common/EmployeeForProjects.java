@@ -1,4 +1,4 @@
-package employees.model;
+package common;
 
 
 import common.iEmployeeForProjects;
@@ -23,6 +23,9 @@ public class EmployeeForProjects implements iWorkerForProjects, iEmployeeForProj
     	this.position = position;
     	this.salary = salary;
     	this.pesel = pesel;
+    	
+    	// chwilowe na potrzeby projektu - IZABELLA
+    	this.id = id;
     }
 
 	/* (non-Javadoc)

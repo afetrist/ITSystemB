@@ -33,7 +33,7 @@
 		</dependency>
 		<dependency>
 			<groupId>pl.edu.agh</groupId>
-			<artifactId>ITSystemB-workers</artifactId>
+			<artifactId>ITSystemB-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

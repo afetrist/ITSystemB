@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.controller.ListController;
 import pl.edu.agh.iisg.to2.controller.ProjectController;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.common.ProjectMock;
 
 import static org.junit.Assert.*;
 

@@ -11,6 +11,7 @@
 	<modules>
 		<module>../ITSystemB-workers</module>
 		<module>../ITSystemB-projects</module>
+		<module>../ITSystemB-common</module>
 	</modules>
 
 	<properties>

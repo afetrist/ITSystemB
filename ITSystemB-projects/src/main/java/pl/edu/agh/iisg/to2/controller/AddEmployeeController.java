@@ -2,7 +2,7 @@ package pl.edu.agh.iisg.to2.controller;
 
 import java.math.BigDecimal;
 
-import employees.model.EmployeeForProjects;
+import common.iEmployeeForProjects;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,14 +15,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.common.ProjectMock;
 
 public class AddEmployeeController {
 
-		@FXML private TableView<EmployeeForProjects> employeeTable;
-		@FXML private TableColumn<EmployeeForProjects, String> idColumn;
-		@FXML private TableColumn<EmployeeForProjects, String> firstNameColumn;
-		@FXML private TableColumn<EmployeeForProjects, String> lastNameColumn;
+		@FXML private TableView<iEmployeeForProjects> employeeTable;
+		@FXML private TableColumn<iEmployeeForProjects, String> idColumn;
+		@FXML private TableColumn<iEmployeeForProjects, String> firstNameColumn;
+		@FXML private TableColumn<iEmployeeForProjects, String> lastNameColumn;
 		
 		@FXML private Button cancelButton;
 		@FXML private Button addButton;
@@ -35,7 +35,7 @@ public class AddEmployeeController {
 
 		private ProjectController projController; 
 		private ProjectMock project;
-		private ObservableList<EmployeeForProjects> employees;
+		private ObservableList<iEmployeeForProjects> employees;
 
 		@FXML private Label errorEmployees;
 		
@@ -58,9 +58,9 @@ public class AddEmployeeController {
 
 		@FXML
 		private void handleAddAction(ActionEvent event) {
-			EmployeeForProjects etmp = employeeTable.getSelectionModel().getSelectedItem();
+			iEmployeeForProjects etmp = employeeTable.getSelectionModel().getSelectedItem();
 	        	if (this.type == 0){
-	        		ObservableList<EmployeeForProjects> e = FXCollections.observableArrayList(etmp);
+	        		ObservableList<iEmployeeForProjects> e = FXCollections.observableArrayList(etmp);
 	        		this.project.setEmployees(e);
 	        		this.type = 1;
 	        	}else{
@@ -90,7 +90,7 @@ public class AddEmployeeController {
 			return true;
 		}
 		
-		public void setData(ProjectMock p, ObservableList<EmployeeForProjects> e, int i) {
+		public void setData(ProjectMock p, ObservableList<iEmployeeForProjects> e, int i) {
 			this.type = i;
 			this.employees = e;
 			this.project = p;

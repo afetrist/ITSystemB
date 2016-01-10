@@ -9,14 +9,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-import employees.model.EmployeeForProjects;
-import employees.model.Person;
+import common.EmployeeForProjects;
+import common.iEmployeeForProjects;
+import common.ITeam;
+import common.TeamMock;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pl.edu.agh.iisg.to2.common.ProjectMock;
 
 public class DataGenerator {
 	
@@ -136,10 +139,10 @@ public class DataGenerator {
 		
 		for (int i = 0; i < size && i < SIZE; i++) {
 			Random generator = new Random(); 
-			int i1 = generator.nextInt(24);
-			int i2 = generator.nextInt(24);
-			int i3 = generator.nextInt(240);
-			workers.add(new EmployeeForProjects( new SimpleLongProperty(Long.valueOf(i3)), new SimpleStringProperty(names[i1]), new SimpleStringProperty(surnames[i2]), new SimpleStringProperty(surnames[i2]) , new SimpleIntegerProperty(100) , new SimpleStringProperty(pesel[i1])));
+			int i1 = Math.abs(generator.nextInt())%20;
+			int i2 = Math.abs(generator.nextInt())%20;
+			int i3 = Math.abs(generator.nextInt())%20;
+			workers.add(new EmployeeForProjects( new SimpleLongProperty(Long.valueOf(i3)), new SimpleStringProperty(names[i1]), new SimpleStringProperty(surnames[i2]), new SimpleStringProperty(surnames[i2]) , new SimpleIntegerProperty(i1*i2*i3+100) , new SimpleStringProperty(pesel[i1])));
 		}
 		
 		return workers;
@@ -208,8 +211,8 @@ public class DataGenerator {
 		final int SIZE = 12;
 		for (int i = 0; i < size && i < SIZE; i++) {
 			Random generator = new Random(); 
-			int i2 = generator.nextInt(24);
-			teams.add(new TeamMock(id[i], generateEmployees(2), new BigDecimal(BigInteger.valueOf(100)), names[i2]));	
+			int i2 =  Math.abs(generator.nextInt())%20;
+			teams.add(new TeamMock(id[i2], generateEmployees(2), new BigDecimal(BigInteger.valueOf(i2*i2*i2)), names[i2]));	
 		}
 		return teams;
 	}
@@ -272,7 +275,7 @@ public class DataGenerator {
 		Random generator = new Random(); 
 		int i = generator.nextInt(24);
 		int i2 = generator.nextInt(24);
-		ITeam team = new TeamMock(id[i],generateEmployees(3), new BigDecimal(BigInteger.valueOf(100)), names[i2]);	
+		ITeam team = new TeamMock(id[i],generateEmployees(3), new BigDecimal(BigInteger.valueOf(i2+100)), names[i2]);	
 		
 		return team;
 	}
@@ -281,8 +284,8 @@ public class DataGenerator {
 	public static List<ProjectMock> generateProjects(List<EmployeeForProjects> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams, int numberOfProjects){
 		List<ProjectMock> projects = new ArrayList<>();
 		Random generator = new Random(); 
-		int iT = generator.nextInt(numberOfTeams);
-		int iE = generator.nextInt(numberOfEmployees);
+		int iT =  Math.abs(generator.nextInt(numberOfTeams));
+		int iE =  Math.abs(generator.nextInt(numberOfEmployees));
 		long minDay = LocalDate.of(1970, 1, 1).toEpochDay();
 		long maxDay = LocalDate.of(2015, 12, 31).toEpochDay();
 		long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
@@ -290,7 +293,7 @@ public class DataGenerator {
 		LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 		LocalDate randomDate2 = LocalDate.ofEpochDay(randomDay2);
 		for(int i = 0; i < numberOfProjects; i++) {
-			ProjectMock p = new ProjectMock(randomDate, randomDate2, teams.get(iT), employees.get(iE), new BigDecimal(BigInteger.valueOf(100)));
+			ProjectMock p = new ProjectMock(randomDate, randomDate2, teams.get(iT), employees.get(iE), new BigDecimal(BigInteger.valueOf(i + i*100)));
 			projects.add(p);
 			System.out.println();
 		}
@@ -299,15 +302,15 @@ public class DataGenerator {
 	
 	public static ProjectMock generateProject(List<EmployeeForProjects> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams){;
 		Random generator = new Random(); 
-		int iT = generator.nextInt(numberOfTeams);
-		int iE = generator.nextInt(numberOfEmployees);
+		int iT =  Math.abs(generator.nextInt(numberOfTeams));
+		int iE =  Math.abs(generator.nextInt(numberOfEmployees));
 		long minDay = LocalDate.of(1970, 1, 1).toEpochDay();
 		long maxDay = LocalDate.of(2015, 12, 31).toEpochDay();
 		long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 		long randomDay2 = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 		LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 		LocalDate randomDate2 = LocalDate.ofEpochDay(randomDay2);
-		ProjectMock p = new ProjectMock(randomDate, randomDate2, teams.get(iT), employees.get(iE), new BigDecimal(BigInteger.valueOf(100)));
+		ProjectMock p = new ProjectMock(randomDate, randomDate2, teams.get(iT), employees.get(iE), new BigDecimal(BigInteger.valueOf(iT + iE*100)));
 
 		return p;
 	}
@@ -321,29 +324,29 @@ public class DataGenerator {
 		long randomDay2 = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 		LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 		LocalDate randomDate2 = LocalDate.ofEpochDay(randomDay2);
-		ObservableList<EmployeeForProjects> employees = FXCollections.observableArrayList();
+		ObservableList<iEmployeeForProjects> employees = FXCollections.observableArrayList();
+		ObservableList<iEmployeeForProjects> employeesTmp = FXCollections.observableArrayList();
 		employees.addAll(d.getEmployees());
 		ObservableList<ITeam> teams = FXCollections.observableArrayList();
+		ObservableList<ITeam> teamsTmp = FXCollections.observableArrayList();
 		teams.addAll(d.getTeams());
 		Random rn = new Random();
-		int range = numberOfEmployees + 1;
-		int randomNum =  rn.nextInt(range) + 1;
-		if ((employees.size() - randomNum ) > 0 ){
-			for (int i = 0; i < employees.size() - randomNum; i = i + 1){
-				employees.remove(i);
-				i--;
-			}
+		int range = numberOfEmployees;
+		int randomNum =  Math.abs(rn.nextInt(range));
+		int i;
+		for (i = 0; i < numberOfEmployees; i = i + 1){
+			int index = (randomNum + i)%employees.size();
+			employeesTmp.add(employees.get(index));
 		}
-		int range2 = numberOfTeams + 1;
-		int randomNum2 =  rn.nextInt(range2) + 1;
-		if ((teams.size() - randomNum2) > 0 ){
-			for (int i = 0; i < teams.size() - randomNum2; i = i + 1){
-				teams.remove(i) ;
-				i--;
-			}
+		Random rn2 = new Random();
+		int range2 = numberOfTeams;
+		int randomNum2 =  Math.abs(rn2.nextInt(range2));
+		for (i = 0; i < numberOfTeams; i = i + 1){
+			int index = (randomNum2 + i)%teams.size();
+			teamsTmp.add(teams.get(index));
 		}
 		
-		ProjectMock p = new ProjectMock(randomDate, randomDate2, teams, employees, new BigDecimal(BigInteger.valueOf(100)));
+		ProjectMock p = new ProjectMock(randomDate, randomDate2, teams, employees, new BigDecimal(BigInteger.valueOf(range2 + range*100)));
 
 		return p;
 	}

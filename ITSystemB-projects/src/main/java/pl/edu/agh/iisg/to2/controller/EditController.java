@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import employees.model.EmployeeForProjects;
+import common.iEmployeeForProjects;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -38,10 +38,12 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import pl.edu.agh.iisg.to2.model.ITeam;
+import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.common.ProjectMock;
 import static java.lang.Math.toIntExact;
+import pl.edu.agh.iisg.to2.FindEmployees;
+import pl.edu.agh.iisg.to2.FindTeams;
 
 
 public class EditController {
@@ -71,7 +73,7 @@ public class EditController {
 	private DateTimeFormatter formatter;
 	
 	private ObservableList<ITeam> teams;
-	private ObservableList<EmployeeForProjects> employees;
+	private ObservableList<iEmployeeForProjects> employees;
 	private ObservableList<ProjectMock> projects;
 	
 	private GeneratedData d;
@@ -243,8 +245,8 @@ public class EditController {
 			
 		}
 		if (!(employeesTextField.getText().isEmpty())){
-			ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
-			etmp.addAll(FindEmployees.setEmployeesFromString(employeesTextField.getText(), employees));
+			ObservableList<iEmployeeForProjects> etmp = FXCollections.observableArrayList();
+			etmp.addAll(FindEmployees.setEmployeesFromStringNameLastName(employeesTextField.getText(), employees));
 			projectEdit.setEmployees(etmp);
 		}
 		
@@ -302,9 +304,9 @@ public class EditController {
 		int daysInt = toIntExact(days);
 		ObservableList<ITeam> ttmp = FXCollections.observableArrayList();
 		ttmp.addAll(FindTeams.setTeamsFromString(teamsTextField.getText(), teams));
-		ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
-		etmp.addAll(FindEmployees.setEmployeesFromString(employeesTextField.getText(), employees));
-		for (EmployeeForProjects e: etmp ) finalBudget = finalBudget +  e.getSalary().getValue();
+		ObservableList<iEmployeeForProjects> etmp = FXCollections.observableArrayList();
+		etmp.addAll(FindEmployees.setEmployeesFromStringNameLastName(employeesTextField.getText(), employees));
+		for (iEmployeeForProjects e: etmp ) finalBudget = finalBudget +  e.getSalary().getValue();
 		for (ITeam t: ttmp) budget = budget.add(t.getCostOfTeam());
 		budget = budget.multiply(new BigDecimal(daysInt*8)); 
 		finalBudget = finalBudget*daysInt*8;

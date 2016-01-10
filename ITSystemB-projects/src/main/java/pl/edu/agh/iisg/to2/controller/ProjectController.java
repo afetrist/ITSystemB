@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import employees.model.EmployeeForProjects;
+import common.iEmployeeForProjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.ProjectMain;
-import pl.edu.agh.iisg.to2.model.ITeam;
+import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.common.ProjectMock;
 import pl.edu.agh.iisg.to2.model.DataGenerator;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
 
@@ -23,7 +23,7 @@ public class ProjectController {
 
 	private ObservableList<ProjectMock> projects;
 	private ObservableList<ITeam> teams;
-	private ObservableList<EmployeeForProjects> employees;
+	private ObservableList<iEmployeeForProjects> employees;
 	private Stage primaryStage;
 	private GeneratedData data;
 	private BorderPane rootLayout;

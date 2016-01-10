@@ -1,15 +1,17 @@
-package pl.edu.agh.iisg.to2.model;
+package pl.edu.agh.iisg.to2.common;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import employees.model.EmployeeForProjects;
+import common.EmployeeForProjects;
+import common.ITeam;
+import common.iEmployeeForProjects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 
 public interface IProject {
-
+	
 	public String getId();
 	public void setId(String id);
 	
@@ -22,8 +24,8 @@ public interface IProject {
 	public ObservableList<ITeam> getTeams();
 	public void setTeams(ObservableList<ITeam> teams);
 	
-	public ObservableList<EmployeeForProjects> getEmployees();
-	public void setEmployees(ObservableList<EmployeeForProjects> employees);
+	public ObservableList<iEmployeeForProjects> getEmployees();
+	public void setEmployees(ObservableList<iEmployeeForProjects> employees);
 	
 	public ObjectProperty<BigDecimal> getBudget();
 	public void setBudget(ObjectProperty<BigDecimal> budget);

@@ -16,11 +16,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import employees.model.EmployeeForProjects;
+import common.EmployeeForProjects;
+import common.iEmployeeForProjects;
+import common.ITeam;
+import common.TeamMock;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
+
+import pl.edu.agh.iisg.to2.common.ProjectMock;
+import pl.edu.agh.iisg.to2.common.IProject;
 
 public class MySQLAccess {
      
@@ -40,6 +46,13 @@ public void connect() throws ClassNotFoundException, SQLException {
 	   connect = DriverManager
 	       .getConnection("jdbc:mysql://" + host + "/TOProjects?"
 	           + "user=" + user + "&password=" + passwd );
+	   //statement = connect.createStatement();
+	   // Result set get the result of the SQL query
+	   //statement.executeQuery("TRUNCATE TABLE IProject_Team");
+	   //statement.executeQuery("TRUNCATE TABLE IProject_Employee");
+	   //statement.executeQuery("TRUNCATE TABLE IProject");
+	   //statement.executeQuery("DELETE from IProject");
+	   
 }
 
 public void readDataBase() throws Exception {
@@ -48,7 +61,6 @@ public void readDataBase() throws Exception {
 
    // Statements allow to issue SQL queries to the database
    statement = connect.createStatement();
-   // Result set get the result of the SQL query
    resultSet = statement
        .executeQuery("select * from IProject");
    writeResultSet(resultSet);
@@ -91,22 +103,24 @@ public ArrayList<ITeam> fetchTeamsObjectsForProject(String projectId) throws SQL
 	ArrayList<ITeam> teamsList = new ArrayList<ITeam>();
 	while (teamSet.next()) {
 		String teamId = teamSet.getString("teamId");
-		System.out.println("Fetch team with id " + teamId);
+		//System.out.println("Fetch team with id " + teamId);
 		
 		// ===========================================================//
 		// 				TODO: Fetch from other modules
 		// TeamMock team = fetch team with id = teamId;
 		//
+		
 		// ===========================================================//
 		
 		TeamMock team = new TeamMock(teamId);
+		teamsList.addAll(DataGenerator.generateTeams(8));
 		teamsList.add(team);
 	}	
 	
 	return teamsList;
 }
 
-public ArrayList<EmployeeForProjects> fetchEmployeeObjectsForProject(String projectId) throws SQLException, ClassNotFoundException
+public List<iEmployeeForProjects> fetchEmployeeObjectsForProject(String projectId) throws SQLException, ClassNotFoundException
 {
 	Statement fetchStatement = null;
 	ResultSet employeeSet = null;
@@ -115,10 +129,10 @@ public ArrayList<EmployeeForProjects> fetchEmployeeObjectsForProject(String proj
 	employeeSet = fetchStatement.executeQuery("SELECT * FROM IProject_Employee WHERE projectId="
 			+ "\"" + projectId + "\"");
 
-	ArrayList<EmployeeForProjects> employeeList = new ArrayList<EmployeeForProjects>();
+	List<iEmployeeForProjects> employeeList = new ArrayList<iEmployeeForProjects>();
 	while (employeeSet.next()) {
 		String employeeId = employeeSet.getString("employeeId");
-		System.out.println("Fetch emplotee with id " + employeeId);
+		//System.out.println("Fetch emplotee with id " + employeeId);
 		
 		// ===========================================================//
 		// 				TODO: Fetch from other modules
@@ -126,7 +140,8 @@ public ArrayList<EmployeeForProjects> fetchEmployeeObjectsForProject(String proj
 		//
 		// ===========================================================//
 		
-		EmployeeForProjects employee = new EmployeeForProjects( new SimpleLongProperty(Long.valueOf(1232)), new SimpleStringProperty("stas"), new SimpleStringProperty("test1"), new SimpleStringProperty("szef") , new SimpleIntegerProperty(100) , new SimpleStringProperty("223113"));
+		iEmployeeForProjects employee = new EmployeeForProjects( new SimpleLongProperty(Long.valueOf(1232)), new SimpleStringProperty("stas"), new SimpleStringProperty("test1"), new SimpleStringProperty("szef") , new SimpleIntegerProperty(100) , new SimpleStringProperty("223113"));
+		employeeList.addAll(DataGenerator.generateEmployees(15));
 		employeeList.add(employee);
 	}	
 	
@@ -152,8 +167,8 @@ public List<ProjectMock> fetchAllProjects() throws SQLException, ClassNotFoundEx
 			   LocalDate deadline = Instant.ofEpochMilli(deadDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 
 			   
-			   ArrayList<ITeam> teams = this.fetchTeamsObjectsForProject(projectId);
-			   ArrayList<EmployeeForProjects> employees = this.fetchEmployeeObjectsForProject(projectId);
+			   List<ITeam> teams = this.fetchTeamsObjectsForProject(projectId);
+			   List<iEmployeeForProjects> employees = this.fetchEmployeeObjectsForProject(projectId);
 			   BigDecimal budgetDecimal = new BigDecimal(BigInteger.valueOf(budget));
 
 			   ProjectMock p = new ProjectMock(deadline, startDate, teams, employees, budgetDecimal);
@@ -184,13 +199,13 @@ public void insertProject(IProject project) throws SQLException, ClassNotFoundEx
 	preparedStatement.executeUpdate();
 	
 	// Add relationships with Employee
-	for (EmployeeForProjects employee: project.getEmployees()){
-		System.out.println("Add relationship...");
+	for (iEmployeeForProjects employee: project.getEmployees()){
+		//System.out.println("Add relationship...");
 		this.insertEmployeeRelationship(project, employee);
 	} 
 	// Add relationships with Team
 	for (ITeam team: project.getTeams()){
-		System.out.println("Add team relationship...");
+		//System.out.println("Add team relationship...");
 		this.insertTeamRelationship(project, team);
 	} 
 	
@@ -205,7 +220,7 @@ private void insertTeamRelationship(IProject project, ITeam team) throws SQLExce
 	String command = "INSERT INTO TOProjects.IProject_Team (teamId, projectId) VALUES "
 			+ "(\"" + team.getId() + "\", "
 			+ "\"" + project.getId() + "\")";
-	System.out.println(command);
+	//System.out.println(command);
 	PreparedStatement preparedStatement = connect.prepareStatement(command);
 	preparedStatement.executeUpdate();
 }
@@ -214,17 +229,17 @@ private void removeAllTeamRelationships(IProject project) throws SQLException, C
 {
 	String command = "DELETE FROM TOProjects.IProject_Team WHERE projectId="
 			+ "\"" + project.getId() + "\"";
-	System.out.println(command);
+	//System.out.println(command);
 	PreparedStatement preparedStatement = connect.prepareStatement(command);
 	preparedStatement.executeUpdate();
 }
 
-private void insertEmployeeRelationship(IProject project, EmployeeForProjects employee) throws SQLException, ClassNotFoundException
+private void insertEmployeeRelationship(IProject project, iEmployeeForProjects employee) throws SQLException, ClassNotFoundException
 {
 	String command = "INSERT INTO TOProjects.IProject_Employee (employeeId, projectId) VALUES "
 			+ "(\"" + employee.getId() + "\", "
 			+ "\"" + project.getId() + "\")";
-	System.out.println(command);
+	//System.out.println(command);
 	PreparedStatement preparedStatement = connect.prepareStatement(command);
 	preparedStatement.executeUpdate();
 }
@@ -233,7 +248,7 @@ private void removeAllEmployeeRelationships(IProject project) throws SQLExceptio
 {
 	String command = "DELETE FROM TOProjects.IProject_Employee WHERE projectId="
 			+ "\"" + project.getId() + "\"";
-	System.out.println(command);
+	//System.out.println(command);
 	PreparedStatement preparedStatement = connect.prepareStatement(command);
 	preparedStatement.executeUpdate();
 }
@@ -249,7 +264,7 @@ public void updateProject(IProject project) throws SQLException, ClassNotFoundEx
 			+ "budget=" + project.getBudget().getValue()
 			+ " WHERE projectId=" + "\"" + project.getId() + "\";";
 	
-	System.out.println(command);
+	//System.out.println(command);
 	
 	PreparedStatement preparedStatement = connect.prepareStatement(command);
 	preparedStatement.executeUpdate();
@@ -260,7 +275,7 @@ public void updateProject(IProject project) throws SQLException, ClassNotFoundEx
 	this.removeAllTeamRelationships(project);
 	
 	// and recreate them once again
-	for (EmployeeForProjects employee: project.getEmployees()){
+	for (iEmployeeForProjects employee: project.getEmployees()){
 		this.insertEmployeeRelationship(project, employee);
 	}
 	// and recreate them once again
@@ -275,11 +290,11 @@ private void writeMetaData(ResultSet resultSet) throws SQLException {
  //   Now get some metadata from the database
  // Result set get the result of the SQL query
  
- System.out.println("The columns in the table are: ");
+ //System.out.println("The columns in the table are: ");
  
- System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
+ //System.out.println("Table: " + resultSet.getMetaData().getTableName(1));
  for  (int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++){
-   System.out.println("Column " +i  + " "+ resultSet.getMetaData().getColumnName(i));
+   //System.out.println("Column " +i  + " "+ resultSet.getMetaData().getColumnName(i));
  }
 }
 
@@ -294,9 +309,9 @@ private void writeResultSet(ResultSet resultSet) throws SQLException {
    Date deadline = resultSet.getDate("deadline");
    int budget = resultSet.getInt("budget");
    
-   System.out.println("Start Date: " + startDate);
-   System.out.println("Deadline: " + deadline);
-   System.out.println("Budget: " + budget);
+   //System.out.println("Start Date: " + startDate);
+   //System.out.println("Deadline: " + deadline);
+   //System.out.println("Budget: " + budget);
  }
 }
 

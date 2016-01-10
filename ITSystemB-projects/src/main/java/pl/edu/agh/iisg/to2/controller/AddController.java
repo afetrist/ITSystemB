@@ -10,7 +10,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
-import employees.model.EmployeeForProjects;
+
+import common.iEmployeeForProjects; 
+import common.EmployeeForProjects;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -39,9 +41,12 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import pl.edu.agh.iisg.to2.model.ITeam;
+import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.common.ProjectMock; 
+import pl.edu.agh.iisg.to2.common.IProject; 
+import pl.edu.agh.iisg.to2.FindEmployees;
+import pl.edu.agh.iisg.to2.FindTeams;
 
 public class AddController {
 
@@ -71,7 +76,7 @@ public class AddController {
 	private ProjectMock project;
 	private ObservableList<ProjectMock> projectsTmp;
 	private ObservableList<ITeam> teams;
-	private ObservableList<EmployeeForProjects> employees;
+	private ObservableList<iEmployeeForProjects> employees;
 	
 	private GeneratedData d;
 	
@@ -124,14 +129,14 @@ public class AddController {
 		int daysInt = toIntExact(days);
 		ObservableList<ITeam> ttmp = FXCollections.observableArrayList();
 		ttmp.addAll(FindTeams.setTeamsFromString(teamsTextField.getText(), teams));
-		ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
-		etmp.addAll(FindEmployees.setEmployeesFromString(employeesTextField.getText(), employees));
+		ObservableList<iEmployeeForProjects> etmp = FXCollections.observableArrayList();
+		etmp.addAll(FindEmployees.setEmployeesFromStringNameLastName(employeesTextField.getText(), employees));
 		int finalBudget = 0;
-		for (EmployeeForProjects e: etmp ) finalBudget = finalBudget +  e.getSalary().getValue();
+		for (iEmployeeForProjects e: etmp ) finalBudget = finalBudget +  e.getSalary().getValue();
 		for (ITeam t: ttmp) budget = budget.add(t.getCostOfTeam());
 		budget = budget.multiply(new BigDecimal(daysInt*8)); 
 		finalBudget = finalBudget*daysInt*8;
-		int tmp = budget.intValueExact() + finalBudget;
+		int tmp = Math.abs(budget.intValueExact() + finalBudget);
 		calculatedCost.setText(Integer.toString(tmp));	
 	}
 
@@ -158,7 +163,7 @@ public class AddController {
 			controllerAddEmployee.setData(this.project, employees, 0);
 			
             stageAddEmployee.showAndWait();
-            System.out.println("Refreshing...");
+            //System.out.println("Refreshing...");
     		String s2 = project.getStringEmployeesForProject().getValue();
     		employeesTextField.setText(s2);
             //projectTable.refresh(); 
@@ -266,8 +271,8 @@ public class AddController {
 		}
 		if (!(employeesTextField.getText().isEmpty())){
 			System.out.println("chce ustawic pracownika:"+ employeesTextField.getText());
-			ObservableList<EmployeeForProjects> etmp = FXCollections.observableArrayList();
-			etmp.addAll(FindEmployees.setEmployeesFromString(employeesTextField.getText(), employees));
+			ObservableList<iEmployeeForProjects> etmp = FXCollections.observableArrayList();
+			etmp.addAll(FindEmployees.setEmployeesFromStringNameLastName(employeesTextField.getText(), employees));
 			project.setEmployees(etmp);
 		}
 		
