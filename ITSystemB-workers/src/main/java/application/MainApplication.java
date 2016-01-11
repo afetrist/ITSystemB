@@ -12,9 +12,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.Tab;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import pl.edu.agh.iisg.to2.ProjectMain;
+import pl.edu.agh.to2.controller.TeamsMainController;
 
 public class MainApplication extends Application {
 	
@@ -32,9 +34,10 @@ public class MainApplication extends Application {
 		
 		//UWAGA: obecnie jest mock na Wasze pany, możecie je zastąpić z pozimomu fxmla lub javy
 		employeesRoot = new EmployeesRoot(primaryStage, rootLayout);
+
 		showPersonOverview();
-		addProject();
-		
+//		addProject();
+		showTeams();
 	}
 	
 	public void initRootLayout(){
@@ -93,6 +96,22 @@ public class MainApplication extends Application {
 		tab.setText("Projects");
 		tab.setContent(projectMain.getPane());
 		paneLayout.getTabs().add(tab);		
+	}
+	
+	public void showTeams() {
+		try {
+			FXMLLoader loader = new FXMLLoader(TeamsMainController.class.getResource("../view/TeamsMainView.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			
+			Tab tab = new Tab();
+			tab.setText("Teams");
+			tab.setContent(personOverview);
+			paneLayout.getTabs().add(tab);
+			
+		} catch (Exception e) {
+			System.err.println("Could not load .fxml file");
+			e.printStackTrace();
+		}
 	}
 	
 	public Stage getPrimaryStage() {
