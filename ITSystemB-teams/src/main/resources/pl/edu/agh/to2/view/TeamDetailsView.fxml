@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<GridPane hgap="5.0" maxWidth="-Infinity" minHeight="-Infinity"
+	minWidth="-Infinity" prefHeight="701.0" prefWidth="600.0"
+	xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="pl.edu.agh.to2.controller.TeamDetailsController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="139.0"
+			minWidth="10.0" prefWidth="58.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="478.0"
+			minWidth="10.0" prefWidth="390.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0"
+			minWidth="10.0" prefWidth="63.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0"
+			minWidth="10.0" prefWidth="56.0" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints maxHeight="129.0" minHeight="10.0"
+			prefHeight="29.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="129.0" minHeight="10.0"
+			prefHeight="34.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="129.0" minHeight="0.0"
+			prefHeight="35.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="267.0" minHeight="2.0"
+			prefHeight="37.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="346.0" minHeight="10.0"
+			prefHeight="179.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="346.0" minHeight="10.0"
+			prefHeight="40.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="470.0" minHeight="10.0"
+			prefHeight="350.0" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<Label text="Name:" />
+		<Label text="Leader:" GridPane.rowIndex="1" />
+		<Label text="Created:" GridPane.rowIndex="2" />
+		<TableView fx:id="membersTable" prefHeight="251.0"
+			prefWidth="427.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+			<columns>
+				<TableColumn fx:id="firstNameColumn" minWidth="150.0"
+					prefWidth="150.0" text="First Name" />
+				<TableColumn fx:id="lastNameColumn" minWidth="150.0"
+					prefWidth="150.0" text="Last Name" />
+				<TableColumn fx:id="postColumn" minWidth="75.0"
+					prefWidth="75.0" text="Role" />
+			</columns>
+		</TableView>
+		<Label text="Members:" GridPane.columnSpan="2"
+			GridPane.rowIndex="3" />
+		<Label text="Team Hierarchy:" GridPane.columnSpan="2"
+			GridPane.rowIndex="5" />
+		<TreeView fx:id="teamTreeView" prefHeight="391.0" prefWidth="457.0"
+			GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
+		<Label fx:id="name" text="Label" GridPane.columnIndex="1" />
+		<Label fx:id="leader" text="Label" GridPane.columnIndex="1"
+			GridPane.rowIndex="1" />
+		<Label fx:id="created" text="Label" GridPane.columnIndex="1"
+			GridPane.rowIndex="2" />
+		<TilePane alignment="CENTER" orientation="VERTICAL"
+			prefHeight="200.0" prefWidth="200.0" vgap="5.0" GridPane.columnIndex="2"
+			GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="2">
+			<children>
+				<Button fx:id="Edit" alignment="CENTER" minWidth="70.0"
+					mnemonicParsing="false" onAction="#handleEditAction" prefHeight="26.0"
+					text="Edit" />
+				<Button fx:id="Delete" minWidth="70.0" mnemonicParsing="false"
+					onAction="#handleDeleteAction" prefHeight="26.0" text="Delete" />
+			</children>
+			<opaqueInsets>
+				<Insets />
+			</opaqueInsets>
+		</TilePane>
+	</children>
+	<padding>
+		<Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+	</padding>
+</GridPane>
