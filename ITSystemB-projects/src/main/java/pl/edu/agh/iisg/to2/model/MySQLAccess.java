@@ -25,8 +25,8 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
-import pl.edu.agh.iisg.to2.common.ProjectMock;
-import pl.edu.agh.iisg.to2.common.IProject;
+import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.IProject;
 
 public class MySQLAccess {
      

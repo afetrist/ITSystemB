@@ -19,7 +19,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pl.edu.agh.iisg.to2.common.ProjectMock;
+import pl.edu.agh.iisg.to2.model.ProjectMock;
 
 public class DataGenerator {
 	

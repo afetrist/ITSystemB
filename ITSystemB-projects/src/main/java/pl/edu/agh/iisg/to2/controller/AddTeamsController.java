@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import common.ITeam;
-import pl.edu.agh.iisg.to2.common.ProjectMock;
+import pl.edu.agh.iisg.to2.model.ProjectMock;
 
 public class AddTeamsController {
 

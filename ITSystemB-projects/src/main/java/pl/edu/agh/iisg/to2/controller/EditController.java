@@ -40,7 +40,7 @@ import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
 import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.common.ProjectMock;
+import pl.edu.agh.iisg.to2.model.ProjectMock;
 import static java.lang.Math.toIntExact;
 import pl.edu.agh.iisg.to2.FindEmployees;
 import pl.edu.agh.iisg.to2.FindTeams;

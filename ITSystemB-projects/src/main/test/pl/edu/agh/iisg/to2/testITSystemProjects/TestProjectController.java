@@ -2,7 +2,7 @@ package pl.edu.agh.iisg.to2.testITSystemProjects;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.controller.ProjectController;
-import pl.edu.agh.iisg.to2.common.ProjectMock;
+import pl.edu.agh.iisg.to2.model.ProjectMock;
 
 import static org.junit.Assert.*;
 

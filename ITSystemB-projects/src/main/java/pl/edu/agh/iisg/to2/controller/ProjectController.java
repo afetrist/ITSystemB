@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.common.ProjectMock;
+import pl.edu.agh.iisg.to2.model.ProjectMock;
 import pl.edu.agh.iisg.to2.model.DataGenerator;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
 

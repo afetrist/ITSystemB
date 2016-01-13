@@ -43,8 +43,8 @@ import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
 import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.common.ProjectMock; 
-import pl.edu.agh.iisg.to2.common.IProject; 
+import pl.edu.agh.iisg.to2.model.ProjectMock; 
+import pl.edu.agh.iisg.to2.model.IProject; 
 import pl.edu.agh.iisg.to2.FindEmployees;
 import pl.edu.agh.iisg.to2.FindTeams;
 
