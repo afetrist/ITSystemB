@@ -13,8 +13,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import common.ITeam;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
+import pl.edu.agh.to2.common.ITeam;
 
 public class AddTeamsController {
 
@@ -30,7 +30,7 @@ public class AddTeamsController {
 		@FXML private TextField teamsTextField;
 		
 		private ProjectController projController; 
-		private ProjectMock project;
+		private Project project;
 		private ObservableList<ITeam> teams;
 		
 		private Stage dialogStage;
@@ -89,7 +89,7 @@ public class AddTeamsController {
 			return true;
 		}
 		
-		public void setData(ProjectMock p, ObservableList<ITeam> t, int i) {
+		public void setData(Project p, ObservableList<ITeam> t, int i) {
 			this.teams = t;
 			this.project = p;
 			this.type = i;

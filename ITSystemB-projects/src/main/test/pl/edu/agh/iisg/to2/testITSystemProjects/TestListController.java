@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.controller.ListController;
 import pl.edu.agh.iisg.to2.controller.ProjectController;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
 
 import static org.junit.Assert.*;
 
@@ -41,8 +41,8 @@ public class TestListController extends Application {
     	ProjectController projectController = new ProjectController(this.primaryStage);
     	projectController.initRootLayout();
     	ListController controller = projectController.getListController();
-    	ObservableList<ProjectMock> projects = FXCollections.observableArrayList();
-    	projects.add( new ProjectMock());
+    	ObservableList<Project> projects = FXCollections.observableArrayList();
+    	projects.add( new Project());
 		controller.setDataToTest(projects);
 		controller.setProjController(projectController);
     	assertFalse(controller.getProjects().isEmpty());

@@ -10,7 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.controller.ProjectController;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
 import pl.edu.agh.iisg.to2.model.DataGenerator;
  
@@ -29,21 +29,20 @@ public class ProjectMain {
 	}*/
 
 	public void run() throws ClassNotFoundException, SQLException {
-		MySQLAccess dao = new MySQLAccess();
-		GeneratedData genData = new GeneratedData();
-		for (int numTmp = 0; numTmp < 5; numTmp = numTmp + 1){
+		//MySQLAccess dao = new MySQLAccess();
+		/*GeneratedData genData = new GeneratedData();
+		for (int numTmp = 0; numTmp < 2; numTmp = numTmp + 1){
 			try {
 				dao.insertProject(DataGenerator.generateProjectWithMultipleTeamsEmployees(genData, 3, 3));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		
-	    try {
+		}*/
+	    /*try {
 			dao.readDataBase();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 	    
 		this.presenter = new ProjectController();
 		this.presenter.initRootLayout();

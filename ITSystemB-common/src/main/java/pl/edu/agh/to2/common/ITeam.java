@@ -1,4 +1,4 @@
-package common;
+package pl.edu.agh.to2.common;
 
 import java.math.BigDecimal;
 import java.util.List;

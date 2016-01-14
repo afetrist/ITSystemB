@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pl.edu.agh.iisg.to2.model.IProject;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
 
@@ -21,7 +21,7 @@ public class FindEmployees {
 		ObservableList<IProject> projects = FXCollections.observableArrayList();
 		MySQLAccess sqlAccess = new MySQLAccess();
 	    try {
-	    	List<ProjectMock> fetched = sqlAccess.fetchAllProjects();
+	    	List<Project> fetched = sqlAccess.fetchAllProjects();
 	    	projects.addAll(fetched);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,7 +34,7 @@ public class FindEmployees {
 		ObservableList<IProject> projectsFinal = FXCollections.observableArrayList();
 		MySQLAccess sqlAccess = new MySQLAccess();
 	    try {
-	    	List<ProjectMock> fetched = sqlAccess.fetchAllProjects();
+	    	List<Project> fetched = sqlAccess.fetchAllProjects();
 	    	projects.addAll(fetched);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,7 +57,7 @@ public class FindEmployees {
 		ObservableList<IProject> projectsFinal = FXCollections.observableArrayList();
 		MySQLAccess sqlAccess = new MySQLAccess();
 	    try {
-	    	List<ProjectMock> fetched = sqlAccess.fetchAllProjects();
+	    	List<Project> fetched = sqlAccess.fetchAllProjects();
 	    	projects.addAll(fetched);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,7 +80,7 @@ public class FindEmployees {
 		ObservableList<IProject> projectsFinal = FXCollections.observableArrayList();
 		MySQLAccess sqlAccess = new MySQLAccess();
 	    try {
-	    	List<ProjectMock> fetched = sqlAccess.fetchAllProjects();
+	    	List<Project> fetched = sqlAccess.fetchAllProjects();
 	    	projects.addAll(fetched);
 		} catch (Exception e) {
 			e.printStackTrace();

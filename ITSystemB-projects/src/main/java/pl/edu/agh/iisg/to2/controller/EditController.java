@@ -38,9 +38,10 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
+import pl.edu.agh.to2.common.ITeam;
+
 import static java.lang.Math.toIntExact;
 import pl.edu.agh.iisg.to2.FindEmployees;
 import pl.edu.agh.iisg.to2.FindTeams;
@@ -67,14 +68,14 @@ public class EditController {
 	@FXML private Label errorBudget;
 
 	private Stage dialogStage;
-	private ProjectMock projectEdit;
+	private Project projectEdit;
 
 	private LocalDateStringConverter converter;
 	private DateTimeFormatter formatter;
 	
 	private ObservableList<ITeam> teams;
 	private ObservableList<iEmployeeForProjects> employees;
-	private ObservableList<ProjectMock> projects;
+	private ObservableList<Project> projects;
 	
 	private GeneratedData d;
 	
@@ -102,7 +103,7 @@ public class EditController {
      }
 
 
-	public void setData(ObservableList<ProjectMock> projects, ProjectMock project, GeneratedData d) {
+	public void setData(ObservableList<Project> projects, Project project, GeneratedData d) {
 		this.projectEdit = project;
 		this.d = d;
 		this.teams = d.getTeams();
@@ -273,11 +274,11 @@ public class EditController {
 	}
 
 
-	public ProjectMock getProjectEdit() {
+	public Project getProjectEdit() {
 		return projectEdit;
 	}
 
-	public void setProjectEdit(ProjectMock projectEdit) {
+	public void setProjectEdit(Project projectEdit) {
 		this.projectEdit = projectEdit;
 	}
 	
@@ -297,7 +298,6 @@ public class EditController {
 	@FXML
 	private void handleCalculateAction(ActionEvent event) {
 		BigDecimal budget = new BigDecimal(0);
-		int finalBudget = 0;
 		ObjectProperty<LocalDate> deadline =  new SimpleObjectProperty<LocalDate>(deadlineDatePicker.getValue());
 		ObjectProperty<LocalDate> startdate =  new SimpleObjectProperty<LocalDate>(startdateDatePicker.getValue());
 		long days = ChronoUnit.DAYS.between(deadline.getValue(), startdate.getValue());
@@ -306,12 +306,13 @@ public class EditController {
 		ttmp.addAll(FindTeams.setTeamsFromString(teamsTextField.getText(), teams));
 		ObservableList<iEmployeeForProjects> etmp = FXCollections.observableArrayList();
 		etmp.addAll(FindEmployees.setEmployeesFromStringNameLastName(employeesTextField.getText(), employees));
+		int finalBudget = 0;
 		for (iEmployeeForProjects e: etmp ) finalBudget = finalBudget +  e.getSalary().getValue();
 		for (ITeam t: ttmp) budget = budget.add(t.getCostOfTeam());
 		budget = budget.multiply(new BigDecimal(daysInt*8)); 
 		finalBudget = finalBudget*daysInt*8;
-		int tmp = budget.intValueExact() + finalBudget;
-		calculatedCost.setText(Integer.toString(tmp));	
+		int tmp = Math.abs(budget.intValueExact() + finalBudget);
+		calculatedCost.setText(Integer.toString(tmp));		
 	}
 
 }

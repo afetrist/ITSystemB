@@ -3,9 +3,7 @@ package pl.edu.agh.iisg.to2.common;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import common.iEmployeeForProjects;
 import javafx.beans.property.ObjectProperty;
-import javafx.collections.ObservableList;
 
 public interface IProjectForEmployees {
 

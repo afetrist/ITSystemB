@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import common.EmployeeForProjects;
-import common.ITeam;
 import common.iEmployeeForProjects;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.common.ITeam;
 
 public interface IProject {
 	

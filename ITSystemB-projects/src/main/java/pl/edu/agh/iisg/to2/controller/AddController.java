@@ -41,9 +41,9 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.model.ProjectMock; 
+import pl.edu.agh.iisg.to2.model.Project;
+import pl.edu.agh.to2.common.ITeam;
 import pl.edu.agh.iisg.to2.model.IProject; 
 import pl.edu.agh.iisg.to2.FindEmployees;
 import pl.edu.agh.iisg.to2.FindTeams;
@@ -73,8 +73,8 @@ public class AddController {
 	@FXML private Label errorBudget;
 
 	private Stage dialogStage;
-	private ProjectMock project;
-	private ObservableList<ProjectMock> projectsTmp;
+	private Project project;
+	private ObservableList<Project> projectsTmp;
 	private ObservableList<ITeam> teams;
 	private ObservableList<iEmployeeForProjects> employees;
 	
@@ -82,7 +82,7 @@ public class AddController {
 	
 	@FXML
 	public void initialize() {
-		this.project = new ProjectMock();
+		this.project = new Project();
 		errorDate.setVisible(false);
 		errorTeams.setVisible(false);
 		errorEmployees.setVisible(false);
@@ -101,7 +101,7 @@ public class AddController {
 		this.dialogStage = dialogStage;
 	}
 
-	public void setData(ObservableList<ProjectMock> projects, GeneratedData d) {
+	public void setData(ObservableList<Project> projects, GeneratedData d) {
 		this.d = d;
 		this.projectsTmp = projects;
 		this.teams = d.getTeams();

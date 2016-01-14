@@ -36,7 +36,7 @@ public class MainApplication extends Application {
 		employeesRoot = new EmployeesRoot(primaryStage, rootLayout);
 
 		showPersonOverview();
-//		addProject();
+		addProject();
 		showTeams();
 	}
 	

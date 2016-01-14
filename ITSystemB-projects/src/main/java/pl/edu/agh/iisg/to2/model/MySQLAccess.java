@@ -18,14 +18,14 @@ import java.util.List;
 
 import common.EmployeeForProjects;
 import common.iEmployeeForProjects;
-import common.ITeam;
-import common.TeamMock;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
+import pl.edu.agh.to2.common.ITeam;
+import pl.edu.agh.to2.common.TeamMock;
 import pl.edu.agh.iisg.to2.model.IProject;
 
 public class MySQLAccess {
@@ -39,14 +39,13 @@ final private String user = "root";
 final private String passwd = "";
 
 public void connect() throws ClassNotFoundException, SQLException {
-	// This will load the MySQL driver, each DB has its own driver
+	
 	   Class.forName("com.mysql.jdbc.Driver");
 	   
-	   // Setup the connection with the DB
 	   connect = DriverManager
 	       .getConnection("jdbc:mysql://" + host + "/TOProjects?"
 	           + "user=" + user + "&password=" + passwd );
-	   //statement = connect.createStatement();
+	   statement = connect.createStatement();
 	   // Result set get the result of the SQL query
 	   //statement.executeQuery("TRUNCATE TABLE IProject_Team");
 	   //statement.executeQuery("TRUNCATE TABLE IProject_Employee");
@@ -65,24 +64,7 @@ public void readDataBase() throws Exception {
        .executeQuery("select * from IProject");
    writeResultSet(resultSet);
 
-//   // PreparedStatements can use variables and are more efficient
-
-//
-//   preparedStatement = connect
-//       .prepareStatement("SELECT myuser, webpage, datum, summary, COMMENTS from feedback.comments");
-//   resultSet = preparedStatement.executeQuery();
-//   writeResultSet(resultSet);
-//
-//   // Remove again the insert comment
-//   preparedStatement = connect
-//   .prepareStatement("delete from feedback.comments where myuser= ? ; ");
-//   preparedStatement.setString(1, "Test");
-//   preparedStatement.executeUpdate();
-//   
-//   resultSet = statement
-//   .executeQuery("select * from feedback.comments");
-//   writeMetaData(resultSet);
-//   
+   
  } catch (Exception e) {
    throw e;
  } finally {
@@ -113,7 +95,7 @@ public ArrayList<ITeam> fetchTeamsObjectsForProject(String projectId) throws SQL
 		// ===========================================================//
 		
 		TeamMock team = new TeamMock(teamId);
-		teamsList.addAll(DataGenerator.generateTeams(8));
+		teamsList.addAll(DataGenerator.generateTeams(5));
 		teamsList.add(team);
 	}	
 	
@@ -141,16 +123,16 @@ public List<iEmployeeForProjects> fetchEmployeeObjectsForProject(String projectI
 		// ===========================================================//
 		
 		iEmployeeForProjects employee = new EmployeeForProjects( new SimpleLongProperty(Long.valueOf(1232)), new SimpleStringProperty("stas"), new SimpleStringProperty("test1"), new SimpleStringProperty("szef") , new SimpleIntegerProperty(100) , new SimpleStringProperty("223113"));
-		employeeList.addAll(DataGenerator.generateEmployees(15));
+		employeeList.addAll(DataGenerator.generateEmployees(10));
 		employeeList.add(employee);
 	}	
 	
 	return employeeList;
 }
 
-public List<ProjectMock> fetchAllProjects() throws SQLException, ClassNotFoundException
+public List<Project> fetchAllProjects() throws SQLException, ClassNotFoundException
 {
-	ArrayList<ProjectMock> projectsList = new ArrayList<ProjectMock>();
+	ArrayList<Project> projectsList = new ArrayList<Project>();
 	
 	 try {
 		   connect();
@@ -171,7 +153,7 @@ public List<ProjectMock> fetchAllProjects() throws SQLException, ClassNotFoundEx
 			   List<iEmployeeForProjects> employees = this.fetchEmployeeObjectsForProject(projectId);
 			   BigDecimal budgetDecimal = new BigDecimal(BigInteger.valueOf(budget));
 
-			   ProjectMock p = new ProjectMock(deadline, startDate, teams, employees, budgetDecimal);
+			   Project p = new Project(deadline, startDate, teams, employees, budgetDecimal);
 			   p.setId(projectId);
 			  
 			   projectsList.add(p);

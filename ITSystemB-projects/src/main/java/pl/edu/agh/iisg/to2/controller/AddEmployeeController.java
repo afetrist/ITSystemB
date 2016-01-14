@@ -15,7 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
 
 public class AddEmployeeController {
 
@@ -34,7 +34,7 @@ public class AddEmployeeController {
 		private int type;
 
 		private ProjectController projController; 
-		private ProjectMock project;
+		private Project project;
 		private ObservableList<iEmployeeForProjects> employees;
 
 		@FXML private Label errorEmployees;
@@ -90,7 +90,7 @@ public class AddEmployeeController {
 			return true;
 		}
 		
-		public void setData(ProjectMock p, ObservableList<iEmployeeForProjects> e, int i) {
+		public void setData(Project p, ObservableList<iEmployeeForProjects> e, int i) {
 			this.type = i;
 			this.employees = e;
 			this.project = p;

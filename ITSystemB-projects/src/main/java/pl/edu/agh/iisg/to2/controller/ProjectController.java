@@ -13,15 +13,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.ProjectMain;
-import common.ITeam;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
+import pl.edu.agh.to2.common.ITeam;
 import pl.edu.agh.iisg.to2.model.DataGenerator;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
 
 public class ProjectController {
 
-	private ObservableList<ProjectMock> projects;
+	private ObservableList<Project> projects;
 	private ObservableList<ITeam> teams;
 	private ObservableList<iEmployeeForProjects> employees;
 	private Stage primaryStage;
@@ -40,34 +40,45 @@ public class ProjectController {
 		return rootLayout;
 	}
 	
-	public void addProjects(ProjectMock p){
+	public void addProjects(Project p){
 		this.projects.add(p);
 	}
 	
-	public ObservableList<ProjectMock> getProjects(){
+	public ObservableList<Project> getProjects(){
 		return projects;
 	}
 
-	public void setProjects(ObservableList<ProjectMock> p){
+	public void setProjects(ObservableList<Project> p){
 		this.projects = p;
 	}
 	
+	public void setData(ObservableList<Project> p, GeneratedData d, int i) {
+		this.data = d;
+		this.employees = d.getEmployees();
+		this.teams = d.getTeams();
+		
+	}
+	
 	public void generateMockData() {
-		//int numberOfEmployees = 12;
-		//int numberOFTeams = 5;
-		this.data = new GeneratedData();
+		MySQLAccess sqlAccess = new MySQLAccess();
+		GeneratedData genData = new GeneratedData();
+		this.data = genData;
 		this.employees = FXCollections.observableArrayList(data.getEmployees());
 		this.teams = FXCollections.observableArrayList(data.getTeams());
-		this.projects = FXCollections.observableArrayList();
-		int i = 0;
-//		for (i = 0; i < 15; i = i + 1){
-//			this.projects.add(DataGenerator.generateProjectWithMultipleTeamsEmployees(data, numberOfEmployees ,numberOFTeams));
-//		}
-		
-		MySQLAccess sqlAccess = new MySQLAccess();
-	    try {
-	    	List<ProjectMock> fetched = sqlAccess.fetchAllProjects();
-	    	this.projects.addAll(fetched);
+		for (int numTmp = 0; numTmp < 10; numTmp = numTmp + 1){
+			try {
+				sqlAccess.insertProject(DataGenerator.generateProjectWithMultipleTeamsEmployees(genData, 3, 3));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			ObservableList<Project> tmp = FXCollections.observableArrayList();
+	    	List<Project> fetched = sqlAccess.fetchAllProjects();
+	    	for (int i = 0; i < fetched.size(); i = i + 1){
+	    		tmp.add(fetched.get(i));
+	    	}
+	    	this.projects = FXCollections.observableArrayList(tmp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,9 +96,6 @@ public class ProjectController {
 		try {
 			//this.primaryStage.setTitle("Project");
 
-			/*for (ProjectMock tmp: this.getProjects()){
-				System.out.println(tmp.getId());
-			}*/
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ProjectMain.class.getResource("view/ListView.fxml"));
 			this.rootLayout = (BorderPane) loader.load();

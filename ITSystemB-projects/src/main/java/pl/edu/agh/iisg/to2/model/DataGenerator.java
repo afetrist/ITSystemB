@@ -11,15 +11,15 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import common.EmployeeForProjects;
 import common.iEmployeeForProjects;
-import common.ITeam;
-import common.TeamMock;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
+import pl.edu.agh.to2.common.ITeam;
+import pl.edu.agh.to2.common.TeamMock;
 
 public class DataGenerator {
 	
@@ -281,8 +281,8 @@ public class DataGenerator {
 	}
 	
 	
-	public static List<ProjectMock> generateProjects(List<EmployeeForProjects> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams, int numberOfProjects){
-		List<ProjectMock> projects = new ArrayList<>();
+	public static List<Project> generateProjects(List<EmployeeForProjects> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams, int numberOfProjects){
+		List<Project> projects = new ArrayList<>();
 		Random generator = new Random(); 
 		int iT =  Math.abs(generator.nextInt(numberOfTeams));
 		int iE =  Math.abs(generator.nextInt(numberOfEmployees));
@@ -292,15 +292,15 @@ public class DataGenerator {
 		long randomDay2 = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 		LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 		LocalDate randomDate2 = LocalDate.ofEpochDay(randomDay2);
-		for(int i = 0; i < numberOfProjects; i++) {
-			ProjectMock p = new ProjectMock(randomDate, randomDate2, teams.get(iT), employees.get(iE), new BigDecimal(BigInteger.valueOf(i + i*100)));
+		for(int i = 0; i < 3; i++) {
+			Project p = new Project(randomDate, randomDate2, teams.get(iT), employees.get(iE), new BigDecimal(BigInteger.valueOf(i + i*100)));
 			projects.add(p);
 			System.out.println();
 		}
 		return projects;
 	}
 	
-	public static ProjectMock generateProject(List<EmployeeForProjects> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams){;
+	public static Project generateProject(List<EmployeeForProjects> employees, List<ITeam> teams, int numberOfEmployees, int numberOfTeams){;
 		Random generator = new Random(); 
 		int iT =  Math.abs(generator.nextInt(numberOfTeams));
 		int iE =  Math.abs(generator.nextInt(numberOfEmployees));
@@ -310,14 +310,14 @@ public class DataGenerator {
 		long randomDay2 = ThreadLocalRandom.current().nextLong(minDay, maxDay);
 		LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
 		LocalDate randomDate2 = LocalDate.ofEpochDay(randomDay2);
-		ProjectMock p = new ProjectMock(randomDate, randomDate2, teams.get(iT), employees.get(iE), new BigDecimal(BigInteger.valueOf(iT + iE*100)));
+		Project p = new Project(randomDate, randomDate2, teams.get(iT), employees.get(iE), new BigDecimal(BigInteger.valueOf(iT + iE*100)));
 
 		return p;
 	}
 	
 	
 	
-	public static ProjectMock generateProjectWithMultipleTeamsEmployees(GeneratedData d, int numberOfEmployees, int numberOfTeams){
+	public static Project generateProjectWithMultipleTeamsEmployees(GeneratedData d, int numberOfEmployees, int numberOfTeams){
 		long minDay = LocalDate.of(1970, 1, 1).toEpochDay();
 		long maxDay = LocalDate.of(2015, 12, 31).toEpochDay();
 		long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
@@ -346,7 +346,7 @@ public class DataGenerator {
 			teamsTmp.add(teams.get(index));
 		}
 		
-		ProjectMock p = new ProjectMock(randomDate, randomDate2, teams, employees, new BigDecimal(BigInteger.valueOf(range2 + range*100)));
+		Project p = new Project(randomDate, randomDate2, teams, employees, new BigDecimal(BigInteger.valueOf(range2 + range*100)));
 
 		return p;
 	}

@@ -2,7 +2,7 @@ package pl.edu.agh.iisg.to2.testITSystemProjects;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import pl.edu.agh.iisg.to2.controller.ProjectController;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
+import pl.edu.agh.iisg.to2.model.Project;
 
 import static org.junit.Assert.*;
 
@@ -37,7 +37,7 @@ public class TestProjectController extends Application {
     public void testProjectController() {
     	ProjectController projectController = new ProjectController(this.primaryStage);
     	projectController.initRootLayout();
-    	projectController.addProjects(new ProjectMock());
+    	projectController.addProjects(new Project());
     	assertFalse(projectController.getProjects().isEmpty());
     }
 }

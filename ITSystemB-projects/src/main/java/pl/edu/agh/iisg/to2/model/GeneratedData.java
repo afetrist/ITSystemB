@@ -1,17 +1,17 @@
 package pl.edu.agh.iisg.to2.model;
 
 import common.iEmployeeForProjects;
-import common.ITeam;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.common.ITeam;
 
 public class GeneratedData {
 	private ObservableList<iEmployeeForProjects> employees;
 	private ObservableList<ITeam> teams;
 	
 	public GeneratedData(){
-		this.employees = FXCollections.observableArrayList(DataGenerator.generateEmployees(30));
-		this.teams = FXCollections.observableArrayList(DataGenerator.generateTeams(15));
+		this.employees = FXCollections.observableArrayList(DataGenerator.generateEmployees(10));
+		this.teams = FXCollections.observableArrayList(DataGenerator.generateTeams(5));
 	}
 	
 	

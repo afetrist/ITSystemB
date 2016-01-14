@@ -25,21 +25,20 @@ import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
 import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
-import common.ITeam;
-import pl.edu.agh.iisg.to2.model.ProjectMock;
-
+import pl.edu.agh.iisg.to2.model.Project;
+import pl.edu.agh.to2.common.ITeam;
 import pl.edu.agh.iisg.to2.FindEmployees;
 import pl.edu.agh.iisg.to2.FindTeams;
 
 public class ListController {
 
 
-	@FXML private TableView<ProjectMock> projectTable;
-	@FXML private TableColumn<ProjectMock, LocalDate> deadlineColumn;
-	@FXML private TableColumn<ProjectMock, LocalDate> startDateColumn;
-	@FXML private TableColumn<ProjectMock, String> employeesColumn;
-	@FXML private TableColumn<ProjectMock, String> teamsColumn;
-	@FXML private TableColumn<ProjectMock, BigDecimal> budgetColumn;
+	@FXML private TableView<Project> projectTable;
+	@FXML private TableColumn<Project, LocalDate> deadlineColumn;
+	@FXML private TableColumn<Project, LocalDate> startDateColumn;
+	@FXML private TableColumn<Project, String> employeesColumn;
+	@FXML private TableColumn<Project, String> teamsColumn;
+	@FXML private TableColumn<Project, BigDecimal> budgetColumn;
 	
 	@FXML private Button deleteButton;
 	@FXML private Button cancelButton;
@@ -57,10 +56,10 @@ public class ListController {
 
 	private LocalDateStringConverter converter;
 	private ProjectController projController; 
-	private ObservableList<ProjectMock> projects;
+	private ObservableList<Project> projects;
 	private ObservableList<ITeam> teams;
 	private ObservableList<iEmployeeForProjects> employees;
-	private ObservableList<ProjectMock> projectsTmp;
+	private ObservableList<Project> projectsTmp;
 	
 	@FXML private Label errorId;
 	@FXML private Label errorDate;
@@ -91,7 +90,7 @@ public class ListController {
 	}
 	
 	private void initializeWithArguments(int mode) {
-		ObservableList<ProjectMock> tmpWithArguments = FXCollections.observableArrayList();
+		ObservableList<Project> tmpWithArguments = FXCollections.observableArrayList();
 		tmpWithArguments.addAll(projects);
 		String tmp = "";
 		if (!paramId.getText().isEmpty()) {
@@ -167,7 +166,7 @@ public class ListController {
 				} 
 			}
 		}
-		for (ProjectMock tmpp: tmpWithArguments){
+		for (Project tmpp: tmpWithArguments){
 			//System.out.println("koncowe:"+ tmpp.getDeadline().getValue().toString()+ tmpp.getDeadline().getValue().toString());
 		}
 		if ((areParametersValid())&& (mode == 1)){
@@ -235,7 +234,7 @@ public class ListController {
             
             EditController controllerEdit = fxmlLoaderEdit.getController();
             controllerEdit.setDialogStage(stageEdit);
-            ProjectMock editproject = projectTable.getSelectionModel().getSelectedItem();
+            Project editproject = projectTable.getSelectionModel().getSelectedItem();
             projectTable.getItems().removeAll(projectTable.getSelectionModel().getSelectedItems());
     		controllerEdit.setData(projectTable.getItems(), editproject, this.d);
             
@@ -249,19 +248,19 @@ public class ListController {
         
 	}
 	
-	public void setDataToTest(ObservableList<ProjectMock> p) {
+	public void setDataToTest(ObservableList<Project> p) {
 		this.projects = p;
 		projectTable.getItems().setAll(p);
 	}
 	
-	public void setData(ObservableList<ProjectMock> p, GeneratedData d, int i) {
+	public void setData(ObservableList<Project> p, GeneratedData d, int i) {
 		this.d = d;
 		this.employees = d.getEmployees();
 		if (i == 0){
 			this.projectsTmp = p;
 		}
 		this.projects = p;
-		for (ProjectMock ptmp: p){
+		for (Project ptmp: p){
 			//System.out.println("deadline: "+ ptmp.getDeadline().getValue().toString()+ "startdate: "+ ptmp.getStartdate().getValue().toString() + "\n");
 		} 
 		this.teams = d.getTeams();
@@ -300,7 +299,7 @@ public class ListController {
 		this.converter = converter;
 	}
 	
-	public ObservableList<ProjectMock> getProjects(){
+	public ObservableList<Project> getProjects(){
 		return this.projects;
 	}
 

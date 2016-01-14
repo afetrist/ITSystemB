@@ -15,12 +15,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pl.edu.agh.to2.common.ITeam;
 import common.EmployeeForProjects;
-import common.ITeam;
 import common.iEmployeeForProjects;
 
 
-public class ProjectMock implements IProject {
+public class Project implements IProject {
 
 	private String id;
 	private ObjectProperty<LocalDate> deadline;
@@ -29,11 +29,11 @@ public class ProjectMock implements IProject {
 	private ObservableList<iEmployeeForProjects> employees;
 	private ObjectProperty<BigDecimal> budget;
 
-	public ProjectMock(){
+	public Project(){
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public ProjectMock(LocalDate deadline, LocalDate startdate, ITeam team, iEmployeeForProjects employee, BigDecimal budget) {
+	public Project(LocalDate deadline, LocalDate startdate, ITeam team, iEmployeeForProjects employee, BigDecimal budget) {
 		this.deadline = new SimpleObjectProperty<>(deadline);
 		this.startdate = new SimpleObjectProperty<>(startdate);
 		this.id = UUID.randomUUID().toString();
@@ -44,7 +44,7 @@ public class ProjectMock implements IProject {
 		this.budget = new SimpleObjectProperty<BigDecimal>(budget);
 	}
 	 
-	public ProjectMock(LocalDate deadline, LocalDate startdate, List<ITeam> teams, List<iEmployeeForProjects> employees, BigDecimal budget) {
+	public Project(LocalDate deadline, LocalDate startdate, List<ITeam> teams, List<iEmployeeForProjects> employees, BigDecimal budget) {
 		this.id = UUID.randomUUID().toString();
 		this.deadline = new SimpleObjectProperty<>(deadline);
 		this.startdate = new SimpleObjectProperty<>(startdate);
@@ -119,7 +119,7 @@ public class ProjectMock implements IProject {
 	}
 	
 
-	public void printProject(ProjectMock p){
+	public void printProject(Project p){
 		System.out.println(p.getId());
 	}
 	
