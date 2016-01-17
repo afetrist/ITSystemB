@@ -36,7 +36,10 @@ public class MainApplication extends Application {
 		employeesRoot = new EmployeesRoot(primaryStage, rootLayout);
 
 		showPersonOverview();
-		addProject();
+		
+		// mam jakis dziwny problem z baza dlatego zwalnia wiec zakomentowalam wam, zeby nie dzialalo wolno
+		//addProject();
+		
 		showTeams();
 	}
 	
