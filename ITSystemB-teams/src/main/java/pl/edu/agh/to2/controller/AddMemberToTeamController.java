@@ -11,9 +11,10 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import pl.edu.agh.to2.Member;
-import pl.edu.agh.to2.Team;
-import pl.edu.agh.to2.model.IWorker;
+import pl.edu.agh.to2.common.IWorker;
+import pl.edu.agh.to2.db.DbHandle;
+import pl.edu.agh.to2.model.Member;
+import pl.edu.agh.to2.model.Team;
 import pl.edu.agh.to2.model.generator.BetterDataGenerator;
 
 public class AddMemberToTeamController extends ModifyMemberInTeamController {
@@ -24,11 +25,13 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 			if (supervisor.get() != null) {
 				observableWorkers.add(supervisor.get().getWorker());
 			}
-			supervisor.set(new Member(selectedWorker));
+			supervisor.set(new Member(-1, selectedWorker, roleTextField.getText(), null));
 		} else if (selectedMember != null) {
 			observableMembers.add(selectedMember);
 		} else {
-			observableMembers.add(new Member(selectedWorker));
+			
+				observableMembers.add(new Member(-1, selectedWorker, roleTextField.getText(), null));
+			
 		}
 		observableWorkers.remove(selectedWorker);
 
@@ -37,7 +40,7 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 	}
 
 	private void initControls(ObservableList<Member> observableMembers, ObservableList<IWorker> observableWorkers,
-			ObjectProperty<Member> supervisor, IWorker worker) {
+			ObjectProperty<Member> supervisor, IWorker worker, DbHandle dbHandle) {
 
 		this.observableMembers = observableMembers;
 		this.observableWorkers = observableWorkers;
@@ -46,24 +49,25 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 
 		memberLabel.setText("Worker: " + selectedWorker.getFullName());
 
-		// TODO: query to db for supervisedTeam info
-		selectedMember = null;
-		List<Team> teamsFromDB = BetterDataGenerator.generateTeams();
-		for (Team t : teamsFromDB) {
-			if (t.getSupervisor() != null && t.getSupervisor().getWorker().equals(selectedWorker)) {
-				selectedMember = t.getSupervisor();
-				break;
-			}
-		}
-
+		selectedMember = dbHandle.loadMemberByWorker(worker);
 		if (selectedMember != null && selectedMember.isSupervisor()) {
 			supervisorCheckBox.setSelected(false);
 			supervisorCheckBox.setDisable(true);
 		}
+
+		supervisorCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) {
+				roleTextField.setText("Lider zespołu");
+				roleTextField.setEditable(false);
+			} else {
+				roleTextField.setText("");
+				roleTextField.setEditable(true);
+			}
+		});
 	}
 
 	public static void init(ObservableList<Member> observableMembers, ObservableList<IWorker> observableWorkers,
-			ObjectProperty<Member> supervisor, IWorker selectedWorker) {
+			ObjectProperty<Member> supervisor, IWorker selectedWorker, DbHandle dbHandle) {
 		try {
 			FXMLLoader loader = new FXMLLoader(
 					ModifyMemberInTeamController.class.getResource("../view/AddMemberToTeamView.fxml"));
@@ -75,7 +79,7 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 			stage.setScene(new Scene(root));
 			stage.sizeToScene();
 			AddMemberToTeamController controller = loader.getController();
-			controller.initControls(observableMembers, observableWorkers, supervisor, selectedWorker);
+			controller.initControls(observableMembers, observableWorkers, supervisor, selectedWorker, dbHandle);
 			stage.show();
 
 		} catch (IOException e) {

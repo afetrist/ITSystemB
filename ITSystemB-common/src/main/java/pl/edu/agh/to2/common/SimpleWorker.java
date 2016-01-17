@@ -1,4 +1,4 @@
-package pl.edu.agh.to2.model;
+package pl.edu.agh.to2.common;
 
 import java.math.BigDecimal;
 

@@ -12,8 +12,8 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import pl.edu.agh.to2.Member;
-import pl.edu.agh.to2.model.IWorker;
+import pl.edu.agh.to2.common.IWorker;
+import pl.edu.agh.to2.model.Member;
 
 public class EditMemberInTeamController extends ModifyMemberInTeamController {
 	@FXML
@@ -37,7 +37,7 @@ public class EditMemberInTeamController extends ModifyMemberInTeamController {
 			supervisor.set(selectedMember);
 			observableMembers.remove(selectedMember);
 		} 
-		
+		selectedMember.setRole(roleTextField.getText());
 		Stage stage = (Stage) acceptButton.getScene().getWindow();
 		stage.close();
 	}
@@ -51,11 +51,22 @@ public class EditMemberInTeamController extends ModifyMemberInTeamController {
 		this.supervisor = supervisor;
 
 		memberLabel.setText("Worker: " + selectedMember.getWorker().getFullName());
-
+		roleTextField.setText(selectedMember.getRole());
+		
 		if (selectedMember.isSupervisor()) {
 			supervisorCheckBox.setSelected(false);
 			supervisorCheckBox.setDisable(true);
 		}
+		
+		supervisorCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+			if (newValue) {
+				roleTextField.setText("Lider zespołu");
+				roleTextField.setEditable(false);
+			} else {
+				roleTextField.setText("");
+				roleTextField.setEditable(true);
+			}
+		});
 	}
 	
 	public static void init(ObservableList<Member> observableMembers, ObservableList<IWorker> observableWorkers,

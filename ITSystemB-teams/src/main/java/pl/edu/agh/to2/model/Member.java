@@ -1,6 +1,6 @@
-package pl.edu.agh.to2;
+package pl.edu.agh.to2.model;
 
-import pl.edu.agh.to2.model.IWorker;
+import pl.edu.agh.to2.common.IWorker;
 
 public class Member {
 	private long id;
@@ -39,6 +39,14 @@ public class Member {
 	
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public IWorker getWorker() {

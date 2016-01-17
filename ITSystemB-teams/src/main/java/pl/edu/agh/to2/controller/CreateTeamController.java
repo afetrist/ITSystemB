@@ -26,10 +26,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import pl.edu.agh.to2.Member;
-import pl.edu.agh.to2.Team;
+import pl.edu.agh.to2.common.IWorker;
 import pl.edu.agh.to2.db.DbHandle;
-import pl.edu.agh.to2.model.IWorker;
+import pl.edu.agh.to2.model.Member;
+import pl.edu.agh.to2.model.Team;
 
 public class CreateTeamController {
 	private DbHandle dbHandle;
@@ -212,7 +212,7 @@ public class CreateTeamController {
 			if (newValue != null && newValue.length() == 3 && oldValue.length() < newValue.length()) {
 				System.out.println("<main_contr>: query to db for '" + newValue + "'");
 				observableTeams.clear();
-				observableTeams.addAll(dbHandle.loadTeams());
+				observableTeams.addAll(dbHandle.loadTeams(newValue));
 			}
 			
 			filteredTeams.setPredicate(team -> {
@@ -275,7 +275,7 @@ public class CreateTeamController {
 					Team rowTeam = row.getItem();
 
 					AddMemberToTeamController.init(observableMembers, observableWorkers, supervisor,
-							rowTeam.getSupervisor().getWorker());
+							rowTeam.getSupervisor().getWorker(), dbHandle);
 				}
 			});
 			return row;
@@ -303,7 +303,7 @@ public class CreateTeamController {
 					// TODO: query to database
 					IWorker worker = row.getItem();
 
-					AddMemberToTeamController.init(observableMembers, observableWorkers, supervisor, worker);
+					AddMemberToTeamController.init(observableMembers, observableWorkers, supervisor, worker, dbHandle);
 				}
 			});
 			return row;
