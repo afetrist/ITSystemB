@@ -1,7 +1,5 @@
 package pl.edu.agh.to2.controller;
 
-import java.sql.SQLException;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -18,10 +16,9 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pl.edu.agh.to2.Member;
-import pl.edu.agh.to2.Team;
 import pl.edu.agh.to2.db.DbHandle;
-import pl.edu.agh.to2.model.generator.BetterDataGenerator;
+import pl.edu.agh.to2.model.Member;
+import pl.edu.agh.to2.model.Team;
 
 public class TeamsMainController {
 
@@ -65,7 +62,7 @@ public class TeamsMainController {
 			if (newValue != null && newValue.length() == 3 && oldValue.length() < newValue.length()) {
 				System.out.println("<main_contr>: query to db for '" + newValue + "'");
 				observableTeams.clear();
-				observableTeams.addAll(dbHandle.loadTeams());
+				observableTeams.addAll(dbHandle.loadTeams(newValue));
 			}
 			
 			filteredTeams.setPredicate(team -> {
@@ -74,9 +71,10 @@ public class TeamsMainController {
 				}
 
 				String lowerCaseFilter = newValue.toLowerCase();
-				if (lowerCaseFilter.equals("all")) {
-					return true;
-				} else if (team.getTeamName().toLowerCase().contains(lowerCaseFilter)) {
+//				if (lowerCaseFilter.equals("all")) {
+//					return true;
+//				} else 
+				if (team.getTeamName().toLowerCase().contains(lowerCaseFilter)) {
 					return true;
 				} else if (team.getSupervisor() != null
 						&& team.getSupervisor().toString().toLowerCase().contains(lowerCaseFilter)) {

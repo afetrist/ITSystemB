@@ -1,22 +1,15 @@
 package pl.edu.agh.to2.controller;
 
-import java.io.IOException;
-
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.stage.Modality;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import pl.edu.agh.to2.Member;
-import pl.edu.agh.to2.model.IWorker;
+import pl.edu.agh.to2.common.IWorker;
+import pl.edu.agh.to2.model.Member;
 
 public abstract class ModifyMemberInTeamController {
 
@@ -35,11 +28,9 @@ public abstract class ModifyMemberInTeamController {
 	@FXML
 	protected Button cancelButton;
 	@FXML
+	protected TextField roleTextField;
+	@FXML
 	protected Button acceptButton;
-	@FXML
-	protected ComboBox roleComboBox;
-	@FXML
-	protected Button newRoleButton;
 
 
 	@FXML

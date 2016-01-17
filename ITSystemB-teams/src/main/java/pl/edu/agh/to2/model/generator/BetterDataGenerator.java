@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import pl.edu.agh.to2.Member;
-import pl.edu.agh.to2.Team;
-import pl.edu.agh.to2.model.IWorker;
-import pl.edu.agh.to2.model.SimpleWorker;
+import pl.edu.agh.to2.common.IWorker;
+import pl.edu.agh.to2.common.SimpleWorker;
+import pl.edu.agh.to2.model.Member;
+import pl.edu.agh.to2.model.Team;
 
 public class BetterDataGenerator {
 	

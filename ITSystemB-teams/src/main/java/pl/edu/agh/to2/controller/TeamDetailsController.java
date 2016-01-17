@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,9 +21,8 @@ import javafx.scene.control.TreeView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import pl.edu.agh.to2.Member;
-import pl.edu.agh.to2.Role;
-import pl.edu.agh.to2.Team;
+import pl.edu.agh.to2.model.Member;
+import pl.edu.agh.to2.model.Team;
 
 public class TeamDetailsController {
 	private Team overviewedTeam;
@@ -46,7 +44,7 @@ public class TeamDetailsController {
 	@FXML
 	private TableColumn<Member, String> lastNameColumn;
 	@FXML
-	private TableColumn<Member, Role> roleColumn;
+	private TableColumn<Member, String> roleColumn;
 	@FXML
 	private TableColumn<Member, String> peselColumn;
 	@FXML

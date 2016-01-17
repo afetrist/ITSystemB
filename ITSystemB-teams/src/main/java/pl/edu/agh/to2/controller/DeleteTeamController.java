@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import pl.edu.agh.to2.Team;
+import pl.edu.agh.to2.model.Team;
 
 public class DeleteTeamController {
 	private Team overviewedTeam;

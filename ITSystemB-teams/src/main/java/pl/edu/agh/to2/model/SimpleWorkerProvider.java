@@ -3,6 +3,8 @@ package pl.edu.agh.to2.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.edu.agh.to2.common.IWorker;
+import pl.edu.agh.to2.common.IWorkerProvider;
 import pl.edu.agh.to2.model.generator.BetterDataGenerator;
 
 public class SimpleWorkerProvider implements IWorkerProvider {
