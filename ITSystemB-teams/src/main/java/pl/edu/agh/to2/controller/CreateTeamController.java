@@ -2,6 +2,7 @@ package pl.edu.agh.to2.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javafx.beans.property.ObjectProperty;
@@ -99,7 +100,7 @@ public class CreateTeamController {
 				} else {
 					teamToCreate = new Team(-1, teamName, null, Calendar.getInstance().getTime());
 				}
-				teamToCreate.setMembers(membersTable.getItems());
+				teamToCreate.setMembers(new ArrayList<>(membersTable.getItems()));
 				parentObservableTeams.add(teamToCreate);
 			} else {
 				if (teamToCreate.getSupervisor() != null) {
@@ -112,14 +113,12 @@ public class CreateTeamController {
 					teamToCreate.setSupervisor(null);
 				}
 
-				teamToCreate.setMembers(membersTable.getItems());
+				teamToCreate.setMembers(new ArrayList<>(membersTable.getItems()));
 			}
+			dbHandle.updateTeam(teamToCreate);
+			Stage stage = (Stage) createButton.getScene().getWindow();
+			stage.close();
 		}
-		System.out.println(teamToCreate);
-		dbHandle.updateTeam(teamToCreate);
-		System.out.println(teamToCreate);
-		Stage stage = (Stage) createButton.getScene().getWindow();
-		stage.close();
 	}
 
 	@FXML
@@ -212,7 +211,7 @@ public class CreateTeamController {
 			if (newValue != null && newValue.length() == 3 && oldValue.length() < newValue.length()) {
 				System.out.println("<main_contr>: query to db for '" + newValue + "'");
 				observableTeams.clear();
-				observableTeams.addAll(dbHandle.loadTeams(newValue));
+				observableTeams.addAll(dbHandle.loadTeams(newValue, true));
 			}
 			
 			filteredTeams.setPredicate(team -> {

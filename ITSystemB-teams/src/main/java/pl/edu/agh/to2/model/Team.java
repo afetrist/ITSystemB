@@ -8,6 +8,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import pl.edu.agh.to2.common.ITeam;
 
 public class Team implements ITeam {
 	private long id;
@@ -23,8 +24,8 @@ public class Team implements ITeam {
 		this.dateOfCreation = dateOfCreation;
 	}
 
-	public long getId() {
-		return id;
+	public int getId() {
+		return (int) id;
 	}
 
 	public void setId(long id) {
@@ -100,14 +101,31 @@ public class Team implements ITeam {
 
 	@Override
 	public BigDecimal getCostOfTeam() {
-		// TODO Auto-generated method stub
+		BigDecimal total = new BigDecimal(0);
+		
+		for (Member member : members) {
+			total.add(member.getWorker().getPayment());
+		}
+		
+		if (supervisor != null) {
+			total.add(supervisor.get().getWorker().getPayment());
+		}
 		return null;
 	}
 
 	@Override
-	public List<Member> getFullMemberList() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getNameOfTeam() {
+		return getTeamName();
+	}
+
+	@Override
+	public ObjectProperty<BigDecimal> getCostOfTeamObservable() {
+		return new SimpleObjectProperty<BigDecimal>(getCostOfTeam());
+	}
+
+	@Override
+	public StringProperty getNameofTeamObservable() {
+		return getTeamNameProperty();
 	}
 
 }

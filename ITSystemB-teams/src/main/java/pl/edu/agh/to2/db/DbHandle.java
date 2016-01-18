@@ -22,8 +22,14 @@ public class DbHandle {
 	private ResultSet rs = null;
 	private IWorkerProvider workerProvider = new SimpleWorkerProvider();
 
-	public List<Team> loadTeams(String keyword) {
-		String query = "SELECT * FROM Team WHERE name LIKE '%" + keyword + "%'";
+	public List<Team> loadTeams(String keyword, boolean onlySubteams) {
+		String query = "";
+
+		if (onlySubteams) {
+			query = "SELECT * FROM Team WHERE idSupervisor NOT IN (SELECT idMember FROM TeamMembers)";
+		} else {
+			query = "SELECT * FROM Team WHERE name LIKE '%" + keyword + "%'";
+		}
 		List<Team> list = new ArrayList<Team>();
 		Team team = null;
 		ResultSet rs = null;
@@ -53,6 +59,71 @@ public class DbHandle {
 			DbUtil.close(conn);
 		}
 		return list;
+	}
+
+	public boolean loadMembersForTeam(Team team) {
+		String memberQuery = "SELECT m.idMember, m.role, m.idWorker FROM Member AS m JOIN TeamMembers AS tm "
+				+ "ON tm.idMember = m.idMember WHERE tm.idTeam = ?";
+		
+		List<Member> members = new ArrayList<>();
+		
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmtMember = conn.prepareStatement(memberQuery);
+			pstmtMember.setInt(1, team.getId());
+			
+			rs = pstmtMember.executeQuery();
+			while (rs.next()) {
+				List<IWorker> workers = workerProvider.loadWorkers(Arrays.asList(rs.getInt("idWorker")), true);
+				Member member = new Member(rs.getInt("idMember"), workers.get(0), rs.getString("role"), null);
+				members.add(member);
+			}	
+			
+			team.setMembers(members);
+			
+			for (Member m : members) {
+				loadTeamForSupervisor(m);
+			}
+	
+		} catch (SQLException e) {
+			System.out.println("<db_log>: ERROR while loading members for team!\n" + e);
+		} finally {
+			DbUtil.close(rs);
+			DbUtil.close(conn);
+		}		
+		
+		return true;
+	}
+	
+	private boolean loadTeamForSupervisor(Member supervisor) {
+		String checkQuery = "SELECT * FROM Team WHERE idSupervisor=?";
+		Team team = null;
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmtCheck = conn.prepareStatement(checkQuery);
+			pstmtCheck.setInt(1, (int)supervisor.getId());
+			
+			rs = pstmtCheck.executeQuery();
+			if (rs.next()) {
+				team = new Team(-1, null, supervisor, null);
+				team.setId(rs.getInt("idTeam"));
+				team.setTeamName(rs.getString("name"));
+				team.setDateOfCreation(rs.getDate("dateOfCreation"));
+				
+				supervisor.setSupervisedTeam(team);
+				loadMembersForTeam(team);
+			}
+		} catch (SQLException e) {
+			System.out.println("<db_log>: ERROR while loading team for supervisor!\n" + e);
+		} finally {
+			DbUtil.close(rs);
+			DbUtil.close(conn);
+		}		
+		
+		if (team == null)
+			return false;
+		else
+			return true;
 	}
 
 	public List<IWorker> loadUnasignedWorkers(String[] criteria) {
@@ -213,14 +284,14 @@ public class DbHandle {
 						resultId = rsltId.getInt(1);
 						member.setId(resultId);
 						System.out.println("<db_log>: INSERTED Member(" + member.getId() + ", "
-								+ member.getWorker().getId() + ")");
+								+ member.getWorker().getId() + ", " + member.getWorker().getFullName() + ")");
 					} else {
 						// Update member entity
 						pstmsUpdate.setString(1, member.getRole());
 						pstmsUpdate.setInt(2, member.getWorker().getId());
 						pstmsUpdate.executeUpdate();
-						System.out.println(
-								"<db_log>: UPDATED Member(" + member.getId() + ", " + member.getWorker().getId() + ")");
+						System.out.println("<db_log>: UPDATED Member(" + member.getId() + ", "
+								+ member.getWorker().getId() + ", " + member.getWorker().getFullName() + ")");
 					}
 				}
 			}
@@ -240,21 +311,21 @@ public class DbHandle {
 	private boolean persistMembersInTeamRelation(Team team, List<Member> members) {
 		String removeQuery = "DELETE FROM TeamMembers WHERE idTeam=?";
 		String insertQuery = "INSERT TeamMembers(idTeam, idMember) VALUES(?, ?)";
-		
+
 		try {
 			conn = ConnectionFactory.getConnection();
 			PreparedStatement pstmtRemove = conn.prepareStatement(removeQuery);
 			PreparedStatement pstmtInsert = conn.prepareStatement(insertQuery);
-			
-			pstmtRemove.setInt(1, (int)team.getId());
+
+			pstmtRemove.setInt(1, (int) team.getId());
 			pstmtRemove.executeUpdate();
-			
+
 			for (Member member : members) {
-				pstmtInsert.setInt(1, (int)team.getId());
-				pstmtInsert.setInt(2, (int)member.getId());
+				pstmtInsert.setInt(1, (int) team.getId());
+				pstmtInsert.setInt(2, (int) member.getId());
 				pstmtInsert.executeUpdate();
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println("<db_log>: ERROR while persisting member-team relation!\n" + e);
 		} finally {

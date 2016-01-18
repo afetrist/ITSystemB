@@ -46,13 +46,12 @@ public class TeamsMainController {
 
 	private void handleTeamDoubleClick(Team team) {
 		System.out.println("<main_contr>: opening 'team_detail_contr'");
-		TeamDetailsController.initTeamDetailsDialog(team, observableTeams);
+		TeamDetailsController.initTeamDetailsDialog(team, observableTeams, dbHandle);
 	}
 	
 	@FXML
 	public void initialize() {
 		System.out.println("<main_contr>: controller initiation");
-//		observableTeams = FXCollections.observableArrayList(BetterDataGenerator.generateTeams());
 		observableTeams = FXCollections.observableArrayList();
 		
 		teamsTable.setPlaceholder(new Label("No matching data"));
@@ -62,7 +61,7 @@ public class TeamsMainController {
 			if (newValue != null && newValue.length() == 3 && oldValue.length() < newValue.length()) {
 				System.out.println("<main_contr>: query to db for '" + newValue + "'");
 				observableTeams.clear();
-				observableTeams.addAll(dbHandle.loadTeams(newValue));
+				observableTeams.addAll(dbHandle.loadTeams(newValue, false));
 			}
 			
 			filteredTeams.setPredicate(team -> {
@@ -106,6 +105,9 @@ public class TeamsMainController {
 			row.setOnMouseClicked(event -> {
 				if (event.getClickCount() == 2 && !row.isEmpty()) {
 					Team selectedTeam = row.getItem();
+					System.out.println(selectedTeam.getId());
+					System.out.println(selectedTeam.getTeamName());
+					System.out.println(selectedTeam.getMembers());
 					handleTeamDoubleClick(selectedTeam);
 				}
 			});

@@ -13,7 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class TeamMock implements ITeam {
-	private String id;
+	private int id;
 	private List<EmployeeForProjects> employees;
 	private BigDecimal costOfTeam;
 	private String nameOfTeam;
@@ -22,12 +22,12 @@ public class TeamMock implements ITeam {
 		this.employees = new ArrayList<>();	
 	}
 	
-	public TeamMock(String id) {
+	public TeamMock(int id) {
 		this.id = id;
 		this.employees = new ArrayList<>();	
 	}
 
-	public TeamMock(String id, List<EmployeeForProjects> employees, BigDecimal costofteam, String nameOfTeam) {
+	public TeamMock(int id, List<EmployeeForProjects> employees, BigDecimal costofteam, String nameOfTeam) {
 		this.id = id;
 		this.employees = employees;
 		this.costOfTeam = costofteam;
@@ -37,16 +37,6 @@ public class TeamMock implements ITeam {
 	@Override
 	public BigDecimal getCostOfTeam() {
 		return costOfTeam;
-	}
-
-	@Override
-	public List<EmployeeForProjects> getFullMemberList() {
-		return employees;
-	}
-
-	@Override
-	public String getId() {
-		return id;
 	}
 
 	public List<EmployeeForProjects> getEmployees() {
@@ -79,6 +69,11 @@ public class TeamMock implements ITeam {
 	public StringProperty getNameofTeamObservable() {
 		StringProperty p = new SimpleStringProperty(this.getNameOfTeam());
 		return p;
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 
 }

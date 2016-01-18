@@ -15,7 +15,7 @@ public class DbTester {
     private static void showTeams(){
     	DbHandle handle = new DbHandle();
     	List<Team> teams;
-    	teams = handle.loadTeams("");
+    	teams = handle.loadTeams("", false);
 		if(teams==null){
 			System.out.println("something went terribly wrong :(");
 			return;

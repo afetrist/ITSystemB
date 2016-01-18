@@ -21,12 +21,15 @@ import javafx.scene.control.TreeView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import pl.edu.agh.to2.db.DbHandle;
 import pl.edu.agh.to2.model.Member;
 import pl.edu.agh.to2.model.Team;
 
 public class TeamDetailsController {
 	private Team overviewedTeam;
 	private ObservableList<Team> observableTeams;
+	private DbHandle dbHandle;
+	
 	@FXML
 	private Button Edit;
 	@FXML
@@ -137,7 +140,7 @@ public class TeamDetailsController {
 		return link;
 	}
 
-	public static void initTeamDetailsDialog(Team t, ObservableList<Team> oTeams) {
+	public static void initTeamDetailsDialog(Team t, ObservableList<Team> oTeams, DbHandle dbHandle) {
 		try {
 			FXMLLoader loader = new FXMLLoader(TeamDetailsController.class.getResource("../view/TeamDetailsView.fxml"));
 			Parent root = (Parent) loader.load();
@@ -150,9 +153,10 @@ public class TeamDetailsController {
 			TeamDetailsController controller = loader.getController();
 			controller.overviewedTeam = t;
 			controller.observableTeams = oTeams;
+			controller.dbHandle = dbHandle;
 			controller.initControls();
 			stage.show();
-
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Could not load .fxml file");
@@ -167,6 +171,11 @@ public class TeamDetailsController {
 	}
 
 	public void initControls() {
+		
+//		if (overviewedTeam.getMembers() == null) {
+			dbHandle.loadMembersForTeam(overviewedTeam);
+//		}
+		
 		name.setText(overviewedTeam.getTeamName());
 		if (overviewedTeam.getSupervisor() != null)
 			leader.setText(overviewedTeam.getSupervisor().toString());
