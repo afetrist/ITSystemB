@@ -58,13 +58,13 @@ public class TeamDetailsController {
 
 	@FXML
 	private void handleEditAction(Event event) {
-		CreateTeamController.initCreateTeamDialog(observableTeams, overviewedTeam, null);
+		CreateTeamController.initCreateTeamDialog(observableTeams, overviewedTeam, dbHandle);
 	}
 
 	@FXML
 	private void handleDeleteAction(Event event) {
 		Stage stage = (Stage) name.getScene().getWindow();
-		DeleteTeamController.initDeleteTeamDialog(stage, overviewedTeam, observableTeams);
+		DeleteTeamController.initDeleteTeamDialog(stage, overviewedTeam, observableTeams,dbHandle);
 	}
 
 	//// ==||| Lazy Tree Loadnig |||==
@@ -93,9 +93,30 @@ public class TeamDetailsController {
 			}
 			return super.getChildren().isEmpty();
 		}
+		
+		private void loadForOrphan() {
+			List<Member> members = overviewedTeam.getMembers();
 
+
+				if (members != null) {
+					hasLoadedChildren = true;
+					for (Member m : members) {
+						LazyTreeItem child1 = new LazyTreeItem(m);
+						super.getChildren().add(child1);
+					}
+				}
+			
+		}	
+			
+		
+		
 		private void loadChildren() {
 			System.out.println("<tree_view_log>:loading children for: \'" + this.getValue() + "\'");
+			if(this.getValue()==null){
+				System.out.println("<tree_view_log>:beginning treeView handling for orphan team");
+				loadForOrphan();
+				return;
+			}
 			Team team = this.getValue().getSupervisedTeam();
 			if (team != null) {
 				List<Member> members = team.getMembers();
@@ -189,10 +210,7 @@ public class TeamDetailsController {
 			ObservableList<Member> oMembers = FXCollections.observableArrayList(members);
 			firstNameColumn.setCellValueFactory(value -> value.getValue().getWorker().getFirstNameProperty());
 			lastNameColumn.setCellValueFactory(value -> value.getValue().getWorker().getLastNameProperty());
-			// peselColumn.setCellValueFactory(value ->
-			// value.getValue().getWorker().getPeselProperty());
-			// postColumn.setCellValueFactory(value
-			// ->value.getValue().getRoleProperty());
+			//roleColumn.setCellValueFactory(value->value.getValue().getRole());
 			membersTable.setItems(oMembers);
 			initDynamicTree(overviewedTeam);
 

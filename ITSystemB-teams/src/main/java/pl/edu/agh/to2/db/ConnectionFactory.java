@@ -11,7 +11,10 @@ public class ConnectionFactory {
     public static final String DBNAME = "teams_test"; 
     public static final String USER = "root";
     public static final String PASSWORD = "bazy";
-    public static final String DRIVER_CLASS = "org.mariadb.jdbc.Driver"; 
+    
+    // niepotrzebne wykomentować: 
+    //public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";  
+    public static final String DRIVER_CLASS = "com.mysql.jdbc.Driver"; 
     
      
 

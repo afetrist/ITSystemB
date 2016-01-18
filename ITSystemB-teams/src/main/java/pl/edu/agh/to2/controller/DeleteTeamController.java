@@ -13,12 +13,14 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import pl.edu.agh.to2.db.DbHandle;
 import pl.edu.agh.to2.model.Team;
 
 public class DeleteTeamController {
 	private Team overviewedTeam;
 	private ObservableList<Team> observableTeams;
 	private Stage parentStage;
+	private DbHandle dbHandle;
 
 	private String deleteMessage = "Are you sure you want to delete\n ";
 	@FXML
@@ -38,9 +40,10 @@ public class DeleteTeamController {
 
 	@FXML
 	private void handleDeleteAction(Event event) {
+		
+		dbHandle.deleteTeam(overviewedTeam);
 		overviewedTeam.setMembers(null);
-		overviewedTeam.getSupervisor().setSupervisedTeam(null);
-
+		if(overviewedTeam.getSupervisor()!=null)overviewedTeam.getSupervisor().setSupervisedTeam(null);
 		observableTeams.remove(observableTeams.indexOf(overviewedTeam));
 		System.out.println("team deleted");
 		Stage stage = (Stage) Delete.getScene().getWindow();
@@ -48,7 +51,7 @@ public class DeleteTeamController {
 		parentStage.close();
 	}
 
-	public static void initDeleteTeamDialog(Stage parentStage, Team t, ObservableList<Team> oTeams) {
+	public static void initDeleteTeamDialog(Stage parentStage, Team t, ObservableList<Team> oTeams, DbHandle dbHandle) {
 		try {
 			FXMLLoader loader = new FXMLLoader(DeleteTeamController.class.getResource("../view/DeleteTeamView.fxml"));
 			Parent root = (Parent) loader.load();
@@ -62,6 +65,7 @@ public class DeleteTeamController {
 			controller.overviewedTeam = t;
 			controller.observableTeams = oTeams;
 			controller.parentStage = parentStage;
+			controller.dbHandle = dbHandle;
 			controller.initControls();
 			stage.show();
 

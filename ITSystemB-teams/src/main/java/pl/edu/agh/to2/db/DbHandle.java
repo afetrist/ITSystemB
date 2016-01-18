@@ -127,10 +127,12 @@ public class DbHandle {
 	}
 
 	public List<IWorker> loadUnasignedWorkers(String[] criteria) {
-		String query = "SELECT idWorker FROM Member";
+		String query = "select idWorker from member as m  inner join teammembers as tm where m.idMember=tm.idMember";
+		String queryLeaders="select idWorker from member as m join team as t where t.idSupervisor=m.idMember";
 		List<IWorker> workers = new ArrayList<>();
 		List<Integer> assignedWorkers = new ArrayList<>();
 		ResultSet result = null;
+		ResultSet result2=null;
 		try {
 			conn = ConnectionFactory.getConnection();
 			stmt = conn.createStatement();
@@ -138,11 +140,16 @@ public class DbHandle {
 			while (result.next()) {
 				assignedWorkers.add(result.getInt("idWorker"));
 			}
+			result2 = stmt.executeQuery(queryLeaders);
+			while (result2.next()) {
+				assignedWorkers.add(result2.getInt("idWorker"));
+			}
 			workers = workerProvider.loadWorkers(assignedWorkers, false);
 		} catch (SQLException e) {
 			System.out.println("<db_log>: ERROR while loading workers from database!\n" + e);
 		} finally {
-			DbUtil.close(rs);
+			DbUtil.close(result);
+			DbUtil.close(result2);
 			DbUtil.close(stmt);
 			DbUtil.close(conn);
 		}
@@ -335,5 +342,49 @@ public class DbHandle {
 		}
 
 		return true;
+	}
+	public boolean deleteTeam(Team team){
+		String removeTeamQuery = "DELETE FROM team WHERE idTeam="+team.getId();
+		String removeMemberQuery = "DELETE FROM member WHERE idMember=?";
+		String removeRelationQuery = "DELETE FROM teammembers WHERE idTeam="+team.getId();
+		String removeLeaderFromOtherTeam="DELETE FROM teammembers WHERE idMember=?";
+		List<Member> membersToAnnihilate = team.getMembers();		
+		
+		try {
+			conn = ConnectionFactory.getConnection();
+			PreparedStatement pstmtRemoveT = conn.prepareStatement(removeTeamQuery);
+			PreparedStatement pstmtRemoveR = conn.prepareStatement(removeRelationQuery);
+			PreparedStatement pstmtRemoveM = conn.prepareStatement(removeMemberQuery);
+			PreparedStatement pstmtRemoveL = conn.prepareStatement(removeLeaderFromOtherTeam);
+			if(team.getSupervisor()!=null){
+				membersToAnnihilate.add(team.getSupervisor());
+				pstmtRemoveL.setInt(1, (int) team.getSupervisor().getId());
+				pstmtRemoveL.executeUpdate();
+			}
+			pstmtRemoveR.executeUpdate();
+			pstmtRemoveT.executeUpdate();
+			if(membersToAnnihilate!=null){
+			for (Member member : membersToAnnihilate) {
+				System.out.println("<db_log> deleting member with id: "+member.getId()+"from database");
+				pstmtRemoveM.setInt(1, (int) member.getId());
+				pstmtRemoveM.executeUpdate();
+			}
+			}
+		
+			
+
+		} catch (SQLException e) {
+			System.out.println("<db_log>: ERROR while persisting member-team relation!\n" + e);
+		} finally {
+			DbUtil.close(rs);
+			DbUtil.close(stmt);
+			DbUtil.close(conn);
+		}
+
+		
+		
+		
+		return true;
+	
 	}
 }
