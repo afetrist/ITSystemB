@@ -27,11 +27,12 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 			}
 			supervisor.set(new Member(-1, selectedWorker, roleTextField.getText(), null));
 		} else if (selectedMember != null) {
+			selectedMember.setRole(roleTextField.getText());
 			observableMembers.add(selectedMember);
 		} else {
-			
-				observableMembers.add(new Member(-1, selectedWorker, roleTextField.getText(), null));
-			
+
+			observableMembers.add(new Member(-1, selectedWorker, roleTextField.getText(), null));
+
 		}
 		observableWorkers.remove(selectedWorker);
 
@@ -40,16 +41,21 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 	}
 
 	private void initControls(ObservableList<Member> observableMembers, ObservableList<IWorker> observableWorkers,
-			ObjectProperty<Member> supervisor, IWorker worker, DbHandle dbHandle) {
+			ObjectProperty<Member> supervisor, IWorker worker, Member member, DbHandle dbHandle) {
 
 		this.observableMembers = observableMembers;
 		this.observableWorkers = observableWorkers;
 		this.selectedWorker = worker;
 		this.supervisor = supervisor;
 
-		memberLabel.setText("Worker: " + selectedWorker.getFullName());
+		if (worker != null && member == null) {
+			selectedMember = dbHandle.loadMemberByWorker(worker);
+			memberLabel.setText("Worker: " + selectedWorker.getFullName());
+		} else if (member != null) {
+			selectedMember = member;
+			memberLabel.setText("Worker: " + selectedMember.getWorker().getFullName());
+		}
 
-		selectedMember = dbHandle.loadMemberByWorker(worker);
 		if (selectedMember != null && selectedMember.isSupervisor()) {
 			supervisorCheckBox.setSelected(false);
 			supervisorCheckBox.setDisable(true);
@@ -57,8 +63,10 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 
 		supervisorCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
 			if (newValue) {
-				roleTextField.setText("Lider zespołu");
-				roleTextField.setEditable(false);
+				if (!supervisorCheckBox.isDisabled()) {
+					roleTextField.setText("Lider zespołu");
+					roleTextField.setEditable(false);
+				}
 			} else {
 				roleTextField.setText("");
 				roleTextField.setEditable(true);
@@ -67,7 +75,7 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 	}
 
 	public static void init(ObservableList<Member> observableMembers, ObservableList<IWorker> observableWorkers,
-			ObjectProperty<Member> supervisor, IWorker selectedWorker, DbHandle dbHandle) {
+			ObjectProperty<Member> supervisor, IWorker selectedWorker, Member member, DbHandle dbHandle) {
 		try {
 			FXMLLoader loader = new FXMLLoader(
 					ModifyMemberInTeamController.class.getResource("../view/AddMemberToTeamView.fxml"));
@@ -79,7 +87,7 @@ public class AddMemberToTeamController extends ModifyMemberInTeamController {
 			stage.setScene(new Scene(root));
 			stage.sizeToScene();
 			AddMemberToTeamController controller = loader.getController();
-			controller.initControls(observableMembers, observableWorkers, supervisor, selectedWorker, dbHandle);
+			controller.initControls(observableMembers, observableWorkers, supervisor, selectedWorker, member, dbHandle);
 			stage.show();
 
 		} catch (IOException e) {

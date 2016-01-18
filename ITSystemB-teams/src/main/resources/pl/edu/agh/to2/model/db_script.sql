@@ -47,9 +47,7 @@ CREATE TABLE IF NOT EXISTS `teams_test`.`Team` (
   UNIQUE INDEX `idSupervisor_UNIQUE` (`idSupervisor` ASC),
   CONSTRAINT `fk_Team_Member`
     FOREIGN KEY (`idSupervisor`)
-    REFERENCES `teams_test`.`Member` (`idMember`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `teams_test`.`Member` (`idMember`))
 ENGINE = InnoDB;
 
 
@@ -70,9 +68,7 @@ CREATE TABLE IF NOT EXISTS `teams_test`.`TeamMembers` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_TeamMembers_Member1`
     FOREIGN KEY (`idMember`)
-    REFERENCES `teams_test`.`Member` (`idMember`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `teams_test`.`Member` (`idMember`))
 ENGINE = InnoDB;
 
 

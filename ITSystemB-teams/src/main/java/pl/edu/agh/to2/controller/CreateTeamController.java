@@ -33,6 +33,8 @@ import pl.edu.agh.to2.model.Member;
 import pl.edu.agh.to2.model.Team;
 
 public class CreateTeamController {
+	
+	private boolean editing = false;
 	private DbHandle dbHandle;
 	private Team teamToCreate;
 	private ObservableList<Team> parentObservableTeams;
@@ -134,7 +136,11 @@ public class CreateTeamController {
 			Stage stage = new Stage();
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initStyle(StageStyle.DECORATED);
-			stage.setTitle("Create team");
+			if (team == null) {
+				stage.setTitle("Create team");	
+			} else {
+				stage.setTitle("Edit team");
+			}
 			stage.setScene(new Scene(root));
 			stage.sizeToScene();
 			CreateTeamController controller = loader.getController();
@@ -149,13 +155,14 @@ public class CreateTeamController {
 
 	public void initControls(ObservableList<Team> parentObservableTeams, Team teamFromParent, DbHandle dbHandle) {
 		this.parentObservableTeams = parentObservableTeams;
-//		this.observableTeams = FXCollections.observableArrayList(parentObservableTeams);
 		this.observableTeams = FXCollections.observableArrayList();
-		// this.observableWorkers =
-		// FXCollections.observableArrayList(BetterDataGenerator.generateWorkers(24));
 		this.observableWorkers = FXCollections.observableArrayList();
 		this.teamToCreate = teamFromParent;
 		this.dbHandle = dbHandle;
+		
+		if (teamToCreate != null) {
+			editing = true;
+		}
 
 		ObservableList<Member> observableMembers;
 		ObservableList<Team> observableSubTeams = FXCollections.observableArrayList();
@@ -213,7 +220,7 @@ public class CreateTeamController {
 				observableTeams.clear();
 				observableTeams.addAll(dbHandle.loadTeams(newValue, true));
 			}
-			
+
 			filteredTeams.setPredicate(team -> {
 				if (newValue == null || newValue.isEmpty() || newValue.length() < 3) {
 					return false;
@@ -273,8 +280,8 @@ public class CreateTeamController {
 				if (event.getClickCount() == 2 && !row.isEmpty()) {
 					Team rowTeam = row.getItem();
 
-					AddMemberToTeamController.init(observableMembers, observableWorkers, supervisor,
-							rowTeam.getSupervisor().getWorker(), dbHandle);
+					AddMemberToTeamController.init(observableMembers, observableWorkers, supervisor, null,
+							rowTeam.getSupervisor(), dbHandle);
 				}
 			});
 			return row;
@@ -302,7 +309,8 @@ public class CreateTeamController {
 					// TODO: query to database
 					IWorker worker = row.getItem();
 
-					AddMemberToTeamController.init(observableMembers, observableWorkers, supervisor, worker, dbHandle);
+					AddMemberToTeamController.init(observableMembers, observableWorkers, supervisor, worker, null,
+							dbHandle);
 				}
 			});
 			return row;
@@ -326,7 +334,10 @@ public class CreateTeamController {
 			public void onChanged(ListChangeListener.Change<? extends Member> c) {
 				while (c.next()) {
 					if (c.wasAdded()) {
+						System.out.println("ADDDDDDDEEEEEEEEEEEEEEDDDDDDDDd");
 						for (Member member : c.getAddedSubList()) {
+							System.out.println(member);
+							System.err.println(member.isSupervisor());
 							if (member.isSupervisor()) {
 								subteamsTable.getItems().add(member.getSupervisedTeam());
 								observableTeams.remove(member.getSupervisedTeam());

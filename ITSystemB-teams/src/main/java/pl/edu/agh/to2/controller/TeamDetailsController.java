@@ -59,6 +59,7 @@ public class TeamDetailsController {
 	@FXML
 	private void handleEditAction(Event event) {
 		CreateTeamController.initCreateTeamDialog(observableTeams, overviewedTeam, dbHandle);
+		((Stage) Edit.getScene().getWindow()).close();
 	}
 
 	@FXML
