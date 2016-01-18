@@ -127,8 +127,8 @@ public class DbHandle {
 	}
 
 	public List<IWorker> loadUnasignedWorkers(String[] criteria) {
-		String query = "select idWorker from member as m  inner join teammembers as tm where m.idMember=tm.idMember";
-		String queryLeaders="select idWorker from member as m join team as t where t.idSupervisor=m.idMember";
+		String query = "select idWorker from Member as m  inner join TeamMembers as tm where m.idMember=tm.idMember";
+		String queryLeaders="select idWorker from Member as m join Team as t where t.idSupervisor=m.idMember";
 		List<IWorker> workers = new ArrayList<>();
 		List<Integer> assignedWorkers = new ArrayList<>();
 		ResultSet result = null;
@@ -297,6 +297,7 @@ public class DbHandle {
 						pstmsUpdate.setString(1, member.getRole());
 						pstmsUpdate.setInt(2, member.getWorker().getId());
 						pstmsUpdate.executeUpdate();
+						System.out.println(pstmsUpdate.toString());
 						System.out.println("<db_log>: UPDATED Member(" + member.getId() + ", "
 								+ member.getWorker().getId() + ", " + member.getWorker().getFullName() + ")");
 					}

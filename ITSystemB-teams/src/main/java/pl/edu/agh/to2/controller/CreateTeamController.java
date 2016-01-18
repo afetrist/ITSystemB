@@ -33,8 +33,7 @@ import pl.edu.agh.to2.model.Member;
 import pl.edu.agh.to2.model.Team;
 
 public class CreateTeamController {
-	
-	private boolean editing = false;
+
 	private DbHandle dbHandle;
 	private Team teamToCreate;
 	private ObservableList<Team> parentObservableTeams;
@@ -137,7 +136,7 @@ public class CreateTeamController {
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.initStyle(StageStyle.DECORATED);
 			if (team == null) {
-				stage.setTitle("Create team");	
+				stage.setTitle("Create team");
 			} else {
 				stage.setTitle("Edit team");
 			}
@@ -159,10 +158,6 @@ public class CreateTeamController {
 		this.observableWorkers = FXCollections.observableArrayList();
 		this.teamToCreate = teamFromParent;
 		this.dbHandle = dbHandle;
-		
-		if (teamToCreate != null) {
-			editing = true;
-		}
 
 		ObservableList<Member> observableMembers;
 		ObservableList<Team> observableSubTeams = FXCollections.observableArrayList();
@@ -228,7 +223,9 @@ public class CreateTeamController {
 
 				String lowerCaseFilter = newValue.toLowerCase();
 
-				if (lowerCaseFilter.equals("all")) {
+				if (team.equals(teamToCreate)) {
+					return false;
+				} else if (lowerCaseFilter.equals("all")) {
 					return true;
 				} else if (team.getTeamName().toLowerCase().contains(lowerCaseFilter)) {
 					return true;
