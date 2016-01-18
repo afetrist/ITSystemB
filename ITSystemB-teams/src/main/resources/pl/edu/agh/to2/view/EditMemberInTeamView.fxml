@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+	minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="pl.edu.agh.to2.controller.EditMemberInTeamController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0"
+			minWidth="10.0" prefWidth="169.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity"
+			minWidth="-Infinity" prefWidth="300.0" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints maxHeight="-Infinity" minHeight="30.0"
+			prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="40.0"
+			prefHeight="40.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="30.0"
+			prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="10.0"
+			prefHeight="10.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="10.0"
+			prefHeight="30.0" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<Label fx:id="memberLabel" text="Member:" GridPane.columnSpan="2147483647" />
+		<CheckBox fx:id="supervisorCheckBox" mnemonicParsing="false"
+			text="Set as supervisor" GridPane.halignment="LEFT"
+			GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+		<Label fx:id="warningLabel" GridPane.rowIndex="4" />
+		<TilePane alignment="CENTER_RIGHT" prefHeight="200.0"
+			prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+			<children>
+				<Button fx:id="cancelButton" cancelButton="true"
+					mnemonicParsing="false" onAction="#handleCancelAction" text="Cancel">
+					<TilePane.margin>
+						<Insets left="10.0" right="10.0" />
+					</TilePane.margin>
+				</Button>
+				<Button fx:id="acceptButton" mnemonicParsing="false"
+					onAction="#handleAcceptAction" text="Accept">
+					<TilePane.margin>
+						<Insets left="10.0" right="10.0" />
+					</TilePane.margin>
+				</Button>
+				<Button fx:id="deleteButton" mnemonicParsing="false"
+					onAction="#handleDeteleAction" text="Delete">
+					<TilePane.margin>
+						<Insets left="10.0" right="10.0" />
+					</TilePane.margin>
+				</Button>
+			</children>
+		</TilePane>
+		<Separator prefWidth="200.0" GridPane.columnSpan="2147483647"
+			GridPane.rowIndex="3" />
+		<FlowPane alignment="CENTER_LEFT" orientation="VERTICAL"
+			prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+			<children>
+				<ComboBox fx:id="roleComboBox" minWidth="-Infinity"
+					prefWidth="300.0" promptText="Select role">
+					<FlowPane.margin>
+						<Insets left="10.0" right="10.0" />
+					</FlowPane.margin>
+				</ComboBox>
+				<Button fx:id="newRoleButton" mnemonicParsing="false" text="Add new role">
+					<FlowPane.margin>
+						<Insets left="10.0" right="10.0" />
+					</FlowPane.margin>
+				</Button>
+			</children>
+		</FlowPane>
+	</children>
+	<padding>
+		<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+	</padding>
+</GridPane>

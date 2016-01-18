@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.iisg.to2.controller.ListController">
+	<center>
+		<TableView fx:id="projectTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn fx:id="deadlineColumn" prefWidth="75.0" text="Deadline" />
+				<TableColumn fx:id="startDateColumn" prefWidth="75.0" text="StartDate" />
+				<TableColumn fx:id="budgetColumn" prefWidth="75.0" text="Budget" />
+				<TableColumn fx:id="employeesColumn" prefWidth="75.0" text="Employees" />
+				<TableColumn fx:id="teamsColumn" prefWidth="75.0" text="Teams" />
+			</columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+		</TableView>
+	</center>
+   <right>
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0" BorderPane.alignment="CENTER">
+         <opaqueInsets>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </opaqueInsets>
+         <children>
+            <Button fx:id="deleteButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleDeleteAction" text="Delete" />
+            <Button fx:id="addButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleAddAction" text="Add" />
+            <Button fx:id="editButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleEditAction" text="Edit" />     
+            <Button fx:id="cancelButton" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleCancelAction" text="Cancel" />
+            <Pane prefHeight="466.0" prefWidth="150.0">
+               <children>
+                  <TextField fx:id="paramId" layoutX="-2.0" layoutY="70.0" prefHeight="25.0" prefWidth="154.0" />
+                  <TextField fx:id="paramStartDate" layoutX="-2.0" layoutY="144.0" prefHeight="25.0" prefWidth="154.0" />
+                  <TextField fx:id="paramDeadline" layoutX="-1.0" layoutY="200.0" prefHeight="25.0" prefWidth="151.0" />
+                  <TextField fx:id="paramEmployees" layoutX="1.0" layoutY="271.0" prefHeight="25.0" prefWidth="150.0" />
+                  <TextField fx:id="paramTeams" layoutX="-1.0" layoutY="327.0" prefHeight="25.0" prefWidth="152.0" />
+                  <TextField fx:id="paramBudget" layoutX="1.0" layoutY="390.0" prefHeight="25.0" prefWidth="151.0" />
+                  <Text layoutX="-1.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Id" />
+                  <Text layoutX="-2.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Date" />
+                  <Text layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Deadline" />
+                  <Text layoutX="-2.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee" />
+                  <Text layoutX="3.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Team" />
+                  <Text layoutX="4.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Budget" />
+                  <Label fx:id="errorId" layoutX="42.0" layoutY="45.0" text="ERROR! Id bad type!" textFill="RED" />
+                  <Label fx:id="errorDate" layoutX="16.0" layoutY="103.0" prefHeight="24.0" prefWidth="138.0" text="Deadline before start day!" textFill="RED" />
+                  <Label fx:id="errorEmployees" layoutX="17.0" layoutY="237.0" text="It must be id of employee" textFill="RED" />
+                  <Label fx:id="errorTeams" layoutX="37.0" layoutY="296.0" prefHeight="17.0" prefWidth="116.0" text="It must be id of team" textFill="RED" />
+               	  <Label fx:id="errorBudget" layoutX="18.0" layoutY="352.0" text="Only number are allowed" textFill="#ff0101" />
+                  <Button fx:id="findButton" alignment="TOP_CENTER" layoutX="52.0" layoutY="415.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleFindAction" text="Find" />
+                  <Button fx:id="allProjects" layoutX="33.0" layoutY="454.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" onAction="#handleAllProjectsAction" text="All projects" />
+               </children>
+            </Pane>        
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </VBox>
+   </right>
+</BorderPane>

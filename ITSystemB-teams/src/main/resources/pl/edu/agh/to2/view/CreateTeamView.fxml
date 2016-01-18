@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<GridPane prefHeight="700.0" prefWidth="800.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.to2.controller.CreateTeamController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="70.0" prefWidth="70.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="390.0" minWidth="10.0" prefWidth="259.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="337.0" minWidth="10.0" prefWidth="36.0" />
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="434.0" minWidth="10.0" prefWidth="434.0" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="279.0" minHeight="100.0" prefHeight="237.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="98.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="227.0" minHeight="100.0" prefHeight="227.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="-Infinity" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<Label text="Name:" />
+		<TextField fx:id="teamNameText" promptText="Enter name of new team" GridPane.columnIndex="1" />
+		<Label text="Worker:" GridPane.rowIndex="2" />
+		<TextField fx:id="workerSearchText" promptText="firstname, lastname, etc." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+		<Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+		<TableView fx:id="workersTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.rowSpan="2">
+			<columns>
+				<TableColumn fx:id="columnFirstNameWorker" editable="false" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Firstname">
+					<cellValueFactory>
+						<PropertyValueFactory property="firstName" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn fx:id="columnLastNameWorker" editable="false" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Lastname">
+					<cellValueFactory>
+						<PropertyValueFactory property="lastName" />
+					</cellValueFactory>
+				</TableColumn>
+			</columns>
+		</TableView>
+		<TableView fx:id="membersTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+			<columns>
+				<TableColumn fx:id="columnFirstNameMember" editable="false" prefWidth="150.0" resizable="false" text="Firstname" />
+				<TableColumn fx:id="columnLastNameMember" prefWidth="150.0" text="Lastname" />
+				<TableColumn fx:id="columnPost" prefWidth="75.0" text="Post" />
+			</columns>
+		</TableView>
+		<TextField fx:id="teamSearchText" promptText="team name, leader" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+		<Label text="Team:" GridPane.rowIndex="6" />
+		<TableView fx:id="teamsTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="7">
+			<columns>
+				<TableColumn fx:id="columnTeamName" editable="false" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Team name">
+					<cellValueFactory>
+						<PropertyValueFactory property="teamName" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn fx:id="columnTeamLeader" editable="false" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Leader">
+					<cellValueFactory>
+						<PropertyValueFactory property="supervisor" />
+					</cellValueFactory>
+				</TableColumn>
+			</columns>
+		</TableView>
+		<TableView fx:id="subteamsTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7">
+			<columns>
+				<TableColumn fx:id="columnSubteamName" editable="false" minWidth="200.0" prefWidth="-1.0" resizable="false" text="Subteam name">
+					<cellValueFactory>
+						<PropertyValueFactory property="teamName" />
+					</cellValueFactory>
+				</TableColumn>
+				<TableColumn fx:id="columnSubteamLeader" editable="false" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Leader">
+					<cellValueFactory>
+						<PropertyValueFactory property="supervisor" />
+					</cellValueFactory>
+				</TableColumn>
+			</columns>
+		</TableView>
+		<Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" />
+		<Separator prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="8" />
+		<TilePane alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="200.0" tileAlignment="TOP_LEFT" GridPane.columnIndex="3" GridPane.rowIndex="9">
+			<children>
+				<Button fx:id="cancelButton" cancelButton="true" mnemonicParsing="false" onAction="#handleCancelAction" text="Cancel" TilePane.alignment="CENTER">
+					<TilePane.margin>
+						<Insets left="10.0" right="10.0" />
+					</TilePane.margin>
+				</Button>
+				<Button fx:id="createButton" mnemonicParsing="false" onAction="#handleCreateAction" text="Accept" TilePane.alignment="CENTER">
+					<TilePane.margin>
+						<Insets left="10.0" right="10.0" />
+					</TilePane.margin>
+				</Button>
+			</children>
+		</TilePane>
+		<Label text="Members:" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+		<Label text="Subteams:" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+		<Label fx:id="errorLabel" GridPane.columnSpan="4" GridPane.rowIndex="9" />
+		<Label fx:id="supervisorLabel" text="Supervisor: Nobody assigned" GridPane.columnIndex="3" GridPane.rowIndex="4">
+			<padding>
+				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+			</padding>
+		</Label>
+	</children>
+	<padding>
+		<Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+	</padding>
+</GridPane>

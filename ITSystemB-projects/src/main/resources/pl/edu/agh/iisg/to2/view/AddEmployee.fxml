@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.edu.agh.iisg.to2.controller.AddEmployeeController">
+	<center>
+		<TableView fx:id="employeeTable" prefHeight="513.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+			<columns>
+				<TableColumn fx:id="firstNameColumn" prefWidth="75.0" text="First Name" />
+				<TableColumn fx:id="lastNameColumn" prefWidth="75.0" text="Last Name" />
+			</columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+		</TableView>
+	</center>
+   <bottom>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAddAction" text="add Employees" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="okButton" mnemonicParsing="false" onAction="#handleOkAction" text="okey!" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancelAction" text="cancel" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="330.0">
+               <children>
+                  <Label fx:id="errorEmployees" prefHeight="17.0" prefWidth="124.0" text="ERROR!" />
+                  <TextField fx:id="employeeTextField" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
