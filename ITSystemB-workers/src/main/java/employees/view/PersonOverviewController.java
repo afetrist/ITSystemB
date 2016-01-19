@@ -6,7 +6,7 @@ import employees.mockExteriorClasses.Team;
 import employees.model.Payment;
 
 import employees.model.Person;
-
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,8 +19,15 @@ import javafx.util.Callback;
 import pl.edu.agh.iisg.to2.common.IProjectForEmployees;
 
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
+
+import javax.imageio.ImageIO;
+
 import java.sql.*;
 
 
@@ -308,11 +315,28 @@ public class PersonOverviewController {
         Person newPerson = new Person(true);
         boolean okClicked = employeesRoot.showPersonEditDialog(newPerson);
         if (okClicked) {
+        	checkForCorrectUrl(newPerson);
         	employeesRoot.getPersonData().add(newPerson);
             //addNewPersonToDB(newPerson);			//needs DB
         }
     }
 	
+    private void checkForCorrectUrl(Person newPerson){
+    	try {
+			URL url = new URL(newPerson.getUrl());
+			BufferedImage c = ImageIO.read(url);
+			
+		} catch (MalformedURLException e) {
+			System.out.println("Improper URL");
+			newPerson.setUrl("http://www.instrumentationtoday.com/wp-content/themes/patus/images/no-image-half-landscape.png");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("No image found in URL");
+			newPerson.setUrl("http://www.instrumentationtoday.com/wp-content/themes/patus/images/no-image-half-landscape.png");
+		}
+    	
+    }
+    
     /**
      * Called when the user clicks the edit button. Opens a dialog to edit
      * details for the selected person.
@@ -321,9 +345,14 @@ public class PersonOverviewController {
     @FXML
     private void handleEditPerson() {
         Person selectedPerson = personTable.getSelectionModel().getSelectedItem();
+        int pastSalary = selectedPerson.getSalary();
         if (selectedPerson != null) {
             boolean okClicked = employeesRoot.showPersonEditDialog(selectedPerson);
             if (okClicked) {
+            	checkForCorrectUrl(selectedPerson);
+            	if(selectedPerson.getSalary() != pastSalary)
+            		selectedPerson.gotRise(pastSalary);
+            		
             	//savePersonToDB(selectedPerson);		//needs DB
                 showPersonDetails(selectedPerson);
             }

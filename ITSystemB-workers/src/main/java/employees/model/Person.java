@@ -2,6 +2,8 @@ package employees.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import employees.mockExteriorClasses.Project;
 import employees.mockExteriorClasses.Team;
@@ -298,4 +300,10 @@ public class Person {
         setTeamsJoined(projectTeamBoofor.getTeams());
     }
 
+    public void gotRise(int oldSalary){
+    	LocalDate today = LocalDate.now();
+    	String todayString = today.getYear() + "-" + today.getMonthValue() + "-" + today.getDayOfMonth();
+    	salaryHistory.add(new Payment(oldSalary, todayString));
+    }
+    
 }
