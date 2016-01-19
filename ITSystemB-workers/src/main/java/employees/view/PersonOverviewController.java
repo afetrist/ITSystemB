@@ -11,9 +11,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Callback;
 //import pl.edu.agh.application.MainApplication;
+import pl.edu.agh.iisg.to2.common.IProjectForEmployees;
 
 import java.awt.event.ActionEvent;
 import java.lang.reflect.Array;
@@ -76,11 +79,15 @@ public class PersonOverviewController {
     private TableColumn<Team, String> teamLeaderColumn;
 
     @FXML
-    private TableView<Project> projectsHistoryTable;
+    private TableView<IProjectForEmployees> projectsHistoryTable;
     @FXML
-    private TableColumn<Project, String> projectTopicColumn;
+    private TableColumn<IProjectForEmployees, String> projectIDColumn;
     @FXML
-    private TableColumn<Project, String> projectLeaderColumn;
+    private TableColumn<IProjectForEmployees, String> projectStartDateColumn;
+    @FXML
+    private TableColumn<IProjectForEmployees, String> projectDeadlineColumn;
+    @FXML
+    private TableColumn<IProjectForEmployees, String> projectBudgetColumn;
 
 
     // Reference to the main application.
@@ -155,10 +162,19 @@ public class PersonOverviewController {
             teamLeaderColumn.setCellValueFactory(cellData -> cellData.getValue().leaderProperty());
             teamsHistoryTable.setItems(person.getTeamsJoined());
 
-            person.loadProjects();
-            projectTopicColumn.setCellValueFactory(cellData -> cellData.getValue().topicProperty());
-            projectLeaderColumn.setCellValueFactory(cellData -> cellData.getValue().leaderProperty());
-            projectsHistoryTable.setItems(person.getProjectsParticipated());
+            //HERE
+            //ObservableList<IProjectForEmployees> projects = employeesRoot.
+            //		getProjectSupplier().findAllProjectsForEmployeeId(new Long(person.getId()).toString());
+            ObservableList<IProjectForEmployees> projects = employeesRoot.
+            		getProjectSupplier().getProjectForEmployee(new Long(person.getId()).toString());
+            projectIDColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+            projectsHistoryTable.setItems(projects);
+            
+            //OLD
+            //person.loadProjects();
+            //projectTopicColumn.setCellValueFactory(cellData -> cellData.getValue().topicProperty());
+            //projectLeaderColumn.setCellValueFactory(cellData -> cellData.getValue().leaderProperty());
+            //projectsHistoryTable.setItems(person.getProjectsParticipated());
 
 
         } else {

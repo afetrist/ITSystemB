@@ -3,11 +3,15 @@ package pl.edu.agh.iisg.to2.common;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import javafx.beans.property.ObjectProperty;
 
 public interface IProjectForEmployees {
-
+	
 	public String getId();
+	public SimpleStringProperty idProperty();
 	public void setId(String id);
 	
 	public ObjectProperty<LocalDate> getDeadline();

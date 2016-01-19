@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import common.iEmployeeForProjects;
+import common.iWorkerProviderForProjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,7 @@ public class ProjectController {
 	private GeneratedData data;
 	private BorderPane rootLayout;
 	private ListController listController;
+	private iWorkerProviderForProjects injection;
 
 	public ProjectController() {
 	}
@@ -62,6 +64,7 @@ public class ProjectController {
 	public void generateMockData() {
 		MySQLAccess sqlAccess = new MySQLAccess();
 		GeneratedData genData = new GeneratedData();
+		genData.setEmployees(injection.getAllEmployees());
 		this.data = genData;
 		this.employees = FXCollections.observableArrayList(data.getEmployees());
 		this.teams = FXCollections.observableArrayList(data.getTeams());
@@ -113,6 +116,10 @@ public class ProjectController {
 		}
 		
 
+	}
+
+	public void setiWorkerProviderForProjects(iWorkerProviderForProjects injection) {
+		this.injection = injection;
 	}
 
 }

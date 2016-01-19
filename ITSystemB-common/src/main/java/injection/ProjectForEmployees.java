@@ -1,4 +1,4 @@
-package pl.edu.agh.iisg.to2.model;
+package injection;
 
 
 import java.math.BigDecimal;
@@ -8,31 +8,32 @@ import java.util.UUID;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.property.SimpleStringProperty;
 import pl.edu.agh.iisg.to2.common.IProjectForEmployees;
 
 public class ProjectForEmployees implements IProjectForEmployees {
-	private String id;
+	private SimpleStringProperty id;
 	private ObjectProperty<LocalDate> deadline;
 	private ObjectProperty<LocalDate> startdate;
 	private ObjectProperty<BigDecimal> budget;
 
 	public ProjectForEmployees(){
-		this.id = UUID.randomUUID().toString();
+		this.id = new SimpleStringProperty(UUID.randomUUID().toString());
 	}
 	
 	public ProjectForEmployees(LocalDate deadline, LocalDate startdate, BigDecimal budget) {
-		this.deadline = new SimpleObjectProperty<>(deadline);
-		this.startdate = new SimpleObjectProperty<>(startdate);
-		this.id = UUID.randomUUID().toString();
+		this.deadline = new SimpleObjectProperty<LocalDate>(deadline);
+		this.startdate = new SimpleObjectProperty<LocalDate>(startdate);
+		this.id = new SimpleStringProperty(UUID.randomUUID().toString());
 		this.budget = new SimpleObjectProperty<BigDecimal>(budget);
 	}
 
 	public String getId() {
-		return id;
+		return id.get();
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this.id.set(id);
 	}
 
 	public ObjectProperty<LocalDate> getDeadline() {
@@ -60,13 +61,15 @@ public class ProjectForEmployees implements IProjectForEmployees {
 		this.budget = budget;
 	}
 	
-	public void printProject(Project p){
-		System.out.println(p.getId());
-	}
 	
 	public String normalString(StringProperty p){
 		String s = p.getValue();
 		return s;
+	}
+
+	public SimpleStringProperty idProperty() {
+		// TODO Auto-generated method stub
+		return id;
 	}
 	
 

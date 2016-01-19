@@ -95,6 +95,14 @@ public class Project implements IProject {
 	public ObservableList<iEmployeeForProjects> getEmployees() {
 		return employees;
 	}
+	
+	public boolean wasInvolved(String id){
+		for(iEmployeeForProjects employee : employees){
+			if(employee.getId().toString() == id)
+				return true;
+		}
+		return false;
+	}
 
 	public void setEmployees(ObservableList<iEmployeeForProjects> employees) {
 		this.employees = employees;

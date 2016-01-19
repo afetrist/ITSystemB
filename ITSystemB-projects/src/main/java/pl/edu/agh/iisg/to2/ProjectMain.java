@@ -30,6 +30,11 @@ public class ProjectMain {
 		this.presenter.initRootLayout();
 	}*/
 
+	public ProjectMain(iWorkerProviderForProjects workerProviderForProjects) {
+		// TODO Auto-generated constructor stub
+		injection = workerProviderForProjects;
+	}
+
 	public void run() throws ClassNotFoundException, SQLException {
 		//MySQLAccess dao = new MySQLAccess();
 		/*GeneratedData genData = new GeneratedData();
@@ -47,6 +52,7 @@ public class ProjectMain {
 		}*/
 	    
 		this.presenter = new ProjectController();
+		this.presenter.setiWorkerProviderForProjects(injection);
 		this.presenter.initRootLayout();
 	}
 	
@@ -54,8 +60,16 @@ public class ProjectMain {
 		return this.presenter.getPane();
 	}
 	
+	public ObservableList<Project> getProjects(){
+		return presenter.getProjects();
+	}
+	
 	public void injector(iWorkerProviderForProjects injection){
 		this.injection = injection;
+	}
+	
+	public void setInjector(){
+		this.presenter.setiWorkerProviderForProjects(injection);
 	}
 	
 }

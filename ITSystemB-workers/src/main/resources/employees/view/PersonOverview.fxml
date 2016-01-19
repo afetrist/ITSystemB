@@ -23,7 +23,7 @@
                      </columnResizePolicy>
                   </TableView>
                   <TextField fx:id="filtringData" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="206.0" />
-                  <Button fx:id="findButton" layoutX="230.0" layoutY="14.0" mnemonicParsing="false"  text="Find" onAction="#handleFilterPeople"/>
+                  <Button fx:id="findButton" layoutX="230.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleFilterPeople" text="Find" />
                   <CheckBox fx:id="fullWordsCheckBox" layoutX="14.0" layoutY="48.0" mnemonicParsing="false" text="Full Words" />
                   <CheckBox fx:id="allWordsCheckBox" layoutX="117.0" layoutY="48.0" mnemonicParsing="false" text="All Words" />
                </children>
@@ -99,8 +99,10 @@
                                  <children>
                                     <TableView fx:id="projectsHistoryTable" prefHeight="180.0" prefWidth="449.0">
                                       <columns>
-                                        <TableColumn fx:id="projectTopicColumn" prefWidth="217.0" text="Project topic" />
-                                        <TableColumn fx:id="projectLeaderColumn" prefWidth="230.0" text="Project leader" />
+                                        <TableColumn fx:id="projectIDColumn" prefWidth="56.0" text="ID" />
+                                        <TableColumn fx:id="projectStartDateColumn" prefWidth="135.0" text="Start Date" />
+                                          <TableColumn fx:id="projectDeadlineColumn" prefWidth="144.0" text="Deadline" />
+                                          <TableColumn fx:id="projectBudgetColumn" prefWidth="113.0" text="Budget" />
                                       </columns>
                                     </TableView>
                                  </children></AnchorPane>
@@ -108,9 +110,9 @@
                       </Tab>
                     </tabs>
                   </TabPane>
-                  <Button layoutX="77.0" layoutY="526.0" mnemonicParsing="false" text="New Employee" onAction="#handleNewPerson"/>
-                  <Button layoutX="228.0" layoutY="526.0" mnemonicParsing="false" text="Edit" onAction="#handleEditPerson"/>
-                  <Button layoutX="321.0" layoutY="526.0" mnemonicParsing="false" text="Delete" onAction="#handleDeletePerson"/>
+                  <Button layoutX="77.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleNewPerson" text="New Employee" />
+                  <Button layoutX="228.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleEditPerson" text="Edit" />
+                  <Button layoutX="321.0" layoutY="526.0" mnemonicParsing="false" onAction="#handleDeletePerson" text="Delete" />
                </children>
             </AnchorPane>
         </items>

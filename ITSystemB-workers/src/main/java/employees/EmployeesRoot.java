@@ -16,6 +16,7 @@ import javafx.stage.Window;
 
 import java.sql.*;
 
+import common.iProjectProviderForEmployees;
 import employees.model.Person;
 
 
@@ -26,6 +27,7 @@ public class EmployeesRoot {
 	private BorderPane rootLayout;
 	
 	private ObservableList<Person> personData = FXCollections.observableArrayList();
+	private iProjectProviderForEmployees projectSupplier;
 	
 	public EmployeesRoot(Stage primaryStage, BorderPane rootLayout){
 		this.primaryStage = primaryStage;
@@ -175,6 +177,15 @@ public class EmployeesRoot {
 	public Stage getPrimaryStage() {
 		// TODO Auto-generated method stub
 		return primaryStage;
+	}
+
+	public void injector(iProjectProviderForEmployees iprojectProviderForEmployees) {
+		// TODO Auto-generated method stub
+		projectSupplier = iprojectProviderForEmployees;
+	}
+	
+	public iProjectProviderForEmployees getProjectSupplier(){
+		return projectSupplier;
 	}
 
 }

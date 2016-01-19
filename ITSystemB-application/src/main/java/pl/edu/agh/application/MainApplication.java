@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import employees.EmployeesRoot;
 import employees.view.PersonOverviewController;
+import injection.MethodsEmployees;
+import injection.ProjectProviderForEmployees;
 import injection.WorkerProviderForProjects;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,8 +43,12 @@ public class MainApplication extends Application {
 		employeesRoot = new EmployeesRoot(primaryStage, rootLayout);
 		showPersonOverview();
 		
-		addProject();
-		projectMain.injector(new WorkerProviderForProjects(employeesRoot.getPersonData()));
+		addProject(new WorkerProviderForProjects(employeesRoot.getPersonData()));
+		//projectMain.injector(new WorkerProviderForProjects(employeesRoot.getPersonData()));
+		projectMain.setInjector();
+		
+		employeesRoot.injector(new ProjectProviderForEmployees(projectMain.getProjects()));
+		
 		
 		
 		showTeams();
@@ -89,8 +95,8 @@ public class MainApplication extends Application {
 		}
 	}
 	
-	public void addProject() {
-		projectMain = new ProjectMain();
+	public void addProject(WorkerProviderForProjects workerProviderForProjects) {
+		projectMain = new ProjectMain(workerProviderForProjects);
 		try {
 			projectMain.run();
 		} catch (ClassNotFoundException e) {
