@@ -16,16 +16,18 @@ public class ProjectProviderForEmployees implements iProjectProviderForEmployees
 		this.allProjects = allProjects;
 	}
 	
-	public ObservableList<IProjectForEmployees> getProjectForEmployee(String id) {
+	public ObservableList<IProjectForEmployees> getProjectForEmployee(Long id) {
 		ObservableList<IProjectForEmployees> returnList = FXCollections.observableArrayList();
 		
 		for(Project p : allProjects){
-			if(p.wasInvolved(id))
+			if(p.wasInvolved(id)){
 				returnList.add(new ProjectForEmployees(p.getDeadline().get(), p.getStartdate().get(), p.getBudget().get()));
+			}
+				
 		}
 		
 		for(IProjectForEmployees pfe : returnList)
-			pfe.setId(id);
+			pfe.setId(id.toString());
 
 		return returnList;
 	}

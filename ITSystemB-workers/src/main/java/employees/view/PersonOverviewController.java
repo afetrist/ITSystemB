@@ -162,12 +162,12 @@ public class PersonOverviewController {
             teamLeaderColumn.setCellValueFactory(cellData -> cellData.getValue().leaderProperty());
             teamsHistoryTable.setItems(person.getTeamsJoined());
 
-            //HERE
-            //ObservableList<IProjectForEmployees> projects = employeesRoot.
-            //		getProjectSupplier().findAllProjectsForEmployeeId(new Long(person.getId()).toString());
             ObservableList<IProjectForEmployees> projects = employeesRoot.
-            		getProjectSupplier().getProjectForEmployee(new Long(person.getId()).toString());
+            		getProjectSupplier().getProjectForEmployee(person.getId());
             projectIDColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty());
+            projectStartDateColumn.setCellValueFactory(cellData -> cellData.getValue().getStartdate().asString());
+            projectDeadlineColumn.setCellValueFactory(cellData -> cellData.getValue().getDeadline().asString());
+            projectBudgetColumn.setCellValueFactory(cellData -> cellData.getValue().getBudget().asString());
             projectsHistoryTable.setItems(projects);
             
             //OLD

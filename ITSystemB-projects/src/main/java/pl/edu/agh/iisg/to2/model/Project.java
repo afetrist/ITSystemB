@@ -96,9 +96,9 @@ public class Project implements IProject {
 		return employees;
 	}
 	
-	public boolean wasInvolved(String id){
+	public boolean wasInvolved(Long id){
 		for(iEmployeeForProjects employee : employees){
-			if(employee.getId().toString() == id)
+			if(employee.getId().get() == id)
 				return true;
 		}
 		return false;
