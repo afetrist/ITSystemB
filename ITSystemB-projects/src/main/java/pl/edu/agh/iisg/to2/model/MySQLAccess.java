@@ -24,7 +24,6 @@ import javafx.collections.ObservableList;
 
 import pl.edu.agh.iisg.to2.model.Project;
 import pl.edu.agh.to2.common.ITeam;
-import pl.edu.agh.to2.common.TeamMock;
 import pl.edu.agh.iisg.to2.model.IProject;
 
 public class MySQLAccess {

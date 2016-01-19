@@ -1,4 +1,4 @@
-package pl.edu.agh.to2.common;
+package pl.edu.agh.iisg.to2;
 
 
 

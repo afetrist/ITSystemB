@@ -1,4 +1,4 @@
-package pl.edu.agh.to2.common;
+package pl.edu.agh.iisg.to2.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,10 +10,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import pl.edu.agh.to2.common.ITeam;
 
 public class TeamMock implements ITeam {
 	private String id;
-	private List<EmployeeForProjects> employees;
+	private List<iEmployeeForProjects> employees;
 	private BigDecimal costOfTeam;
 	private String nameOfTeam;
 
@@ -26,7 +27,7 @@ public class TeamMock implements ITeam {
 		this.employees = new ArrayList<>();	
 	}
 
-	public TeamMock(String id, List<EmployeeForProjects> employees, BigDecimal costofteam, String nameOfTeam) {
+	public TeamMock(String id, List<iEmployeeForProjects> employees, BigDecimal costofteam, String nameOfTeam) {
 		this.id = id;
 		this.employees = employees;
 		this.costOfTeam = costofteam;
@@ -40,7 +41,7 @@ public class TeamMock implements ITeam {
 	}
 
 	@Override
-	public List<EmployeeForProjects> getFullMemberList() {
+	public List<iEmployeeForProjects> getFullMemberList() {
 		return employees;
 	}
 
@@ -49,11 +50,11 @@ public class TeamMock implements ITeam {
 		return id;
 	}
 
-	public List<EmployeeForProjects> getEmployees() {
+	public List<iEmployeeForProjects> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(ArrayList<EmployeeForProjects> employees) {
+	public void setEmployees(ArrayList<iEmployeeForProjects> employees) {
 		this.employees = employees;
 	}
 

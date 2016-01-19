@@ -16,15 +16,14 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pl.edu.agh.iisg.to2.EmployeeForProjects;
 import pl.edu.agh.iisg.to2.model.Project;
-import pl.edu.agh.to2.common.EmployeeForProjects;
 import pl.edu.agh.to2.common.ITeam;
-import pl.edu.agh.to2.common.TeamMock;
 
 public class DataGenerator {
 	
 
-	public static List<EmployeeForProjects> generateEmployees(int size){
+	public static List<iEmployeeForProjects> generateEmployees(int size){
 		final int SIZE = 24;
 		
 		String[] names = {
@@ -134,7 +133,7 @@ public class DataGenerator {
 			"521568" 
 		};
 		
-		List<EmployeeForProjects> workers = new ArrayList<>();
+		List<iEmployeeForProjects> workers = new ArrayList<>();
 		
 		
 		for (int i = 0; i < size && i < SIZE; i++) {

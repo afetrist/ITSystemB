@@ -13,7 +13,7 @@ public interface ITeam {
 	
 	public BigDecimal getCostOfTeam();
 	
-	public List<EmployeeForProjects> getFullMemberList();
+	public List<iEmployeeForProjects> getFullMemberList();
 	
 	public String getId();
 	
