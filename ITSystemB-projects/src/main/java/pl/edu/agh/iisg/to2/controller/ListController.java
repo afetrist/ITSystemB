@@ -132,9 +132,9 @@ public class ListController {
 			for (int i = 0; i < tmpWithArguments.size(); i++){
 				ObservableList<iEmployeeForProjects> etmp = FXCollections.observableArrayList();
 				etmp.addAll(tmpWithArguments.get(i).getEmployees());
-				String tmpEmployees = FindEmployees.getStringEmployees(etmp).getValue();
+				String tmpEmployees = FindEmployees.getStringEmployees(etmp).getValue().replace(",", "");
 				if (!(tmpEmployees.toLowerCase().contains(tmp.toLowerCase()))){
-					//System.out.println("wartosc tmp: " + tmp+ " wartosc tmpEmployees: "+ tmpEmployees);
+					System.out.println("wartosc tmp: " + tmp+ " wartosc tmpEmployees: "+ tmpEmployees);
 					tmpWithArguments.remove(i) ;
 					i--;
 				}
@@ -146,7 +146,7 @@ public class ListController {
 			for (int i = 0; i < tmpWithArguments.size(); i++){
 				ObservableList<ITeam> ttmp = FXCollections.observableArrayList();
 				ttmp.addAll(tmpWithArguments.get(i).getTeams());
-				String tmpTeams = FindTeams.getStringTeams(ttmp).getValue();
+				String tmpTeams = FindTeams.getStringTeams(ttmp).getValue().replace(",", "");
 				if (!(tmpTeams.toLowerCase().contains(tmp.toLowerCase()))){
 					//System.out.println("wartosc tmp: " + tmp+ " wartosc tmpEmployees: "+ tmpTeams);
 					tmpWithArguments.remove(i) ;

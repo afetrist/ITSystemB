@@ -6,13 +6,13 @@ import java.util.List;
 import common.iEmployeeForProjects;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pl.edu.agh.iisg.to2.common.IMethodsEmployees;
+import pl.edu.agh.iisg.to2.common.IProviderMethodsEmployees;
 import pl.edu.agh.iisg.to2.common.IProjectForEmployees;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
 import pl.edu.agh.iisg.to2.model.Project;
 import pl.edu.agh.iisg.to2.model.ProjectForEmployees;
 
-public class MethodsEmployees implements IMethodsEmployees {
+public class MethodsEmployees implements IProviderMethodsEmployees {
 
 
 	public ObservableList<IProjectForEmployees> findAllProjectsExisting(){

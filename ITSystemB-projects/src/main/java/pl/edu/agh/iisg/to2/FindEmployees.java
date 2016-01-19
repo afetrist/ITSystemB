@@ -15,7 +15,7 @@ import pl.edu.agh.iisg.to2.model.MySQLAccess;
 public class FindEmployees {
 
 
-//--------------------------------------------Funkcje dla modu³u pracownicy ----------------------------------------
+//--------------------------------------------Funkcje dla modulu pracownicy ----------------------------------------
 	
 	public static ObservableList<IProject> findAllProjectsExisting(){
 		ObservableList<IProject> projects = FXCollections.observableArrayList();
@@ -153,9 +153,10 @@ public class FindEmployees {
 		if (etmp != null){
 			for (iEmployeeForProjects tmp: etmp){
 				//System.out.println("ustawiam wartosc stringa Employee:"+ tmp.getId());
-				s.setValue(s.getValue()+ " " + tmp.getId());
+				s.setValue(s.getValue() + tmp.getFirstName().getValue() + " " + tmp.getLastName().getValue()+ "," +" ");
 			}
 		}
+			
 		else s.setValue("0");
 	
 		return s;
@@ -165,10 +166,3 @@ public class FindEmployees {
 		return d.getEmployees();
 	}
 }
-
-
-
-
-
-
-

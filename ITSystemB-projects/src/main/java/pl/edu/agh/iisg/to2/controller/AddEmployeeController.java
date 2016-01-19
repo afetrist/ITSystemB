@@ -82,7 +82,9 @@ public class AddEmployeeController {
 		}
 		
 		private boolean isValid(){
+			errorEmployees.setVisible(true);
 			if ( employeeTextField.getText().isEmpty() == true){
+				employeeTextField.setStyle("-fx-background-color: red");
 				errorEmployees.setText("You didn't choose employees");
 				errorEmployees.setVisible(true);
 				return false;

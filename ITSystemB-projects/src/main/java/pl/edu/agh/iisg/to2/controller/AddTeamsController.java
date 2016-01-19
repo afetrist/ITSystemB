@@ -81,7 +81,9 @@ public class AddTeamsController {
 		}
 		
 		private boolean isValid(){
+			errorTeams.setVisible(false);
 			if ( teamsTextField.getText().isEmpty() == true){
+				teamsTextField.setStyle("-fx-background-color: red");
 				errorTeams.setText("You didn't choose employees");
 				errorTeams.setVisible(true);
 				return false;

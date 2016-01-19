@@ -16,6 +16,7 @@ import pl.edu.agh.iisg.to2.ProjectMain;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
 import pl.edu.agh.iisg.to2.model.Project;
 import pl.edu.agh.to2.common.ITeam;
+import pl.edu.agh.to2.common.IWorkerProvider;
 import pl.edu.agh.iisg.to2.model.DataGenerator;
 import pl.edu.agh.iisg.to2.model.GeneratedData;
 
@@ -60,25 +61,21 @@ public class ProjectController {
 	}
 	
 	public void generateMockData() {
-		MySQLAccess sqlAccess = new MySQLAccess();
-		GeneratedData genData = new GeneratedData();
-		this.data = genData;
+		//int numberOfEmployees = 12;
+		//int numberOFTeams = 5;
+		this.data = new GeneratedData();
 		this.employees = FXCollections.observableArrayList(data.getEmployees());
 		this.teams = FXCollections.observableArrayList(data.getTeams());
-		for (int numTmp = 0; numTmp < 10; numTmp = numTmp + 1){
-			try {
-				sqlAccess.insertProject(DataGenerator.generateProjectWithMultipleTeamsEmployees(genData, 3, 3));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		try {
-			ObservableList<Project> tmp = FXCollections.observableArrayList();
+		this.projects = FXCollections.observableArrayList();
+		int i = 0;
+//		for (i = 0; i < 15; i = i + 1){
+//			this.projects.add(DataGenerator.generateProjectWithMultipleTeamsEmployees(data, numberOfEmployees ,numberOFTeams));
+//		}
+		
+		MySQLAccess sqlAccess = new MySQLAccess();
+	    try {
 	    	List<Project> fetched = sqlAccess.fetchAllProjects();
-	    	for (int i = 0; i < fetched.size(); i = i + 1){
-	    		tmp.add(fetched.get(i));
-	    	}
-	    	this.projects = FXCollections.observableArrayList(tmp);
+	    	this.projects.addAll(fetched);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

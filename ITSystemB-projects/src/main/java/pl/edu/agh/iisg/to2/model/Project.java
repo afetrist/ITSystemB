@@ -145,7 +145,7 @@ public class Project implements IProject {
 		if (getTeams() != null){
 			for (ITeam tmp:  getTeams()){
 				//System.out.println("ustawiam wartosc stringa Team:"+ tmp.getId());
-				s.setValue(s.getValue() + tmp.getId() + " ");
+				s.setValue(s.getValue() + tmp.getNameOfTeam() + "," + " ");
 			}
 		}
 		else s.setValue("-1");
@@ -157,7 +157,7 @@ public class Project implements IProject {
 		if (getEmployees() != null){
 			for (iEmployeeForProjects tmp: getEmployees() ){
 				//System.out.println("ustawiam wartosc stringa Employee:"+ tmp.getId());
-				s.setValue(s.getValue() + tmp.getFirstName().getValue() + " " + tmp.getLastName().getValue() + " ");
+				s.setValue(s.getValue() + tmp.getFirstName().getValue() + " " + tmp.getLastName().getValue()+ "," +" ");
 			}
 		}
 		else s.setValue("-1");

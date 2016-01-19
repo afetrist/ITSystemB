@@ -47,8 +47,8 @@ public void connect() throws ClassNotFoundException, SQLException {
 	           + "user=" + user + "&password=" + passwd );
 	   statement = connect.createStatement();
 	   // Result set get the result of the SQL query
-	   //statement.executeQuery("TRUNCATE TABLE IProject_Team");
-	   //statement.executeQuery("TRUNCATE TABLE IProject_Employee");
+	   //statement.executeQuery("DELETE from IProject_Team");
+	   //statement.executeQuery("DELETE from  IProject_Employee");
 	   //statement.executeQuery("TRUNCATE TABLE IProject");
 	   //statement.executeQuery("DELETE from IProject");
 	   
@@ -137,9 +137,14 @@ public List<Project> fetchAllProjects() throws SQLException, ClassNotFoundExcept
 	 try {
 		   connect();
 		   statement = connect.createStatement();
+		   connect.setAutoCommit(false);
+		   statement.setFetchSize(20);
 		   resultSet = statement.executeQuery("SELECT * FROM IProject");
-
-		   while (resultSet.next()) {
+		   
+		   int i = 0;
+		   while (resultSet.next()&& (i < 15)) {
+			   i = i + 1;
+			   System.out.println(i);
 			   Date sDate = resultSet.getDate("startDate");
 			   Date deadDate = resultSet.getDate("deadline");
 			   int budget = resultSet.getInt("budget");
@@ -147,7 +152,6 @@ public List<Project> fetchAllProjects() throws SQLException, ClassNotFoundExcept
 			   
 			   LocalDate startDate = Instant.ofEpochMilli(sDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
 			   LocalDate deadline = Instant.ofEpochMilli(deadDate.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-
 			   
 			   List<ITeam> teams = this.fetchTeamsObjectsForProject(projectId);
 			   List<iEmployeeForProjects> employees = this.fetchEmployeeObjectsForProject(projectId);
@@ -162,7 +166,9 @@ public List<Project> fetchAllProjects() throws SQLException, ClassNotFoundExcept
 		 } catch (Exception e) {
 		   throw e;
 		 } finally {
-		   close();
+			 statement.setFetchSize(0);
+			 close();
+			 
 		 }
 	return projectsList;
 }

@@ -38,7 +38,7 @@ public class MainApplication extends Application {
 		showPersonOverview();
 		
 		// mam jakis dziwny problem z baza dlatego zwalnia wiec zakomentowalam wam, zeby nie dzialalo wolno
-		//addProject();
+		addProject();
 		
 		showTeams();
 	}

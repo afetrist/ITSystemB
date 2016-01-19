@@ -4,14 +4,14 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pl.edu.agh.iisg.to2.common.IMethodsTeams;
+import pl.edu.agh.iisg.to2.common.IProviderMethodsTeams;
 import pl.edu.agh.iisg.to2.common.IProjectForTeams;
 import pl.edu.agh.iisg.to2.model.MySQLAccess;
 import pl.edu.agh.iisg.to2.model.Project;
 import pl.edu.agh.iisg.to2.model.ProjectForTeams;
 import pl.edu.agh.to2.common.ITeam;
 
-public class MethodsTeams implements IMethodsTeams {
+public class MethodsTeams implements IProviderMethodsTeams {
 
 	public ObservableList<IProjectForTeams> findAllProjectsExisting(){
 		ObservableList<IProjectForTeams> projects = FXCollections.observableArrayList();

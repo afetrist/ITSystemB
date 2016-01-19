@@ -33,6 +33,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.DataFormat;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.converter.LocalDateStringConverter;
@@ -114,8 +117,8 @@ public class EditController {
 
 	@FXML
 	private void handleOkAction(ActionEvent event) {
-		updateModel();
 		if (isInputValid()){
+			updateModel();
 			this.projects.add(projectEdit);
 			//setData(this.projectEdit, this.d);
 			Stage stage = (Stage) cancelButton.getScene().getWindow();
@@ -148,7 +151,7 @@ public class EditController {
 			
             stageAddEmployee.showAndWait();
             System.out.println("Refreshing...");
-    		String s2 = projectEdit.getStringEmployeesForProject().getValue();
+    		String s2 = projectEdit.getStringEmployeesForProject().getValue().replace(",", " ");
     		employeesTextField.setText(s2);
             //projectTable.refresh(); 
         } catch (IOException e) {
@@ -174,7 +177,7 @@ public class EditController {
 			
             stageAddTeams.showAndWait();
             System.out.println("Refreshing...");
-            String s1 = projectEdit.getStringTeamsForProject().getValue();
+            String s1 = projectEdit.getStringTeamsForProject().getValue().replace(",", " ");
     		teamsTextField.setText(s1);
             //projectTable.refresh(); 
         } catch (IOException e) {
@@ -183,41 +186,47 @@ public class EditController {
 	}
 	
 
-	private boolean isInputValid() {/*
-		if (projectEdit.getDeadline() == null || projectEdit.getDeadline().getValue() == null || projectEdit.getStartdate() == null || projectEdit.getStartdate().getValue() == null) {
+	private boolean isInputValid() {
+		int check = 0;
+		errorDate.setVisible(false);
+		errorEmployees.setVisible(false);
+		errorTeams.setVisible(false);
+		errorBudget.setVisible(false);
+		
+		if ( (deadlineDatePicker.getValue() == null) || (startdateDatePicker.getValue() == null) ) {
+			Text t = new Text();
+			t.setFont(Font.font("Verdana", FontWeight.BOLD, 70));
 			errorDate.setText("ERROR! Deadline or startdate is empty!");
 			errorDate.setVisible(true);
-			return false;
-		}
-		if (!(projectEdit.getStartdate().getValue()).isBefore(projectEdit.getDeadline().getValue())) {
-
+			check = check + 1;
+		}else if (!(startdateDatePicker.getValue()).isBefore(deadlineDatePicker.getValue())) {
 			errorDate.setVisible(true);
-			return false;
+			check = check + 1;
 		}
 		DecimalFormat decimalFormatter = new DecimalFormat();
 		decimalFormatter.setParseBigDecimal(true);
-		if (projectEdit.getBudget() != null){
-				if (projectEdit.calculateBudget() > projectEdit.getBudget().getValue().intValueExact() ){
-					errorBudget.setTextFill(Color.RED);
-					errorBudget.setText("ERROR! Not enough money for project!");
-					errorBudget.setVisible(true);
-					return false;
-				}	
-		}else{
+		if (( budgetTextField.getLength() == 0 ) || (budgetTextField.getText().equals(""))){
+			budgetTextField.setStyle("-fx-background-color: red");
 			errorBudget.setText("ERROR! Budget musn't be empty!");
 			errorBudget.setVisible(true);
-			return false;
+			check = check + 1;		
 		}
-		if (projectEdit.getEmployees() == null){
+		if (( employeesTextField.getLength() == 0 ) || (employeesTextField.getText().equals(""))){
+			System.out.println("puste");
+			employeesTextField.setStyle("-fx-background-color: red");
 			errorEmployees.setText("ERROR! You have to choose employees!");
 			errorEmployees.setVisible(true);
-			return false;
+			check = check + 1;
 		}
-		if (projectEdit.getTeams() == null){
+		if (( teamsTextField.getLength() == 0 ) || (teamsTextField.getText().equals(""))){
+			teamsTextField.setStyle("-fx-background-color: red");
 			errorTeams.setText("ERROR! You have to choose teams!");
 			errorTeams.setVisible(true);
+			check = check + 1;
+		}
+		if (check != 0){
 			return false;
-		}*/
+		}
 		return true;
 	}
 
@@ -246,6 +255,7 @@ public class EditController {
 			
 		}
 		if (!(employeesTextField.getText().isEmpty())){
+			System.out.println("NIE POWINNO");
 			ObservableList<iEmployeeForProjects> etmp = FXCollections.observableArrayList();
 			etmp.addAll(FindEmployees.setEmployeesFromStringNameLastName(employeesTextField.getText(), employees));
 			projectEdit.setEmployees(etmp);

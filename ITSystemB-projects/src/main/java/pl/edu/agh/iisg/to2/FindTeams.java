@@ -17,7 +17,7 @@ import common.iEmployeeForProjects;
 public class FindTeams {
 
 
-//--------------------------------------------Funkcje dla modu³u zespo³y ----------------------------------------
+//--------------------------------------------Funkcje dla modulu zespoly ----------------------------------------
 	
 	
 	public static ObservableList<IProject> findAllProjectsExisting(){
@@ -132,7 +132,7 @@ public class FindTeams {
 		ObservableList<ITeam> tmpWithID = FXCollections.observableArrayList();
 		tmpWithID.addAll(t);
 		for (int i = 0; i < tmpWithID.size(); i++){
-			if (!(s1.toLowerCase().contains(tmpWithID.get(i).getId().toLowerCase()))){
+			if (!(s1.toLowerCase().contains(tmpWithID.get(i).getNameOfTeam().toLowerCase()))){
 				tmpWithID.remove(i) ;
 				i--;
 			}
@@ -145,7 +145,7 @@ public class FindTeams {
 		if (tmpp != null){
 			for (ITeam tmp: tmpp){
 				//System.out.println("ustawiam wartosc stringa Team:"+ tmp.getId());
-				s.setValue(s.getValue() + tmp.getId()+ " ");
+				s.setValue(s.getValue() + tmp.getNameOfTeam()+ "," + " ");
 			}
 		}
 		else s.setValue("0");
