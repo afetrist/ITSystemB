@@ -33,8 +33,8 @@ public class EmployeesRoot {
 		this.primaryStage = primaryStage;
 		this.rootLayout = rootLayout;
 		
-		//injectDataBase();		//While DB is available
-		injectMockPeople();
+		injectDataBase();		//While DB is available
+		//injectMockPeople();
 	}
 	
 	public ObservableList<Person> getPersonData() {

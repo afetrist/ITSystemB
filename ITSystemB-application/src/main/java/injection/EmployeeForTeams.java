@@ -1,7 +1,8 @@
-package employees.model;
+package injection;
 
 import common.iEmployeeForTeams;
 import common.iWorkerForTeams;
+import employees.model.Person;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.StringProperty;
@@ -22,11 +23,23 @@ public class EmployeeForTeams implements iWorkerForTeams, iEmployeeForTeams {
     	this.pesel = pesel;
     }
 
+    EmployeeForTeams(Person person){
+    	this.id = person.idProperty();
+    	this.firstName = person.firstNameProperty();
+    	this.lastName = person.lastNameProperty();
+    	this.position = person.positionProperty();
+    	this.salary = person.salaryProperty();
+    	this.pesel = person.peselProperty();
+    }
+    
 	//@Override
 	/* (non-Javadoc)
 	 * @see employees.model.iEmployeeForTeams#getFirstName()
 	 */
-	@Override
+    public LongProperty getID(){
+    	return id;
+    }
+    
 	public StringProperty getFirstName() {
 		return firstName;
 	}
@@ -36,7 +49,6 @@ public class EmployeeForTeams implements iWorkerForTeams, iEmployeeForTeams {
 	/* (non-Javadoc)
 	 * @see employees.model.iEmployeeForTeams#getLastName()
 	 */
-	@Override
 	public StringProperty getLastName() {
 		return lastName;
 	}
@@ -45,7 +57,6 @@ public class EmployeeForTeams implements iWorkerForTeams, iEmployeeForTeams {
 	/* (non-Javadoc)
 	 * @see employees.model.iEmployeeForTeams#getPosition()
 	 */
-	@Override
 	public StringProperty getPosition() {
 		return position;
 	}
@@ -54,7 +65,6 @@ public class EmployeeForTeams implements iWorkerForTeams, iEmployeeForTeams {
 	/* (non-Javadoc)
 	 * @see employees.model.iEmployeeForTeams#getPesel()
 	 */
-	@Override
 	public StringProperty getPesel() {
 		return pesel;
 	}

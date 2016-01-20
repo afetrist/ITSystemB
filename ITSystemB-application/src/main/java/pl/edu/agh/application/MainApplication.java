@@ -8,6 +8,7 @@ import employees.view.PersonOverviewController;
 import injection.MethodsEmployees;
 import injection.ProjectProviderForEmployees;
 import injection.WorkerProviderForProjects;
+import injection.WorkerProviderForTeams;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -49,9 +50,10 @@ public class MainApplication extends Application {
 		
 		employeesRoot.injector(new ProjectProviderForEmployees(projectMain.getProjects()));
 		
-		
+		WorkerProviderForTeams sobieWstrzyknijcie = new WorkerProviderForTeams(employeesRoot.getPersonData()); 
 		
 		showTeams();
+		
 	}
 	
 	public void initRootLayout(){

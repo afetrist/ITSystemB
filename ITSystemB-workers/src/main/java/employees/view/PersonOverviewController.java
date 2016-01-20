@@ -297,7 +297,7 @@ public class PersonOverviewController {
         if(selectedPerson != null){
             boolean okClicked = employeesRoot.showPersonDelete(selectedPerson);
             if(okClicked){
-            	//deletePersonFromDB(selectedPerson);		//needs DB
+            	deletePersonFromDB(selectedPerson);		//needs DB
             	employeesRoot.deletePerson(selectedPerson);
             }
         }
@@ -317,7 +317,7 @@ public class PersonOverviewController {
         if (okClicked) {
         	checkForCorrectUrl(newPerson);
         	employeesRoot.getPersonData().add(newPerson);
-            //addNewPersonToDB(newPerson);			//needs DB
+            addNewPersonToDB(newPerson);			//needs DB
         }
     }
 	
@@ -353,7 +353,7 @@ public class PersonOverviewController {
             	if(selectedPerson.getSalary() != pastSalary)
             		selectedPerson.gotRise(pastSalary);
             		
-            	//savePersonToDB(selectedPerson);		//needs DB
+            	savePersonToDB(selectedPerson);		//needs DB
                 showPersonDetails(selectedPerson);
             }
 
